@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /tmp/enigma-explore log --oneline)",
+      "Bash(dotnet build:*)",
+      "Bash(timeout 5 dotnet run:*)"
+    ]
+  }
+}
