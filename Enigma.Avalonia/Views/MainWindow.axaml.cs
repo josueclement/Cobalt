@@ -16,6 +16,9 @@ public partial class MainWindow : Window
         base.OnDataContextChanged(e);
 
         if (DataContext is MainWindowViewModel vm)
+        {
             vm.DialogService.RegisterHost(HostDialog);
+            vm.OverlayService.RegisterHost(HostOverlay);
+        }
     }
 }
