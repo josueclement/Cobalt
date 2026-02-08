@@ -19,6 +19,7 @@ public partial class MainWindow : Window
         {
             vm.DialogService.RegisterHost(HostDialog);
             vm.OverlayService.RegisterHost(HostOverlay);
+            vm.InfoBarService.RegisterHost(HostInfoBar);
         }
     }
 }
