@@ -8,8 +8,9 @@
         <Setter Property="IsVisible" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Background="{DynamicResource CobaltSurfaceHighBrush}"
-                        BorderBrush="{DynamicResource CobaltBorderBrush}"
+                <Border Name="PART_Card"
+                        Background="{DynamicResource CobaltInfoBackgroundBrush}"
+                        BorderBrush="{DynamicResource CobaltInfoBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Margin="24,24,24,0"
@@ -23,7 +24,7 @@
                                   Width="24" Height="24"
                                   Margin="0,0,12,0"
                                   VerticalAlignment="Center"
-                                  Foreground="{DynamicResource CobaltAccentBrush}"
+                                  Foreground="{DynamicResource CobaltForegroundBrush}"
                                   Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z" />
 
                         <!-- Text -->
@@ -59,24 +60,39 @@
             <Setter Property="IsVisible" Value="True" />
         </Style>
 
-        <!-- Severity styles -->
+        <!-- Severity: Info -->
+        <Style Selector="^[Severity=Info] /template/ Border#PART_Card">
+            <Setter Property="Background" Value="{DynamicResource CobaltInfoBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CobaltInfoBorderBrush}" />
+        </Style>
         <Style Selector="^[Severity=Info] /template/ PathIcon#PART_Icon">
-            <Setter Property="Foreground" Value="{DynamicResource CobaltAccentBrush}" />
             <Setter Property="Data" Value="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z" />
         </Style>
 
+        <!-- Severity: Success -->
+        <Style Selector="^[Severity=Success] /template/ Border#PART_Card">
+            <Setter Property="Background" Value="{DynamicResource CobaltSuccessBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CobaltSuccessBorderBrush}" />
+        </Style>
         <Style Selector="^[Severity=Success] /template/ PathIcon#PART_Icon">
-            <Setter Property="Foreground" Value="{DynamicResource CobaltSuccessBrush}" />
             <Setter Property="Data" Value="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9Z" />
         </Style>
 
+        <!-- Severity: Warning -->
+        <Style Selector="^[Severity=Warning] /template/ Border#PART_Card">
+            <Setter Property="Background" Value="{DynamicResource CobaltWarningBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CobaltWarningBorderBrush}" />
+        </Style>
         <Style Selector="^[Severity=Warning] /template/ PathIcon#PART_Icon">
-            <Setter Property="Foreground" Value="{DynamicResource CobaltWarningBrush}" />
             <Setter Property="Data" Value="M1 21h22L12 2 1 21Zm12-3h-2v-2h2v2Zm0-4h-2v-4h2v4Z" />
         </Style>
 
+        <!-- Severity: Error -->
+        <Style Selector="^[Severity=Error] /template/ Border#PART_Card">
+            <Setter Property="Background" Value="{DynamicResource CobaltErrorBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CobaltErrorBorderBrush}" />
+        </Style>
         <Style Selector="^[Severity=Error] /template/ PathIcon#PART_Icon">
-            <Setter Property="Foreground" Value="{DynamicResource CobaltErrorBrush}" />
             <Setter Property="Data" Value="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2Zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59Z" />
         </Style>
     </ControlTheme>

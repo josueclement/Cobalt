@@ -17,5 +17,13 @@
     <SolidColorBrush x:Key="CobaltSuccessBrush" Color="{DynamicResource CobaltSuccessColor}" />
     <SolidColorBrush x:Key="CobaltWarningBrush" Color="{DynamicResource CobaltWarningColor}" />
     <SolidColorBrush x:Key="CobaltErrorBrush" Color="{DynamicResource CobaltErrorColor}" />
+    <SolidColorBrush x:Key="CobaltInfoBackgroundBrush" Color="{DynamicResource CobaltInfoBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltInfoBorderBrush" Color="{DynamicResource CobaltInfoBorderColor}" />
+    <SolidColorBrush x:Key="CobaltSuccessBackgroundBrush" Color="{DynamicResource CobaltSuccessBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltSuccessBorderBrush" Color="{DynamicResource CobaltSuccessBorderColor}" />
+    <SolidColorBrush x:Key="CobaltWarningBackgroundBrush" Color="{DynamicResource CobaltWarningBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltWarningBorderBrush" Color="{DynamicResource CobaltWarningBorderColor}" />
+    <SolidColorBrush x:Key="CobaltErrorBackgroundBrush" Color="{DynamicResource CobaltErrorBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltErrorBorderBrush" Color="{DynamicResource CobaltErrorBorderColor}" />
 
 </ResourceDictionary>
