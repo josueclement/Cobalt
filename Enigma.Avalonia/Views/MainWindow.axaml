@@ -8,7 +8,8 @@
         x:Class="Enigma.Avalonia.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Enigma">
+        Title="Enigma"
+        Background="{DynamicResource CobaltBackgroundBrush}">
 
     <Design.DataContext>
         <vm:MainWindowViewModel />
