@@ -6,6 +6,8 @@ using System.Linq;
 using Avalonia.Markup.Xaml;
 using Enigma.Avalonia.ViewModels;
 using Enigma.Avalonia.Views;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 
 namespace Enigma.Avalonia;
 
@@ -14,6 +16,11 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+
+        LiveCharts.Configure(settings => settings
+            .AddSkiaSharp()
+            .AddDefaultMappers()
+            .AddDarkTheme());
     }
 
     public override void OnFrameworkInitializationCompleted()

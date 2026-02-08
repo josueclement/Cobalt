@@ -46,6 +46,12 @@ public partial class MainWindowViewModel : ViewModelBase
                 IconData = Geometry.Parse("M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z"),
                 Factory = () => new InfoBarTestingPageViewModel(InfoBarService)
             },
+            new NavigationItemControl
+            {
+                Header = "Charts",
+                IconData = Geometry.Parse("M5 9.2h3V19H5V9.2ZM10.6 5h2.8v14h-2.8V5Zm5.6 8H19v6h-2.8v-6Z"),
+                Factory = () => new ChartsPageViewModel()
+            },
         };
 
         Navigation = new NavigationService(items);

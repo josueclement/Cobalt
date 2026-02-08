@@ -6,7 +6,9 @@
       "Bash(timeout 5 dotnet run:*)",
       "Bash(dotnet --version:*)",
       "WebSearch",
-      "Bash(dotnet run:*)"
+      "Bash(dotnet run:*)",
+      "WebFetch(domain:livecharts.dev)",
+      "Bash(grep:*)"
     ]
   }
 }
