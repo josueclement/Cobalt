@@ -1,5 +1,8 @@
+using Avalonia;
 using Avalonia.Media;
-using Enigma.Avalonia.Controls;
+using Avalonia.Styling;
+using CommunityToolkit.Mvvm.Input;
+using Cobalt.Avalonia.Desktop.Controls;
 using Enigma.Avalonia.Services;
 
 namespace Enigma.Avalonia.ViewModels;
@@ -22,5 +25,17 @@ public partial class MainWindowViewModel : ViewModelBase
 
         Navigation = new NavigationService(items);
         Navigation.NavigateTo(items[0]);
+    }
+
+    [RelayCommand]
+    private void ToggleTheme()
+    {
+        var app = Application.Current;
+        if (app != null)
+        {
+            app.RequestedThemeVariant = app.ActualThemeVariant == ThemeVariant.Dark
+                ? ThemeVariant.Light
+                : ThemeVariant.Dark;
+        }
     }
 }

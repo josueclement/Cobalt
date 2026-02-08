@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Enigma.Avalonia.Controls;
+using Cobalt.Avalonia.Desktop.Controls;
 using Enigma.Avalonia.ViewModels;
 
 namespace Enigma.Avalonia.Services;
@@ -27,6 +27,6 @@ public partial class NavigationService : ObservableObject, INavigationService
 
     partial void OnSelectedItemChanged(NavigationItemControl? value)
     {
-        CurrentPage = value?.Factory?.Invoke();
+        CurrentPage = value?.Factory?.Invoke() as ViewModelBase;
     }
 }

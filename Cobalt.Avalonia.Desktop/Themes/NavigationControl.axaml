@@ -1,0 +1,30 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Cobalt.Avalonia.Desktop.Controls">
+
+    <ControlTheme x:Key="{x:Type controls:NavigationControl}" TargetType="controls:NavigationControl">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                       BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+                       BorderThickness="0,0,1,0"
+                       Width="80">
+                    <ListBox Name="PART_ListBox"
+                            ItemsSource="{TemplateBinding Items}"
+                            SelectedItem="{TemplateBinding SelectedItem}"
+                            Background="Transparent"
+                            BorderThickness="0">
+                        <ListBox.Styles>
+                            <Style Selector="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="Padding" Value="4,8" />
+                            </Style>
+                        </ListBox.Styles>
+                    </ListBox>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

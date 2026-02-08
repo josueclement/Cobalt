@@ -18,9 +18,10 @@ dotnet run            # Run the application
 ### Project Structure
 
 ```
-├── Models/              # Data models (NavigationItem, etc.)
+├── Models/              # Data models
 ├── Services/            # Services (NavigationService)
-├── Controls/            # Reusable UI controls (NavigationControl)
+├── Controls/            # Control classes (NavigationControl, NavigationItemControl)
+├── Styling/             # Control styles and templates (XAML)
 ├── ViewModels/          # ViewModels (ViewModelBase, MainWindowViewModel, page VMs)
 ├── Views/               # Views (MainWindow, page views)
 ├── App.axaml            # Application root, theme config

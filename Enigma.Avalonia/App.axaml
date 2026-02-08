@@ -10,7 +10,13 @@
   
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="/Controls/NavigationControl.axaml" />
-        <StyleInclude Source="/Controls/NavigationItemControl.axaml" />
     </Application.Styles>
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Fluent.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>
