@@ -11,7 +11,7 @@
                        Width="80">
                     <ListBox Name="PART_ListBox"
                             ItemsSource="{TemplateBinding Items}"
-                            SelectedItem="{TemplateBinding SelectedItem}"
+                            SelectedItem="{Binding SelectedItem, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
                             Background="Transparent"
                             BorderThickness="0">
                         <ListBox.Styles>
