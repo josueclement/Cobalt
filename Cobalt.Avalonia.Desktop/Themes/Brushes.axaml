@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="CobaltBackgroundBrush" Color="{DynamicResource CobaltBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltSurfaceBrush" Color="{DynamicResource CobaltSurfaceColor}" />
+    <SolidColorBrush x:Key="CobaltSurfaceHighBrush" Color="{DynamicResource CobaltSurfaceHighColor}" />
+    <SolidColorBrush x:Key="CobaltBorderBrush" Color="{DynamicResource CobaltBorderColor}" />
+    <SolidColorBrush x:Key="CobaltBorderSubtleBrush" Color="{DynamicResource CobaltBorderSubtleColor}" />
+    <SolidColorBrush x:Key="CobaltForegroundBrush" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="CobaltForegroundSecondaryBrush" Color="{DynamicResource CobaltForegroundSecondaryColor}" />
+    <SolidColorBrush x:Key="CobaltForegroundTertiaryBrush" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+    <SolidColorBrush x:Key="CobaltAccentBrush" Color="{DynamicResource CobaltAccentColor}" />
+    <SolidColorBrush x:Key="CobaltAccentHoverBrush" Color="{DynamicResource CobaltAccentHoverColor}" />
+    <SolidColorBrush x:Key="CobaltSelectionBrush" Color="{DynamicResource CobaltSelectionColor}" />
+    <SolidColorBrush x:Key="CobaltHoverBrush" Color="{DynamicResource CobaltHoverColor}" />
+    <SolidColorBrush x:Key="CobaltOverlayBrush" Color="{DynamicResource CobaltOverlayColor}" />
+    <SolidColorBrush x:Key="CobaltSuccessBrush" Color="{DynamicResource CobaltSuccessColor}" />
+    <SolidColorBrush x:Key="CobaltWarningBrush" Color="{DynamicResource CobaltWarningColor}" />
+    <SolidColorBrush x:Key="CobaltErrorBrush" Color="{DynamicResource CobaltErrorColor}" />
+
+</ResourceDictionary>

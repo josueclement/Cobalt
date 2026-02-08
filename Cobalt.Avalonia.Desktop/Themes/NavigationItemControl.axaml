@@ -18,11 +18,11 @@
                     <PathIcon Data="{TemplateBinding IconData}"
                              Width="24"
                              Height="24"
-                             Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+                             Foreground="{DynamicResource CobaltForegroundBrush}" />
                     <TextBlock Text="{TemplateBinding Header}"
                               FontSize="11"
                               TextAlignment="Center"
-                              Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+                              Foreground="{DynamicResource CobaltForegroundBrush}" />
                 </StackPanel>
             </ControlTemplate>
         </Setter>

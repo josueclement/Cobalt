@@ -1,24 +1,12 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Include control styles -->
     <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Colors.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Brushes.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/NavigationItemControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/NavigationControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/ContentDialog.axaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    <!-- Theme dictionaries for future custom colors -->
-    <ResourceDictionary.ThemeDictionaries>
-        <ResourceDictionary x:Key="Default">
-            <!-- Dark theme custom resources (currently using FluentTheme built-ins only) -->
-        </ResourceDictionary>
-        <ResourceDictionary x:Key="Light">
-            <!-- Light theme custom resources (currently using FluentTheme built-ins only) -->
-        </ResourceDictionary>
-        <ResourceDictionary x:Key="Dark">
-            <!-- Dark theme custom resources (currently using FluentTheme built-ins only) -->
-        </ResourceDictionary>
-    </ResourceDictionary.ThemeDictionaries>
 
 </ResourceDictionary>

@@ -5,8 +5,8 @@
     <ControlTheme x:Key="{x:Type controls:NavigationControl}" TargetType="controls:NavigationControl">
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
-                       BorderBrush="{DynamicResource SystemControlForegroundBaseLowBrush}"
+                <Border Background="{DynamicResource CobaltSurfaceBrush}"
+                       BorderBrush="{DynamicResource CobaltBorderSubtleBrush}"
                        BorderThickness="0,0,1,0"
                        Width="80">
                     <ListBox Name="PART_ListBox"

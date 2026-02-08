@@ -1,0 +1,48 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+
+        <!-- Dark theme (JetBrains Darcula-inspired) -->
+        <ResourceDictionary x:Key="Dark">
+            <Color x:Key="CobaltBackgroundColor">#1E1F22</Color>
+            <Color x:Key="CobaltSurfaceColor">#2B2D30</Color>
+            <Color x:Key="CobaltSurfaceHighColor">#313335</Color>
+            <Color x:Key="CobaltBorderColor">#393B40</Color>
+            <Color x:Key="CobaltBorderSubtleColor">#43454A</Color>
+            <Color x:Key="CobaltForegroundColor">#BCBEC4</Color>
+            <Color x:Key="CobaltForegroundSecondaryColor">#6F737A</Color>
+            <Color x:Key="CobaltForegroundTertiaryColor">#4E5157</Color>
+            <Color x:Key="CobaltAccentColor">#3574F0</Color>
+            <Color x:Key="CobaltAccentHoverColor">#4A88F7</Color>
+            <Color x:Key="CobaltSelectionColor">#214283</Color>
+            <Color x:Key="CobaltHoverColor">#2E3035</Color>
+            <Color x:Key="CobaltOverlayColor">#80000000</Color>
+            <Color x:Key="CobaltSuccessColor">#59A869</Color>
+            <Color x:Key="CobaltWarningColor">#E8A33D</Color>
+            <Color x:Key="CobaltErrorColor">#F75464</Color>
+        </ResourceDictionary>
+
+        <!-- Light theme (JetBrains IntelliJ-inspired) -->
+        <ResourceDictionary x:Key="Light">
+            <Color x:Key="CobaltBackgroundColor">#F7F8FA</Color>
+            <Color x:Key="CobaltSurfaceColor">#EBEDF0</Color>
+            <Color x:Key="CobaltSurfaceHighColor">#DFE1E5</Color>
+            <Color x:Key="CobaltBorderColor">#D1D3D8</Color>
+            <Color x:Key="CobaltBorderSubtleColor">#E0E2E6</Color>
+            <Color x:Key="CobaltForegroundColor">#1E1F22</Color>
+            <Color x:Key="CobaltForegroundSecondaryColor">#6F737A</Color>
+            <Color x:Key="CobaltForegroundTertiaryColor">#A0A3AA</Color>
+            <Color x:Key="CobaltAccentColor">#3574F0</Color>
+            <Color x:Key="CobaltAccentHoverColor">#2D64D4</Color>
+            <Color x:Key="CobaltSelectionColor">#C4D8F8</Color>
+            <Color x:Key="CobaltHoverColor">#E8EAED</Color>
+            <Color x:Key="CobaltOverlayColor">#40000000</Color>
+            <Color x:Key="CobaltSuccessColor">#3B8C4B</Color>
+            <Color x:Key="CobaltWarningColor">#C48832</Color>
+            <Color x:Key="CobaltErrorColor">#DB3B3B</Color>
+        </ResourceDictionary>
+
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

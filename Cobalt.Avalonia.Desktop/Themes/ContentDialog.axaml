@@ -16,8 +16,8 @@
                            VerticalAlignment="Stretch" />
 
                     <!-- Dialog Content -->
-                    <Border Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
-                           BorderBrush="{DynamicResource SystemControlForegroundBaseMediumLowBrush}"
+                    <Border Background="{DynamicResource CobaltSurfaceHighBrush}"
+                           BorderBrush="{DynamicResource CobaltBorderBrush}"
                            BorderThickness="1"
                            CornerRadius="8"
                            MinWidth="320"
