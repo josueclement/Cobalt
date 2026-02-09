@@ -9,6 +9,7 @@
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/ContentDialog.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/OverlayControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/InfoBarControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardControl.axaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
