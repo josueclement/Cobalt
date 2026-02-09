@@ -16,8 +16,6 @@
                         <!-- Icon container -->
                         <Border Grid.Column="0"
                                 Width="40" Height="40"
-                                Background="{DynamicResource CobaltSurfaceHighBrush}"
-                                CornerRadius="8"
                                 VerticalAlignment="Center"
                                 IsVisible="{Binding IconData, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
                             <PathIcon Data="{Binding IconData, RelativeSource={RelativeSource TemplatedParent}}"
@@ -58,7 +56,7 @@
         </Style>
 
         <Style Selector="^:pressed /template/ Border#PART_Root">
-            <Setter Property="Background" Value="{DynamicResource CobaltSurfaceHighBrush}" />
+            <Setter Property="Background" Value="{DynamicResource CobaltPressedBrush}" />
         </Style>
     </ControlTheme>
 

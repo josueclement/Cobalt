@@ -56,11 +56,24 @@ public class SettingsCardControl : TemplatedControl
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         base.OnPointerPressed(e);
+        PseudoClasses.Add(":pressed");
 
         if (Command is { } command && command.CanExecute(CommandParameter))
         {
             command.Execute(CommandParameter);
             e.Handled = true;
         }
+    }
+
+    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    {
+        base.OnPointerReleased(e);
+        PseudoClasses.Remove(":pressed");
+    }
+
+    protected override void OnPointerCaptureLost(PointerCaptureLostEventArgs e)
+    {
+        base.OnPointerCaptureLost(e);
+        PseudoClasses.Remove(":pressed");
     }
 }

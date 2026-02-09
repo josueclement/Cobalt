@@ -13,6 +13,7 @@
     <SolidColorBrush x:Key="CobaltAccentHoverBrush" Color="{DynamicResource CobaltAccentHoverColor}" />
     <SolidColorBrush x:Key="CobaltSelectionBrush" Color="{DynamicResource CobaltSelectionColor}" />
     <SolidColorBrush x:Key="CobaltHoverBrush" Color="{DynamicResource CobaltHoverColor}" />
+    <SolidColorBrush x:Key="CobaltPressedBrush" Color="{DynamicResource CobaltPressedColor}" />
     <SolidColorBrush x:Key="CobaltOverlayBrush" Color="{DynamicResource CobaltOverlayColor}" />
     <SolidColorBrush x:Key="CobaltSuccessBrush" Color="{DynamicResource CobaltSuccessColor}" />
     <SolidColorBrush x:Key="CobaltWarningBrush" Color="{DynamicResource CobaltWarningColor}" />
