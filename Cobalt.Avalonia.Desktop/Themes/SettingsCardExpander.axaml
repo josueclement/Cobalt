@@ -14,7 +14,7 @@
                     <StackPanel>
 
                         <!-- Header row -->
-                        <Border x:Name="PART_Header" Padding="16">
+                        <Border x:Name="PART_Header" Padding="16" Background="Transparent">
                             <Grid ColumnDefinitions="Auto,*,Auto">
 
                                 <!-- Icon container -->
@@ -65,12 +65,11 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover /template/ Border#PART_Root">
+        <Style Selector="^ /template/ Border#PART_Header:pointerover">
             <Setter Property="Background" Value="{DynamicResource CobaltHoverBrush}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource CobaltBorderBrush}" />
         </Style>
 
-        <Style Selector="^:pressed /template/ Border#PART_Root">
+        <Style Selector="^:pressed /template/ Border#PART_Header">
             <Setter Property="Background" Value="{DynamicResource CobaltPressedBrush}" />
         </Style>
 

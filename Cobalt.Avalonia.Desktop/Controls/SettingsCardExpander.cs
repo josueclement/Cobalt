@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Metadata;
@@ -8,6 +9,8 @@ namespace Cobalt.Avalonia.Desktop.Controls;
 
 public class SettingsCardExpander : TemplatedControl
 {
+    private Border? _headerBorder;
+
     public static readonly StyledProperty<string?> HeaderProperty =
         AvaloniaProperty.Register<SettingsCardExpander, string?>(nameof(Header));
 
@@ -67,23 +70,41 @@ public class SettingsCardExpander : TemplatedControl
         }
     }
 
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
-        base.OnPointerPressed(e);
+        base.OnApplyTemplate(e);
+
+        if (_headerBorder is not null)
+        {
+            _headerBorder.PointerPressed -= OnHeaderPointerPressed;
+            _headerBorder.PointerReleased -= OnHeaderPointerReleased;
+            _headerBorder.PointerCaptureLost -= OnHeaderPointerCaptureLost;
+        }
+
+        _headerBorder = e.NameScope.Find<Border>("PART_Header");
+
+        if (_headerBorder is not null)
+        {
+            _headerBorder.PointerPressed += OnHeaderPointerPressed;
+            _headerBorder.PointerReleased += OnHeaderPointerReleased;
+            _headerBorder.PointerCaptureLost += OnHeaderPointerCaptureLost;
+        }
+    }
+
+    private void OnHeaderPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
         PseudoClasses.Add(":pressed");
         IsExpanded = !IsExpanded;
         e.Handled = true;
     }
 
-    protected override void OnPointerReleased(PointerReleasedEventArgs e)
+    private void OnHeaderPointerReleased(object? sender, PointerReleasedEventArgs e)
     {
-        base.OnPointerReleased(e);
         PseudoClasses.Remove(":pressed");
     }
 
-    protected override void OnPointerCaptureLost(PointerCaptureLostEventArgs e)
+    private void OnHeaderPointerCaptureLost(object? sender, PointerCaptureLostEventArgs e)
     {
-        base.OnPointerCaptureLost(e);
         PseudoClasses.Remove(":pressed");
     }
 }
