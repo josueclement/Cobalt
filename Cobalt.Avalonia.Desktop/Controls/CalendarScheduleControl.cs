@@ -520,6 +520,21 @@ public class CalendarScheduleControl : TemplatedControl
             _weekViewTimeGrid.RowDefinitions.Add(new RowDefinition(HourHeight, GridUnitType.Pixel));
         }
 
+        // Vertical day separators (full-height lines between columns)
+        for (int col = 1; col < 7; col++)
+        {
+            var separator = new Border
+            {
+                Width = 1,
+                Background = GetBrush("CobaltCalendarGridLineBrush"),
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+            Grid.SetColumn(separator, col);
+            Grid.SetRow(separator, 0);
+            Grid.SetRowSpan(separator, 24);
+            _weekViewTimeGrid.Children.Add(separator);
+        }
+
         // Time labels and hour lines
         for (int hour = 0; hour < 24; hour++)
         {
@@ -542,7 +557,7 @@ public class CalendarScheduleControl : TemplatedControl
                 var line = new Border
                 {
                     BorderBrush = GetBrush("CobaltCalendarGridLineBrush"),
-                    BorderThickness = new Thickness(0, 1, col < 7 ? 1 : 0, 0),
+                    BorderThickness = new Thickness(0, 1, 0, 0),
                     VerticalAlignment = VerticalAlignment.Top
                 };
                 Grid.SetColumn(line, col);
