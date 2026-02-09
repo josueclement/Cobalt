@@ -53,9 +53,16 @@
                             </Grid>
                         </Border>
 
+                        <!-- Separator -->
+                        <Border x:Name="PART_Separator"
+                                Height="1"
+                                Margin="0"
+                                Background="{DynamicResource CobaltBorderSubtleBrush}"
+                                IsVisible="False" />
+
                         <!-- Expandable content -->
                         <Border x:Name="PART_Content"
-                                Padding="16,0,16,16"
+                                Padding="16,12,16,16"
                                 IsVisible="False">
                             <ContentPresenter Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Border>
@@ -77,6 +84,10 @@
             <Setter Property="RenderTransform">
                 <RotateTransform Angle="90" />
             </Setter>
+        </Style>
+
+        <Style Selector="^:expanded /template/ Border#PART_Separator">
+            <Setter Property="IsVisible" Value="True" />
         </Style>
 
         <Style Selector="^:expanded /template/ Border#PART_Content">
