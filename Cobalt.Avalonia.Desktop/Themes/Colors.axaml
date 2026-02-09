@@ -30,6 +30,12 @@
             <Color x:Key="CobaltWarningBorderColor">#504020</Color>
             <Color x:Key="CobaltErrorBackgroundColor">#301C20</Color>
             <Color x:Key="CobaltErrorBorderColor">#502830</Color>
+            <Color x:Key="CobaltCalendarTodayColor">#2A3574F0</Color>
+            <Color x:Key="CobaltCalendarSelectedColor">#214283</Color>
+            <Color x:Key="CobaltCalendarOutOfMonthColor">#4E5157</Color>
+            <Color x:Key="CobaltCalendarAppointmentColor">#3574F0</Color>
+            <Color x:Key="CobaltCalendarGridLineColor">#393B40</Color>
+            <Color x:Key="CobaltCalendarCurrentTimeColor">#F75464</Color>
         </ResourceDictionary>
 
         <!-- Light theme (JetBrains IntelliJ-inspired) -->
@@ -59,6 +65,12 @@
             <Color x:Key="CobaltWarningBorderColor">#DCC098</Color>
             <Color x:Key="CobaltErrorBackgroundColor">#F4DADA</Color>
             <Color x:Key="CobaltErrorBorderColor">#DCA0A0</Color>
+            <Color x:Key="CobaltCalendarTodayColor">#2A3574F0</Color>
+            <Color x:Key="CobaltCalendarSelectedColor">#C4D8F8</Color>
+            <Color x:Key="CobaltCalendarOutOfMonthColor">#A0A3AA</Color>
+            <Color x:Key="CobaltCalendarAppointmentColor">#3574F0</Color>
+            <Color x:Key="CobaltCalendarGridLineColor">#D1D3D8</Color>
+            <Color x:Key="CobaltCalendarCurrentTimeColor">#DB3B3B</Color>
         </ResourceDictionary>
 
     </ResourceDictionary.ThemeDictionaries>

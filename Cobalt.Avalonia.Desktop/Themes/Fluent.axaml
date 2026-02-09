@@ -11,6 +11,7 @@
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/InfoBarControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardExpander.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/CalendarScheduleControl.axaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

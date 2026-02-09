@@ -26,5 +26,11 @@
     <SolidColorBrush x:Key="CobaltWarningBorderBrush" Color="{DynamicResource CobaltWarningBorderColor}" />
     <SolidColorBrush x:Key="CobaltErrorBackgroundBrush" Color="{DynamicResource CobaltErrorBackgroundColor}" />
     <SolidColorBrush x:Key="CobaltErrorBorderBrush" Color="{DynamicResource CobaltErrorBorderColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarTodayBrush" Color="{DynamicResource CobaltCalendarTodayColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarSelectedBrush" Color="{DynamicResource CobaltCalendarSelectedColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarOutOfMonthBrush" Color="{DynamicResource CobaltCalendarOutOfMonthColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarAppointmentBrush" Color="{DynamicResource CobaltCalendarAppointmentColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarGridLineBrush" Color="{DynamicResource CobaltCalendarGridLineColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarCurrentTimeBrush" Color="{DynamicResource CobaltCalendarCurrentTimeColor}" />
 
 </ResourceDictionary>
