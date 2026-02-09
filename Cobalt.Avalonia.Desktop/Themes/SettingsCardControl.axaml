@@ -3,7 +3,6 @@
                     xmlns:controls="using:Cobalt.Avalonia.Desktop.Controls">
 
     <ControlTheme x:Key="{x:Type controls:SettingsCardControl}" TargetType="controls:SettingsCardControl">
-        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border x:Name="PART_Root"
@@ -23,7 +22,7 @@
                                 IsVisible="{Binding IconData, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
                             <PathIcon Data="{Binding IconData, RelativeSource={RelativeSource TemplatedParent}}"
                                       Width="20" Height="20"
-                                      Foreground="{DynamicResource CobaltAccentBrush}" />
+                                      Foreground="{DynamicResource CobaltForegroundBrush}" />
                         </Border>
 
                         <!-- Header + Description -->
