@@ -112,6 +112,8 @@ public class CalendarScheduleControl : TemplatedControl
     private DateTimeOffset _miniCalDisplayMonth;
     private bool _initialScrollDone;
 
+    private readonly List<(Border border, CalendarScheduleItem item, IBrush baseBrush)> _appointmentBorders = new();
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
@@ -152,6 +154,12 @@ public class CalendarScheduleControl : TemplatedControl
         if (_miniCalPrevButton != null) _miniCalPrevButton.Click += (_, _) => MiniCalNavigate(-1);
         if (_miniCalNextButton != null) _miniCalNextButton.Click += (_, _) => MiniCalNavigate(1);
 
+        if (_weekViewTimeGrid != null)
+        {
+            _weekViewTimeGrid.Background = Brushes.Transparent;
+            _weekViewTimeGrid.PointerPressed += (_, _) => SelectedItem = null;
+        }
+
         _miniCalDisplayMonth = new DateTimeOffset(DisplayDate.Year, DisplayDate.Month, 1, 0, 0, 0, DisplayDate.Offset);
         _initialScrollDone = false;
 
@@ -179,6 +187,10 @@ public class CalendarScheduleControl : TemplatedControl
             UpdatePseudoClasses();
             _initialScrollDone = false;
             Rebuild();
+        }
+        else if (change.Property == SelectedItemProperty)
+        {
+            UpdateAppointmentSelection();
         }
         else if (change.Property == SelectedDateProperty)
         {
@@ -221,6 +233,8 @@ public class CalendarScheduleControl : TemplatedControl
     private void Rebuild()
     {
         if (_headerTitle == null) return;
+
+        _appointmentBorders.Clear();
 
         UpdateHeader();
         UpdateMiniCalendar();
@@ -413,12 +427,7 @@ public class CalendarScheduleControl : TemplatedControl
                     };
                     appointmentBorder.Child = appointmentText;
 
-                    var capturedItem = item;
-                    appointmentBorder.PointerPressed += (_, e) =>
-                    {
-                        SelectedItem = capturedItem;
-                        e.Handled = true;
-                    };
+                    SetupAppointmentInteraction(appointmentBorder, item);
 
                     cellContent.Children.Add(appointmentBorder);
                 }
@@ -453,6 +462,7 @@ public class CalendarScheduleControl : TemplatedControl
                 cellBorder.PointerPressed += (_, _) =>
                 {
                     SelectedDate = capturedDate;
+                    SelectedItem = null;
                 };
 
                 Grid.SetColumn(cellBorder, col);
@@ -627,12 +637,7 @@ public class CalendarScheduleControl : TemplatedControl
 
                 appointmentBorder.Child = textPanel;
 
-                var capturedItem = item;
-                appointmentBorder.PointerPressed += (_, e) =>
-                {
-                    SelectedItem = capturedItem;
-                    e.Handled = true;
-                };
+                SetupAppointmentInteraction(appointmentBorder, item);
 
                 Grid.SetColumn(appointmentBorder, dayIdx + 1);
                 Grid.SetRow(appointmentBorder, startRow);
@@ -666,6 +671,45 @@ public class CalendarScheduleControl : TemplatedControl
         {
             _initialScrollDone = true;
             _weekViewScrollViewer.Offset = new Vector(0, 8 * HourHeight);
+        }
+    }
+
+    private void SetupAppointmentInteraction(Border border, CalendarScheduleItem item)
+    {
+        var baseBrush = border.Background ?? GetBrush("CobaltCalendarAppointmentBrush");
+        bool isSelected = SelectedItem == item;
+
+        if (isSelected)
+            border.BorderBrush = Brushes.White;
+
+        border.BorderThickness = new Thickness(isSelected ? 1.5 : 0);
+
+        _appointmentBorders.Add((border, item, baseBrush));
+
+        border.PointerEntered += (_, _) =>
+        {
+            border.Opacity = 0.8;
+        };
+
+        border.PointerExited += (_, _) =>
+        {
+            border.Opacity = 1.0;
+        };
+
+        border.PointerPressed += (_, e) =>
+        {
+            SelectedItem = item;
+            e.Handled = true;
+        };
+    }
+
+    private void UpdateAppointmentSelection()
+    {
+        foreach (var (border, item, _) in _appointmentBorders)
+        {
+            bool isSelected = SelectedItem == item;
+            border.BorderBrush = isSelected ? Brushes.White : null;
+            border.BorderThickness = new Thickness(isSelected ? 1.5 : 0);
         }
     }
 
