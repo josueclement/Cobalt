@@ -1,6 +1,6 @@
-using Avalonia;
 using Avalonia.Controls;
-using global::Avalonia.Media;
+using Avalonia.Media;
+using Avalonia;
 
 namespace Cobalt.Avalonia.Desktop.Controls;
 

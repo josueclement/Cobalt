@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Layout;
-using global::Avalonia.Media;
+using Avalonia.Media;
+using Avalonia;
+using System.Globalization;
 
 namespace Cobalt.Avalonia.Desktop.Controls.CalendarSchedule;
 

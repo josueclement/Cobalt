@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
+using Avalonia;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Navigation;
 

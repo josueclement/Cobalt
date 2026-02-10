@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Cobalt.Avalonia.Desktop.Controls;
 
 namespace Cobalt.Avalonia.Desktop.Services;

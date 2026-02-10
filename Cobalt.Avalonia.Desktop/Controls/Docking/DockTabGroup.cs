@@ -1,12 +1,11 @@
-using System;
-using Avalonia;
 using Avalonia.Collections;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.VisualTree;
+using Avalonia;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Docking;
 

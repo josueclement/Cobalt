@@ -1,6 +1,6 @@
-using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Metadata;
+using Avalonia;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Docking;
 

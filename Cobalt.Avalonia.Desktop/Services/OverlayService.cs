@@ -1,4 +1,3 @@
-using System;
 using Cobalt.Avalonia.Desktop.Controls;
 
 namespace Cobalt.Avalonia.Desktop.Services;

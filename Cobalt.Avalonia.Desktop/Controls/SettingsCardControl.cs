@@ -1,8 +1,8 @@
-using System.Windows.Input;
-using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
 using Avalonia.Media;
+using Avalonia;
+using System.Windows.Input;
 
 namespace Cobalt.Avalonia.Desktop.Controls;
 

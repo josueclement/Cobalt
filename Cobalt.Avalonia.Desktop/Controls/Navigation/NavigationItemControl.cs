@@ -1,7 +1,6 @@
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
+using Avalonia;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Navigation;
 

@@ -1,5 +1,4 @@
-using System;
-using global::Avalonia.Media;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.CalendarSchedule;
 

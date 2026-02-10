@@ -1,7 +1,5 @@
-using System;
-using System.Threading.Tasks;
-using global::Avalonia.Controls;
-using global::Avalonia.Media;
+using Avalonia.Controls;
+using Avalonia.Media;
 using Cobalt.Avalonia.Desktop.Controls;
 
 namespace Cobalt.Avalonia.Desktop.Services;

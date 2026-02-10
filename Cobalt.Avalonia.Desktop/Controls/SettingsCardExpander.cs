@@ -1,9 +1,9 @@
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Metadata;
 using Avalonia.Media;
+using Avalonia.Metadata;
+using Avalonia;
 
 namespace Cobalt.Avalonia.Desktop.Controls;
 

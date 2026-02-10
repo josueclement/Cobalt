@@ -1,12 +1,10 @@
-using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using Avalonia;
+using System.Windows.Input;
 
 namespace Cobalt.Avalonia.Desktop.Controls;
 
