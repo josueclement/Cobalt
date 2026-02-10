@@ -1,4 +1,4 @@
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Docking;
 
 public enum DockPosition
 {

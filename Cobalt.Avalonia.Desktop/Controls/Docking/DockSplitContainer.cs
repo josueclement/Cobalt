@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Docking;
 
 public class DockSplitContainer : TemplatedControl
 {

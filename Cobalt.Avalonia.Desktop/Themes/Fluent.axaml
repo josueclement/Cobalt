@@ -4,24 +4,24 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Colors.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Brushes.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/NavigationItemControl.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/NavigationControl.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/ContentDialog.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/OverlayControl.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/InfoBarControl.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardControl.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardExpander.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/CalendarScheduleControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/ContentDialog.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockPane.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockSplitContainer.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockTabGroup.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockingControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/InfoBarControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/NavigationControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/NavigationItemControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/OverlayControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonButton.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonToggleButton.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonDropDownButton.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonGroup.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonTab.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonControl.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockPane.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockTabGroup.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockSplitContainer.axaml" />
-        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockingControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonToggleButton.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardExpander.axaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

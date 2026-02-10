@@ -3,7 +3,7 @@ using Avalonia.Collections;
 using Avalonia.Controls.Primitives;
 using Avalonia.Metadata;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Ribbon;
 
 public class RibbonTab : TemplatedControl
 {

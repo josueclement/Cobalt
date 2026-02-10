@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="using:Cobalt.Avalonia.Desktop.Controls">
+                    xmlns:controls="using:Cobalt.Avalonia.Desktop.Controls.CalendarSchedule">
 
     <ControlTheme x:Key="{x:Type controls:CalendarScheduleControl}" TargetType="controls:CalendarScheduleControl">
         <Setter Property="Template">

@@ -1,31 +1,24 @@
+using System.Windows.Input;
 using Avalonia;
-using Avalonia.Collections;
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
-using Avalonia.Data;
 using Avalonia.Input;
-using Avalonia.Metadata;
 using global::Avalonia.Media;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Ribbon;
 
-public class RibbonDropDownButton : TemplatedControl
+public class RibbonButton : TemplatedControl
 {
-    private Popup? _popup;
-
     public static readonly StyledProperty<string?> HeaderProperty =
-        AvaloniaProperty.Register<RibbonDropDownButton, string?>(nameof(Header));
+        AvaloniaProperty.Register<RibbonButton, string?>(nameof(Header));
 
     public static readonly StyledProperty<Geometry?> IconDataProperty =
-        AvaloniaProperty.Register<RibbonDropDownButton, Geometry?>(nameof(IconData));
+        AvaloniaProperty.Register<RibbonButton, Geometry?>(nameof(IconData));
 
-    public static readonly StyledProperty<bool> IsDropDownOpenProperty =
-        AvaloniaProperty.Register<RibbonDropDownButton, bool>(
-            nameof(IsDropDownOpen),
-            defaultBindingMode: BindingMode.TwoWay);
+    public static readonly StyledProperty<ICommand?> CommandProperty =
+        AvaloniaProperty.Register<RibbonButton, ICommand?>(nameof(Command));
 
-    [Content]
-    public AvaloniaList<RibbonMenuItem> Items { get; } = new();
+    public static readonly StyledProperty<object?> CommandParameterProperty =
+        AvaloniaProperty.Register<RibbonButton, object?>(nameof(CommandParameter));
 
     public string? Header
     {
@@ -39,24 +32,28 @@ public class RibbonDropDownButton : TemplatedControl
         set => SetValue(IconDataProperty, value);
     }
 
-    public bool IsDropDownOpen
+    public ICommand? Command
     {
-        get => GetValue(IsDropDownOpenProperty);
-        set => SetValue(IsDropDownOpenProperty, value);
+        get => GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
     }
 
-    protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
+    public object? CommandParameter
     {
-        base.OnApplyTemplate(e);
-        _popup = e.NameScope.Find<Popup>("PART_Popup");
+        get => GetValue(CommandParameterProperty);
+        set => SetValue(CommandParameterProperty, value);
     }
 
     protected override void OnPointerPressed(PointerPressedEventArgs e)
     {
         base.OnPointerPressed(e);
         PseudoClasses.Add(":pressed");
-        IsDropDownOpen = !IsDropDownOpen;
-        e.Handled = true;
+
+        if (Command is { } command && command.CanExecute(CommandParameter))
+        {
+            command.Execute(CommandParameter);
+            e.Handled = true;
+        }
     }
 
     protected override void OnPointerReleased(PointerReleasedEventArgs e)

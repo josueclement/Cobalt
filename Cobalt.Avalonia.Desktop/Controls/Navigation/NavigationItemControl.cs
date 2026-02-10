@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Navigation;
 
 public class NavigationItemControl : TemplatedControl
 {

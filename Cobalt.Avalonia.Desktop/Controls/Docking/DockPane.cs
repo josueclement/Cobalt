@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Metadata;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Docking;
 
 public class DockPane : TemplatedControl
 {

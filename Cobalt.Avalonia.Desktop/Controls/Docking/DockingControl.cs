@@ -10,7 +10,7 @@ using global::Avalonia.Media;
 using Avalonia.Metadata;
 using Avalonia.VisualTree;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Docking;
 
 public class DockingControl : TemplatedControl
 {

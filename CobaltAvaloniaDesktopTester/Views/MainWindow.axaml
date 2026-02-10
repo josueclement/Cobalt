@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:CobaltAvaloniaDesktopTester.ViewModels"
         xmlns:controls="using:Cobalt.Avalonia.Desktop.Controls"
+        xmlns:nav="using:Cobalt.Avalonia.Desktop.Controls.Navigation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -27,9 +28,9 @@
             </StackPanel>
 
             <!-- Existing navigation and content -->
-            <controls:NavigationControl DockPanel.Dock="Left"
-                                        Items="{Binding Navigation.Items}"
-                                        SelectedItem="{Binding Navigation.SelectedItem}" />
+            <nav:NavigationControl DockPanel.Dock="Left"
+                                   Items="{Binding Navigation.Items}"
+                                   SelectedItem="{Binding Navigation.SelectedItem}" />
             <ContentControl Content="{Binding Navigation.CurrentPage}"
                             Margin="0" />
         </DockPanel>

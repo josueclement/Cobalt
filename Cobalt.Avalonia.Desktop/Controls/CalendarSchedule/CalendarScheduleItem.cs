@@ -1,7 +1,7 @@
 using System;
 using global::Avalonia.Media;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.CalendarSchedule;
 
 public class CalendarScheduleItem
 {

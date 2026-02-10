@@ -5,7 +5,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Metadata;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Ribbon;
 
 public class RibbonControl : TemplatedControl
 {

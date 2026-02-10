@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using global::Avalonia.Media;
-using Cobalt.Avalonia.Desktop.Controls;
+using Cobalt.Avalonia.Desktop.Controls.CalendarSchedule;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Cobalt.Avalonia.Desktop.Controls;
+using Cobalt.Avalonia.Desktop.Controls.Navigation;
 
 namespace Cobalt.Avalonia.Desktop.Services;
 

@@ -2,7 +2,7 @@ using System.Windows.Input;
 using Avalonia;
 using global::Avalonia.Media;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace Cobalt.Avalonia.Desktop.Controls.Ribbon;
 
 public class RibbonMenuItem : AvaloniaObject
 {

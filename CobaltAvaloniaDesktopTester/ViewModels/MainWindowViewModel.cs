@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Media;
 using Avalonia.Styling;
 using CommunityToolkit.Mvvm.Input;
-using Cobalt.Avalonia.Desktop.Controls;
+using Cobalt.Avalonia.Desktop.Controls.Navigation;
 using Cobalt.Avalonia.Desktop.Services;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
