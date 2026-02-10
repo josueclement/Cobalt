@@ -18,6 +18,10 @@
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonGroup.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonTab.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockPane.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockTabGroup.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockSplitContainer.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/DockingControl.axaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
