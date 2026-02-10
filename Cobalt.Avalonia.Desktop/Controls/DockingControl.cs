@@ -206,10 +206,17 @@ public class DockingControl : TemplatedControl
         if (sourceGroup == targetGroup && sourceGroup.Panes.Count <= 1)
             return;
 
-        // Remove pane from source
+        // Switch selection away first so the ContentPresenter releases the
+        // pane from the logical tree before we re-parent it.
+        if (sourceGroup.SelectedPane == pane)
+        {
+            var idx = sourceGroup.Panes.IndexOf(pane);
+            sourceGroup.SelectedPane = sourceGroup.Panes.Count > 1
+                ? sourceGroup.Panes[idx == 0 ? 1 : idx - 1]
+                : null;
+        }
+
         sourceGroup.Panes.Remove(pane);
-        if (sourceGroup.SelectedPane == null && sourceGroup.Panes.Count > 0)
-            sourceGroup.SelectedPane = sourceGroup.Panes[0];
 
         if (position == DockPosition.Center)
         {
@@ -397,9 +404,15 @@ public class DockingControl : TemplatedControl
         {
             if (group.Panes.Contains(pane))
             {
+                if (group.SelectedPane == pane)
+                {
+                    var idx = group.Panes.IndexOf(pane);
+                    group.SelectedPane = group.Panes.Count > 1
+                        ? group.Panes[idx == 0 ? 1 : idx - 1]
+                        : null;
+                }
+
                 group.Panes.Remove(pane);
-                if (group.SelectedPane == null && group.Panes.Count > 0)
-                    group.SelectedPane = group.Panes[0];
 
                 if (group.Panes.Count == 0)
                     CollapseEmptyGroup(group);
