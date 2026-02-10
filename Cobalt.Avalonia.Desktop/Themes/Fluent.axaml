@@ -12,6 +12,12 @@
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/SettingsCardExpander.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/CalendarScheduleControl.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonButton.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonToggleButton.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonDropDownButton.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonGroup.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonTab.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/RibbonControl.axaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
