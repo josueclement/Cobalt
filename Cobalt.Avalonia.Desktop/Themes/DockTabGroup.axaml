@@ -69,9 +69,10 @@
                         </ListBox.Styles>
                     </ListBox>
 
-                    <!-- Content area -->
+                    <!-- Content area: bind to PaneContent to avoid DockPane having two logical parents
+                         (ListBoxItem + this ContentPresenter) which causes crashes on tree restructuring -->
                     <Border Background="{DynamicResource CobaltBackgroundBrush}" Padding="0">
-                        <ContentPresenter Content="{Binding SelectedPane, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ContentPresenter Content="{Binding SelectedPane.PaneContent, RelativeSource={RelativeSource TemplatedParent}}" />
                     </Border>
                 </DockPanel>
             </ControlTemplate>
