@@ -10,11 +10,13 @@
     </Design.PreviewWith>
 
     <ControlTheme x:Key="{x:Type controls:NavigationItemControl}" TargetType="controls:NavigationItemControl">
+        <Setter Property="Margin" Value="1" />
         <Setter Property="Template">
             <ControlTemplate>
                 <StackPanel Orientation="Vertical"
                            HorizontalAlignment="Center"
-                           Spacing="4">
+                           Spacing="4"
+                           Margin="{TemplateBinding Margin}">
                     <PathIcon Data="{TemplateBinding IconData}"
                              Width="24"
                              Height="24"
