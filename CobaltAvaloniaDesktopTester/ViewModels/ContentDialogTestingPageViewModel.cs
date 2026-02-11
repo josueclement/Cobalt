@@ -61,4 +61,39 @@ public partial class ContentDialogTestingPageViewModel : ViewModelBase
 
         LastResult = $"Complex dialog result: {result}";
     }
+
+    [RelayCommand]
+    private async Task ShowPasswordDialog()
+    {
+        var passwordBox = new TextBox
+        {
+            PasswordChar = '\u2022',
+            Watermark = "Enter your password",
+            Width = 300
+        };
+
+        var result = await _dialogService.ShowAsync(dialog =>
+        {
+            dialog.Title = "Password Required";
+            dialog.Content = new StackPanel
+            {
+                Spacing = 12,
+                Children =
+                {
+                    new TextBlock
+                    {
+                        Text = "Please enter your password:",
+                        TextWrapping = TextWrapping.Wrap
+                    },
+                    passwordBox
+                }
+            };
+            dialog.PrimaryButtonText = "OK";
+            dialog.CloseButtonText = "Cancel";
+        });
+
+        LastResult = result == Cobalt.Avalonia.Desktop.Controls.DialogResult.Primary
+            ? $"Password entered: {passwordBox.Text}"
+            : "Password dialog cancelled.";
+    }
 }

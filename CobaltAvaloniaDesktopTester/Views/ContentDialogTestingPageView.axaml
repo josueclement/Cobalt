@@ -19,6 +19,8 @@
                     Command="{Binding ShowSimpleDialogCommand}" />
             <Button Content="Show Complex Dialog"
                     Command="{Binding ShowComplexDialogCommand}" />
+            <Button Content="Ask Password"
+                    Command="{Binding ShowPasswordDialogCommand}" />
         </StackPanel>
 
         <TextBlock Text="{Binding LastResult}"
