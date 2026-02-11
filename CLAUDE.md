@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Avalonia desktop GUI for the [Enigma.Cryptography](https://github.com/josueclement/Enigma) library.
+**Cobalt.Avalonia.Desktop** is a reusable Avalonia control library. **CobaltAvaloniaDesktopTester** is the companion WinExe app used to develop and test the controls.
 
 ## Build & Run
 
 ```bash
-dotnet build          # Build the solution (both projects)
-dotnet run            # Run from Enigma.Avalonia/ directory
+dotnet build                                        # Build the solution (both projects)
+dotnet run --project CobaltAvaloniaDesktopTester     # Run the tester app
 ```
 
 No test projects exist yet.
@@ -19,14 +19,14 @@ No test projects exist yet.
 
 - **Framework**: Avalonia 11.3 with FluentTheme (Dark variant), .NET 10.0
 - **MVVM**: CommunityToolkit.Mvvm with compiled bindings (`AvaloniaUseCompiledBindingsByDefault=true`)
-- **Crypto**: Enigma.Cryptography (BouncyCastle-based)
+- **Icons**: PhosphorIconsAvalonia — use `IconService.CreateGeometry(Icon.xxx, IconType.regular)` for navigation item icons
 
 ### Two-Project Structure
 
-**Enigma.Avalonia** — Main application (WinExe). Contains ViewModels, Views, and app entry point.
+**CobaltAvaloniaDesktopTester** — Tester application (WinExe). Contains ViewModels, Views, and app entry point. Depends on CommunityToolkit.Mvvm, Enigma.Cryptography, LiveChartsCore, PhosphorIconsAvalonia.
 
 **Cobalt.Avalonia.Desktop** — Reusable control library (no CommunityToolkit dependency). Contains:
-- `Controls/` — TemplatedControls: `NavigationControl`, `NavigationItemControl`, `ContentDialog`, `OverlayControl`, `InfoBarControl`, `SettingsCardControl`, `SettingsCardExpander`, `CalendarScheduleControl`
+- `Controls/` — TemplatedControls organized in subdirectories: `Navigation/`, `Docking/`, `Ribbon/`, `Editors/`, `CalendarSchedule/`, plus top-level `ContentDialog`, `OverlayControl`, `InfoBarControl`, `SettingsCardControl`, `SettingsCardExpander`
 - `Services/` — Each service control has a matching service + interface: `NavigationService`, `ContentDialogService`, `OverlayService`, `InfoBarService`
 - `Themes/` — Control templates (AXAML). Composed via `Fluent.axaml` and included in App.axaml as `avares://Cobalt.Avalonia.Desktop/Themes/Fluent.axaml`
 
@@ -45,6 +45,6 @@ Colors are defined in `Cobalt.Avalonia.Desktop/Themes/Colors.axaml` using `Resou
 
 ### Gotchas
 
-- **Namespace collision**: Both `Enigma.Avalonia` and `Cobalt.Avalonia.Desktop` namespaces cause `Avalonia.Media` (and similar) to resolve incorrectly. Use `global::Avalonia.Media` or `using global::Avalonia.Media;` in C# files that need Avalonia sub-namespaces.
+- **Namespace collision**: The `Cobalt.Avalonia.Desktop` namespace causes `Avalonia.Media` (and similar) to resolve incorrectly as `Cobalt.Avalonia.Media`. Use `global::Avalonia.Media` or `using global::Avalonia.Media;` in C# files that need Avalonia sub-namespaces.
 - **Compiled bindings require `x:DataType`**: Every UserControl/DataTemplate using `{Binding}` needs an explicit `x:DataType` or the build fails with AVLN2100.
 - **Hit testing requires a Background**: A `Border` or `Panel` with no `Background` (null) is invisible to pointer events. Set `Background="Transparent"` on elements that need to receive clicks/hover across their full area.
