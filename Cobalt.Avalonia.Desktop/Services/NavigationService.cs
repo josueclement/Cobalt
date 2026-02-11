@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Avalonia.Controls;
 using Cobalt.Avalonia.Desktop.Controls.Navigation;
 
 namespace Cobalt.Avalonia.Desktop.Services;
@@ -50,7 +51,7 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         FooterItems = footerItems;
     }
 
-    public void NavigateTo(object page)
+    public void NavigateTo(Control page)
     {
         _isNavigating = true;
         try
@@ -66,7 +67,7 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
 
     public void NavigateToItem(NavigationItemControl item) => SelectedItem = item;
 
-    public Task NavigateToAsync(object page)
+    public Task NavigateToAsync(Control page)
     {
         NavigateTo(page);
         return Task.CompletedTask;
@@ -78,7 +79,7 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         return Task.CompletedTask;
     }
 
-    private NavigationItemControl? FindItemForPage(object page)
+    private NavigationItemControl? FindItemForPage(Control page)
     {
         var pageType = page.GetType();
 

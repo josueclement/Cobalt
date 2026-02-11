@@ -1,6 +1,7 @@
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia;
+using Avalonia.Controls;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Navigation;
 
@@ -12,8 +13,8 @@ public class NavigationItemControl : TemplatedControl
     public static readonly StyledProperty<Geometry?> IconDataProperty =
         AvaloniaProperty.Register<NavigationItemControl, Geometry?>(nameof(IconData));
 
-    public static readonly StyledProperty<Func<object>?> FactoryProperty =
-        AvaloniaProperty.Register<NavigationItemControl, Func<object>?>(nameof(Factory));
+    public static readonly StyledProperty<Func<Control>?> FactoryProperty =
+        AvaloniaProperty.Register<NavigationItemControl, Func<Control>?>(nameof(Factory));
 
     public static readonly StyledProperty<Type?> PageTypeProperty =
         AvaloniaProperty.Register<NavigationItemControl, Type?>(nameof(PageType));
@@ -30,7 +31,7 @@ public class NavigationItemControl : TemplatedControl
         set => SetValue(IconDataProperty, value);
     }
 
-    public Func<object>? Factory
+    public Func<Control>? Factory
     {
         get => GetValue(FactoryProperty);
         set => SetValue(FactoryProperty, value);

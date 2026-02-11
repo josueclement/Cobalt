@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Services;
+using CobaltAvaloniaDesktopTester.Views;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
@@ -19,11 +20,11 @@ public class NavigationTestingPageViewModel : ViewModelBase
 
     private void NavigateToSettings()
     {
-        _navigation.NavigateTo(new SettingsPageViewModel());
+        _navigation.NavigateTo(new SettingsPageView { DataContext = new SettingsPageViewModel() });
     }
 
     private void NavigateToDummy()
     {
-        _navigation.NavigateTo(new DummyPageViewModel());
+        _navigation.NavigateTo(new DummyPageView { DataContext = new DummyPageViewModel() });
     }
 }
