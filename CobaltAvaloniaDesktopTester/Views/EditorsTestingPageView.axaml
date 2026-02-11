@@ -92,6 +92,55 @@
                            Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
             </StackPanel>
 
+            <!-- MultiLineTextEditor -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="MultiLineTextEditor"
+                           FontSize="16"
+                           FontWeight="SemiBold" />
+                <editors:MultiLineTextEditor Title="Notes"
+                                             Watermark="Enter multi-line text..."
+                                             Text="{Binding MultiLineTextValue, Mode=TwoWay}" />
+                <editors:MultiLineTextEditor Title="With action"
+                                             Watermark="Type something..."
+                                             Text="{Binding MultiLineTextValue, Mode=TwoWay}"
+                                             Unit="md">
+                    <editors:MultiLineTextEditor.ActionContent>
+                        <Button Content="Format"
+                                Padding="6,2"
+                                FontSize="12" />
+                    </editors:MultiLineTextEditor.ActionContent>
+                </editors:MultiLineTextEditor>
+                <TextBlock Text="{Binding MultiLineTextValue, StringFormat='Bound value: {0}'}"
+                           FontSize="12"
+                           Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+            </StackPanel>
+
+            <!-- HexadecimalEditor -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="HexadecimalEditor"
+                           FontSize="16"
+                           FontWeight="SemiBold" />
+                <editors:HexadecimalEditor Title="Raw bytes (hex)"
+                                           Watermark="Enter hex bytes (e.g. 0A FF 1B)..."
+                                           Value="{Binding HexValue, Mode=TwoWay}" />
+                <TextBlock Text="{Binding HexValue.Length, StringFormat='Bound value: {0} bytes', FallbackValue='Bound value: (null)'}"
+                           FontSize="12"
+                           Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+            </StackPanel>
+
+            <!-- Base64Editor -->
+            <StackPanel Spacing="8">
+                <TextBlock Text="Base64Editor"
+                           FontSize="16"
+                           FontWeight="SemiBold" />
+                <editors:Base64Editor Title="Encoded data"
+                                      Watermark="Enter Base64 string..."
+                                      Value="{Binding Base64Value, Mode=TwoWay}" />
+                <TextBlock Text="{Binding Base64Value.Length, StringFormat='Bound value: {0} bytes', FallbackValue='Bound value: (null)'}"
+                           FontSize="12"
+                           Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+            </StackPanel>
+
         </StackPanel>
     </ScrollViewer>
 </UserControl>
