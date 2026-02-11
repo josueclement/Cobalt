@@ -11,8 +11,11 @@ public partial class ContentDialogTestingPageViewModel : ViewModelBase
 {
     private readonly IContentDialogService _dialogService;
 
-    [ObservableProperty]
-    private string? _lastResult;
+    public string? LastResult
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
 
     public ContentDialogTestingPageViewModel(IContentDialogService dialogService)
     {

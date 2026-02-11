@@ -12,8 +12,11 @@ public partial class OverlayTestingPageViewModel : ViewModelBase
 {
     private readonly IOverlayService _overlayService;
 
-    [ObservableProperty]
-    private string? _lastResult;
+    public string? LastResult
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(RunSimpleTaskCommand))]

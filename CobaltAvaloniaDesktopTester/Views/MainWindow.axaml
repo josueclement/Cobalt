@@ -32,7 +32,7 @@
                                    Items="{Binding Navigation.Items}"
                                    FooterItems="{Binding Navigation.FooterItems}"
                                    SelectedItem="{Binding Navigation.SelectedItem}"
-                                   Logo="{Binding Logo}" />
+                                    />
             <ContentControl Content="{Binding Navigation.CurrentPage}"
                             Margin="0" />
         </DockPanel>

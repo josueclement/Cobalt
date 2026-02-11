@@ -5,8 +5,11 @@ namespace CobaltAvaloniaDesktopTester.ViewModels;
 
 public partial class SettingsPageViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private string? _lastAction;
+    public string? LastAction
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
 
     [RelayCommand]
     private void CardClicked(string? parameter)

@@ -5,14 +5,23 @@ namespace CobaltAvaloniaDesktopTester.ViewModels;
 
 public partial class RibbonTestingPageViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private string _statusText = "Ready";
+    public string StatusText
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = "Ready";
 
-    [ObservableProperty]
-    private bool _isBoldActive;
+    public bool IsBoldActive
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
 
-    [ObservableProperty]
-    private bool _isItalicActive;
+    public bool IsItalicActive
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
 
     [RelayCommand]
     private void New() => StatusText = "New file created";

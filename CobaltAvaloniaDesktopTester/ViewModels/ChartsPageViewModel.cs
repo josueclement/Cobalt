@@ -9,20 +9,35 @@ namespace CobaltAvaloniaDesktopTester.ViewModels;
 
 public partial class ChartsPageViewModel : ViewModelBase
 {
-    [ObservableProperty]
-    private ISeries[] _lineSeries = [];
-
-    [ObservableProperty]
-    private ISeries[] _columnSeries = [];
-
-    [ObservableProperty]
-    private ISeries[] _pieSeries = [];
-
-    [ObservableProperty]
-    private Axis[] _xAxes = [];
-
-    [ObservableProperty]
-    private Axis[] _yAxes = [];
+    public ISeries[] LineSeries
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+    
+    public ISeries[] ColumnSeries
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+    
+    public ISeries[] PieSeries
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+    
+    public Axis[] XAxes
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+    
+    public Axis[] YAxes
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
 
     public ChartsPageViewModel()
     {
