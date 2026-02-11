@@ -3,22 +3,25 @@ using Cobalt.Avalonia.Desktop.Services;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
-public partial class NavigationTestingPageViewModel : ViewModelBase
+public class NavigationTestingPageViewModel : ViewModelBase
 {
-    private readonly NavigationService _navigation;
-
     public NavigationTestingPageViewModel(NavigationService navigation)
     {
         _navigation = navigation;
+        NavigateToSettingsCommand = new RelayCommand(NavigateToSettings);
+        NavigateToDummyCommand = new RelayCommand(NavigateToDummy);
     }
 
-    [RelayCommand]
+    private readonly NavigationService _navigation;
+
+    public IRelayCommand NavigateToSettingsCommand { get; }
+    public IRelayCommand NavigateToDummyCommand { get; }
+
     private void NavigateToSettings()
     {
         _navigation.NavigateTo(new SettingsPageViewModel());
     }
 
-    [RelayCommand]
     private void NavigateToDummy()
     {
         _navigation.NavigateTo(new DummyPageViewModel());

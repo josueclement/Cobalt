@@ -1,14 +1,21 @@
 using System;
 using Avalonia;
 using Avalonia.Styling;
-using CommunityToolkit.Mvvm.ComponentModel;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
-public partial class ChartsPageViewModel : ViewModelBase
+public class ChartsPageViewModel : ViewModelBase
 {
+    public ChartsPageViewModel()
+    {
+        BuildSeries();
+
+        if (Application.Current is { } app)
+            app.ActualThemeVariantChanged += OnThemeChanged;
+    }
+    
     public ISeries[] LineSeries
     {
         get;
@@ -37,14 +44,6 @@ public partial class ChartsPageViewModel : ViewModelBase
     {
         get;
         set => SetProperty(ref field, value);
-    }
-
-    public ChartsPageViewModel()
-    {
-        BuildSeries();
-
-        if (Application.Current is { } app)
-            app.ActualThemeVariantChanged += OnThemeChanged;
     }
 
     private void OnThemeChanged(object? sender, EventArgs e)

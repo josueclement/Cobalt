@@ -7,19 +7,14 @@ using Cobalt.Avalonia.Desktop.Services;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
-public partial class MainWindowViewModel : ViewModelBase
+public class MainWindowViewModel : ViewModelBase
 {
-    public NavigationService Navigation { get; }
-    public ContentDialogService DialogService { get; }
-    public OverlayService OverlayService { get; }
-    public InfoBarService InfoBarService { get; }
-    public object Logo { get; }
-
     public MainWindowViewModel()
     {
         DialogService = new ContentDialogService();
         OverlayService = new OverlayService();
         InfoBarService = new InfoBarService();
+        ToggleThemeCommand = new RelayCommand(ToggleTheme);
 
         var items = new[]
         {
@@ -118,7 +113,14 @@ public partial class MainWindowViewModel : ViewModelBase
         Navigation.NavigateToItem(items[0]);
     }
 
-    [RelayCommand]
+    public NavigationService Navigation { get; }
+    public ContentDialogService DialogService { get; }
+    public OverlayService OverlayService { get; }
+    public InfoBarService InfoBarService { get; }
+    public object Logo { get; }
+
+    public IRelayCommand ToggleThemeCommand { get; }
+
     private void ToggleTheme()
     {
         var app = Application.Current;

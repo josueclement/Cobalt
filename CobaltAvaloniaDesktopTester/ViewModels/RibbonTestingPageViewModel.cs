@@ -3,8 +3,28 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
-public partial class RibbonTestingPageViewModel : ViewModelBase
+public class RibbonTestingPageViewModel : ViewModelBase
 {
+    public RibbonTestingPageViewModel()
+    {
+        NewCommand = new RelayCommand(New);
+        OpenCommand = new RelayCommand(Open);
+        SaveCommand = new RelayCommand(Save);
+        CutCommand = new RelayCommand(Cut);
+        CopyCommand = new RelayCommand(Copy);
+        PasteCommand = new RelayCommand(Paste);
+        UndoCommand = new RelayCommand(Undo);
+        RedoCommand = new RelayCommand(Redo);
+        ToggleBoldCommand = new RelayCommand(ToggleBold);
+        ToggleItalicCommand = new RelayCommand(ToggleItalic);
+        InsertImageCommand = new RelayCommand(InsertImage);
+        InsertTableCommand = new RelayCommand(InsertTable);
+        InsertLinkCommand = new RelayCommand(InsertLink);
+        ExportPdfCommand = new RelayCommand(ExportPdf);
+        ExportCsvCommand = new RelayCommand(ExportCsv);
+        ExportJsonCommand = new RelayCommand(ExportJson);
+    }
+
     public string StatusText
     {
         get;
@@ -23,51 +43,52 @@ public partial class RibbonTestingPageViewModel : ViewModelBase
         set => SetProperty(ref field, value);
     }
 
-    [RelayCommand]
+    public IRelayCommand NewCommand { get; }
+    public IRelayCommand OpenCommand { get; }
+    public IRelayCommand SaveCommand { get; }
+    public IRelayCommand CutCommand { get; }
+    public IRelayCommand CopyCommand { get; }
+    public IRelayCommand PasteCommand { get; }
+    public IRelayCommand UndoCommand { get; }
+    public IRelayCommand RedoCommand { get; }
+    public IRelayCommand ToggleBoldCommand { get; }
+    public IRelayCommand ToggleItalicCommand { get; }
+    public IRelayCommand InsertImageCommand { get; }
+    public IRelayCommand InsertTableCommand { get; }
+    public IRelayCommand InsertLinkCommand { get; }
+    public IRelayCommand ExportPdfCommand { get; }
+    public IRelayCommand ExportCsvCommand { get; }
+    public IRelayCommand ExportJsonCommand { get; }
+
     private void New() => StatusText = "New file created";
 
-    [RelayCommand]
     private void Open() => StatusText = "Open file dialog";
 
-    [RelayCommand]
     private void Save() => StatusText = "File saved";
 
-    [RelayCommand]
     private void Cut() => StatusText = "Cut to clipboard";
 
-    [RelayCommand]
     private void Copy() => StatusText = "Copied to clipboard";
 
-    [RelayCommand]
     private void Paste() => StatusText = "Pasted from clipboard";
 
-    [RelayCommand]
     private void Undo() => StatusText = "Undo";
 
-    [RelayCommand]
     private void Redo() => StatusText = "Redo";
 
-    [RelayCommand]
     private void ToggleBold() => StatusText = IsBoldActive ? "Bold enabled" : "Bold disabled";
 
-    [RelayCommand]
     private void ToggleItalic() => StatusText = IsItalicActive ? "Italic enabled" : "Italic disabled";
 
-    [RelayCommand]
     private void InsertImage() => StatusText = "Insert image";
 
-    [RelayCommand]
     private void InsertTable() => StatusText = "Insert table";
 
-    [RelayCommand]
     private void InsertLink() => StatusText = "Insert link";
 
-    [RelayCommand]
     private void ExportPdf() => StatusText = "Exported as PDF";
 
-    [RelayCommand]
     private void ExportCsv() => StatusText = "Exported as CSV";
 
-    [RelayCommand]
     private void ExportJson() => StatusText = "Exported as JSON";
 }

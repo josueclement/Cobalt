@@ -7,8 +7,6 @@ namespace CobaltAvaloniaDesktopTester.ViewModels;
 
 public class SchedulePageViewModel : ViewModelBase
 {
-    public IReadOnlyList<CalendarScheduleItem> Items { get; }
-
     public SchedulePageViewModel()
     {
         var today = DateTimeOffset.Now.Date;
@@ -98,4 +96,6 @@ public class SchedulePageViewModel : ViewModelBase
             },
         };
     }
+    
+    public IReadOnlyList<CalendarScheduleItem> Items { get; }
 }

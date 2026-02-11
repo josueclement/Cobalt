@@ -6,8 +6,18 @@ using Cobalt.Avalonia.Desktop.Services;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
-public partial class InfoBarTestingPageViewModel : ViewModelBase
+public class InfoBarTestingPageViewModel : ViewModelBase
 {
+    public InfoBarTestingPageViewModel(IInfoBarService infoBarService)
+    {
+        _infoBarService = infoBarService;
+        ShowInfoCommand = new AsyncRelayCommand(ShowInfo);
+        ShowSuccessCommand = new AsyncRelayCommand(ShowSuccess);
+        ShowWarningCommand = new AsyncRelayCommand(ShowWarning);
+        ShowErrorCommand = new AsyncRelayCommand(ShowError);
+        CloseCommand = new RelayCommand(Close);
+    }
+
     private readonly IInfoBarService _infoBarService;
 
     public string? LastResult
@@ -16,12 +26,12 @@ public partial class InfoBarTestingPageViewModel : ViewModelBase
         set => SetProperty(ref field, value);
     }
 
-    public InfoBarTestingPageViewModel(IInfoBarService infoBarService)
-    {
-        _infoBarService = infoBarService;
-    }
+    public IAsyncRelayCommand ShowInfoCommand { get; }
+    public IAsyncRelayCommand ShowSuccessCommand { get; }
+    public IAsyncRelayCommand ShowWarningCommand { get; }
+    public IAsyncRelayCommand ShowErrorCommand { get; }
+    public IRelayCommand CloseCommand { get; }
 
-    [RelayCommand]
     private async Task ShowInfo()
     {
         await _infoBarService.ShowAsync(o =>
@@ -33,7 +43,6 @@ public partial class InfoBarTestingPageViewModel : ViewModelBase
         LastResult = "Info closed";
     }
 
-    [RelayCommand]
     private async Task ShowSuccess()
     {
         await _infoBarService.ShowAsync(o =>
@@ -45,7 +54,6 @@ public partial class InfoBarTestingPageViewModel : ViewModelBase
         LastResult = "Success closed";
     }
 
-    [RelayCommand]
     private async Task ShowWarning()
     {
         await _infoBarService.ShowAsync(o =>
@@ -57,7 +65,6 @@ public partial class InfoBarTestingPageViewModel : ViewModelBase
         LastResult = "Warning closed";
     }
 
-    [RelayCommand]
     private async Task ShowError()
     {
         await _infoBarService.ShowAsync(o =>
@@ -69,7 +76,6 @@ public partial class InfoBarTestingPageViewModel : ViewModelBase
         LastResult = "Error closed";
     }
 
-    [RelayCommand]
     private void Close()
     {
         _infoBarService.Hide();

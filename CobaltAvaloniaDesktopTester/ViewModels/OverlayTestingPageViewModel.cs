@@ -8,8 +8,15 @@ using Cobalt.Avalonia.Desktop.Services;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
-public partial class OverlayTestingPageViewModel : ViewModelBase
+public class OverlayTestingPageViewModel : ViewModelBase
 {
+    public OverlayTestingPageViewModel(IOverlayService overlayService)
+    {
+        _overlayService = overlayService;
+        RunSimpleTaskCommand = new AsyncRelayCommand(RunSimpleTask, CanRunTask);
+        RunComplexTaskCommand = new AsyncRelayCommand(RunComplexTask, CanRunTask);
+    }
+
     private readonly IOverlayService _overlayService;
 
     public string? LastResult
@@ -18,19 +25,22 @@ public partial class OverlayTestingPageViewModel : ViewModelBase
         set => SetProperty(ref field, value);
     }
 
-    [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(RunSimpleTaskCommand))]
-    [NotifyCanExecuteChangedFor(nameof(RunComplexTaskCommand))]
-    private bool _isBusy;
-
-    public OverlayTestingPageViewModel(IOverlayService overlayService)
+    public bool IsBusy
     {
-        _overlayService = overlayService;
+        get;
+        private set
+        {
+            if (!SetProperty(ref field, value)) return;
+            RunSimpleTaskCommand.NotifyCanExecuteChanged();
+            RunComplexTaskCommand.NotifyCanExecuteChanged();
+        }
     }
+
+    public IAsyncRelayCommand RunSimpleTaskCommand { get; }
+    public IAsyncRelayCommand RunComplexTaskCommand { get; }
 
     private bool CanRunTask() => !IsBusy;
 
-    [RelayCommand(CanExecute = nameof(CanRunTask))]
     private async Task RunSimpleTask()
     {
         IsBusy = true;
@@ -99,7 +109,6 @@ public partial class OverlayTestingPageViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand(CanExecute = nameof(CanRunTask))]
     private async Task RunComplexTask()
     {
         IsBusy = true;

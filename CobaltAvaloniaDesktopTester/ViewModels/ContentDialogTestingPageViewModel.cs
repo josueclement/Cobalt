@@ -7,8 +7,16 @@ using Cobalt.Avalonia.Desktop.Services;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
-public partial class ContentDialogTestingPageViewModel : ViewModelBase
+public class ContentDialogTestingPageViewModel : ViewModelBase
 {
+    public ContentDialogTestingPageViewModel(IContentDialogService dialogService)
+    {
+        _dialogService = dialogService;
+        ShowSimpleDialogCommand = new AsyncRelayCommand(ShowSimpleDialog);
+        ShowComplexDialogCommand = new AsyncRelayCommand(ShowComplexDialog);
+        ShowPasswordDialogCommand = new AsyncRelayCommand(ShowPasswordDialog);
+    }
+
     private readonly IContentDialogService _dialogService;
 
     public string? LastResult
@@ -17,12 +25,10 @@ public partial class ContentDialogTestingPageViewModel : ViewModelBase
         set => SetProperty(ref field, value);
     }
 
-    public ContentDialogTestingPageViewModel(IContentDialogService dialogService)
-    {
-        _dialogService = dialogService;
-    }
+    public IAsyncRelayCommand ShowSimpleDialogCommand { get; }
+    public IAsyncRelayCommand ShowComplexDialogCommand { get; }
+    public IAsyncRelayCommand ShowPasswordDialogCommand { get; }
 
-    [RelayCommand]
     private async Task ShowSimpleDialog()
     {
         var result = await _dialogService.ShowMessageAsync(
@@ -33,7 +39,6 @@ public partial class ContentDialogTestingPageViewModel : ViewModelBase
         LastResult = $"Simple dialog result: {result}";
     }
 
-    [RelayCommand]
     private async Task ShowComplexDialog()
     {
         var result = await _dialogService.ShowAsync(dialog =>
@@ -65,7 +70,6 @@ public partial class ContentDialogTestingPageViewModel : ViewModelBase
         LastResult = $"Complex dialog result: {result}";
     }
 
-    [RelayCommand]
     private async Task ShowPasswordDialog()
     {
         var passwordBox = new TextBox
