@@ -15,36 +15,36 @@ public class ChartsPageViewModel : ViewModelBase
         if (Application.Current is { } app)
             app.ActualThemeVariantChanged += OnThemeChanged;
     }
-    
+
     public ISeries[] LineSeries
     {
         get;
         set => SetProperty(ref field, value);
-    }
-    
+    } = [];
+
     public ISeries[] ColumnSeries
     {
         get;
         set => SetProperty(ref field, value);
-    }
-    
+    } = [];
+
     public ISeries[] PieSeries
     {
         get;
         set => SetProperty(ref field, value);
-    }
-    
+    } = [];
+
     public Axis[] XAxes
     {
         get;
         set => SetProperty(ref field, value);
-    }
-    
+    } = [];
+
     public Axis[] YAxes
     {
         get;
         set => SetProperty(ref field, value);
-    }
+    } = [];
 
     private void OnThemeChanged(object? sender, EventArgs e)
     {
