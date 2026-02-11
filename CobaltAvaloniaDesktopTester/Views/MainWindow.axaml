@@ -30,7 +30,9 @@
             <!-- Existing navigation and content -->
             <nav:NavigationControl DockPanel.Dock="Left"
                                    Items="{Binding Navigation.Items}"
-                                   SelectedItem="{Binding Navigation.SelectedItem}" />
+                                   FooterItems="{Binding Navigation.FooterItems}"
+                                   SelectedItem="{Binding Navigation.SelectedItem}"
+                                   Logo="{Binding Logo}" />
             <ContentControl Content="{Binding Navigation.CurrentPage}"
                             Margin="0" />
         </DockPanel>

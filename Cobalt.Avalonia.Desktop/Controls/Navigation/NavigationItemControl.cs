@@ -15,6 +15,9 @@ public class NavigationItemControl : TemplatedControl
     public static readonly StyledProperty<Func<object>?> FactoryProperty =
         AvaloniaProperty.Register<NavigationItemControl, Func<object>?>(nameof(Factory));
 
+    public static readonly StyledProperty<Type?> PageTypeProperty =
+        AvaloniaProperty.Register<NavigationItemControl, Type?>(nameof(PageType));
+
     public string? Header
     {
         get => GetValue(HeaderProperty);
@@ -31,5 +34,11 @@ public class NavigationItemControl : TemplatedControl
     {
         get => GetValue(FactoryProperty);
         set => SetValue(FactoryProperty, value);
+    }
+
+    public Type? PageType
+    {
+        get => GetValue(PageTypeProperty);
+        set => SetValue(PageTypeProperty, value);
     }
 }

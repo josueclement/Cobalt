@@ -7,7 +7,9 @@ public interface INavigationService
     object? CurrentPage { get; }
     NavigationItemControl? SelectedItem { get; set; }
     IReadOnlyList<NavigationItemControl> Items { get; }
-    void NavigateTo(NavigationItemControl item);
-    Task NavigateToAsync(NavigationItemControl item);
-    Task NavigateToAsync(int index);
+    IReadOnlyList<NavigationItemControl>? FooterItems { get; }
+    void NavigateTo(object page);
+    void NavigateToItem(NavigationItemControl item);
+    Task NavigateToAsync(object page);
+    Task NavigateToItemAsync(int index);
 }

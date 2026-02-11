@@ -8,6 +8,7 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
 {
     private object? _currentPage;
     private NavigationItemControl? _selectedItem;
+    private bool _isNavigating;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -33,30 +34,70 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
             {
                 _selectedItem = value;
                 OnPropertyChanged();
-                CurrentPage = value?.Factory?.Invoke();
+
+                if (!_isNavigating)
+                    CurrentPage = value?.Factory?.Invoke();
             }
         }
     }
 
     public IReadOnlyList<NavigationItemControl> Items { get; }
+    public IReadOnlyList<NavigationItemControl>? FooterItems { get; }
 
-    public NavigationService(IReadOnlyList<NavigationItemControl> items)
+    public NavigationService(IReadOnlyList<NavigationItemControl> items, IReadOnlyList<NavigationItemControl>? footerItems = null)
     {
         Items = items;
+        FooterItems = footerItems;
     }
 
-    public void NavigateTo(NavigationItemControl item) => SelectedItem = item;
-
-    public Task NavigateToAsync(NavigationItemControl item)
+    public void NavigateTo(object page)
     {
-        NavigateTo(item);
+        _isNavigating = true;
+        try
+        {
+            CurrentPage = page;
+            SelectedItem = FindItemForPage(page);
+        }
+        finally
+        {
+            _isNavigating = false;
+        }
+    }
+
+    public void NavigateToItem(NavigationItemControl item) => SelectedItem = item;
+
+    public Task NavigateToAsync(object page)
+    {
+        NavigateTo(page);
         return Task.CompletedTask;
     }
 
-    public Task NavigateToAsync(int index)
+    public Task NavigateToItemAsync(int index)
     {
-        NavigateTo(Items[index]);
+        NavigateToItem(Items[index]);
         return Task.CompletedTask;
+    }
+
+    private NavigationItemControl? FindItemForPage(object page)
+    {
+        var pageType = page.GetType();
+
+        foreach (var item in Items)
+        {
+            if (item.PageType == pageType)
+                return item;
+        }
+
+        if (FooterItems != null)
+        {
+            foreach (var item in FooterItems)
+            {
+                if (item.PageType == pageType)
+                    return item;
+            }
+        }
+
+        return null;
     }
 
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
