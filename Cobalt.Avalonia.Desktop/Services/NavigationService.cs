@@ -53,7 +53,7 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         FooterItems = footerItems;
     }
 
-    public async Task NavigateTo(Control page)
+    public async Task NavigateToAsync(Control page)
     {
         if (!await _navigationLock.WaitAsync(0))
             return;
@@ -84,11 +84,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
     }
 
     public void NavigateToItem(NavigationItemControl item) => SelectedItem = item;
-
-    public async Task NavigateToAsync(Control page)
-    {
-        await NavigateTo(page);
-    }
 
     public Task NavigateToItemAsync(int index)
     {
@@ -186,18 +181,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
                 if (!allowNavigation)
                     return false; // View cancelled, don't check ViewModel
             }
-            else if (control is INavigationLifecycle syncView)
-            {
-                // Fallback to sync version (no cancellation support)
-                try
-                {
-                    syncView.OnDisappearing();
-                }
-                catch
-                {
-                    // Swallow exceptions as before
-                }
-            }
 
             // Check ViewModel (only if View allowed or had no opinion)
             if (allowNavigation && control.DataContext != null)
@@ -211,18 +194,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
                     catch
                     {
                         // Log exception but allow navigation
-                    }
-                }
-                else if (control.DataContext is INavigationLifecycle syncViewModel)
-                {
-                    // Fallback to sync version (no cancellation support)
-                    try
-                    {
-                        syncViewModel.OnDisappearing();
-                    }
-                    catch
-                    {
-                        // Swallow exceptions as before
                     }
                 }
             }
@@ -250,17 +221,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
                     // Log exception but continue
                 }
             }
-            else if (control is INavigationLifecycle syncView)
-            {
-                try
-                {
-                    syncView.OnAppearing();
-                }
-                catch
-                {
-                    // Swallow exceptions
-                }
-            }
 
             // Try ViewModel
             if (control.DataContext != null)
@@ -276,55 +236,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
                         // Log exception but continue
                     }
                 }
-                else if (control.DataContext is INavigationLifecycle syncViewModel)
-                {
-                    try
-                    {
-                        syncViewModel.OnAppearing();
-                    }
-                    catch
-                    {
-                        // Swallow exceptions
-                    }
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// Invokes a lifecycle method on both the page (if it's a Control) and its DataContext (ViewModel).
-    /// Handles null checks and exception swallowing to prevent lifecycle errors from breaking navigation.
-    /// </summary>
-    private void InvokeLifecycleMethod(object? page, Action<INavigationLifecycle> action)
-    {
-        if (page == null)
-            return;
-
-        // Try to invoke on the page itself (View)
-        if (page is INavigationLifecycle lifecyclePage)
-        {
-            try
-            {
-                action(lifecyclePage);
-            }
-            catch
-            {
-                // Swallow exceptions to prevent lifecycle errors from breaking navigation
-                // In production, consider logging here
-            }
-        }
-
-        // Try to invoke on the DataContext (ViewModel)
-        if (page is Control control && control.DataContext is INavigationLifecycle lifecycleViewModel)
-        {
-            try
-            {
-                action(lifecycleViewModel);
-            }
-            catch
-            {
-                // Swallow exceptions to prevent lifecycle errors from breaking navigation
-                // In production, consider logging here
             }
         }
     }

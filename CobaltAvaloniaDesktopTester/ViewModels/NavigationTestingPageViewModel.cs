@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Services;
 using CobaltAvaloniaDesktopTester.Views;
@@ -9,22 +10,22 @@ public class NavigationTestingPageViewModel : ViewModelBase
     public NavigationTestingPageViewModel(NavigationService navigation)
     {
         _navigation = navigation;
-        NavigateToSettingsCommand = new RelayCommand(NavigateToSettings);
-        NavigateToDummyCommand = new RelayCommand(NavigateToDummy);
+        NavigateToSettingsCommand = new AsyncRelayCommand(NavigateToSettings);
+        NavigateToDummyCommand = new AsyncRelayCommand(NavigateToDummy);
     }
 
     private readonly NavigationService _navigation;
 
-    public IRelayCommand NavigateToSettingsCommand { get; }
-    public IRelayCommand NavigateToDummyCommand { get; }
+    public IAsyncRelayCommand NavigateToSettingsCommand { get; }
+    public IAsyncRelayCommand NavigateToDummyCommand { get; }
 
-    private void NavigateToSettings()
+    private async Task NavigateToSettings()
     {
-        _navigation.NavigateTo(new SettingsPageView { DataContext = new SettingsPageViewModel() });
+        await _navigation.NavigateToAsync(new SettingsPageView { DataContext = new SettingsPageViewModel() });
     }
 
-    private void NavigateToDummy()
+    private async Task NavigateToDummy()
     {
-        _navigation.NavigateTo(new DummyPageView { DataContext = new DummyPageViewModel() });
+        await _navigation.NavigateToAsync(new DummyPageView { DataContext = new DummyPageViewModel() });
     }
 }
