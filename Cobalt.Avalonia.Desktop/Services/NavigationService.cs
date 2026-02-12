@@ -87,12 +87,9 @@ public class NavigationService(
 
         try
         {
-            var targetPage = targetItem?.Factory?.Invoke();
-
             if (CurrentPage is not null)
             {
-                // Check if the current page allows navigation (async)
-                bool allowed = await InvokeDisappearingAsync(CurrentPage);
+                var allowed = await InvokeDisappearingAsync(CurrentPage);
 
                 if (!allowed)
                 {
@@ -102,8 +99,7 @@ public class NavigationService(
                 }
             }
 
-            // Navigation allowed - _selectedItem is already set to targetItem from setter
-            CurrentPage = targetPage;
+            CurrentPage = targetItem?.Factory?.Invoke();
 
             // Call OnAppearing on the new page (async)
             if (CurrentPage is not null)
@@ -117,40 +113,28 @@ public class NavigationService(
 
     private async Task<bool> InvokeDisappearingAsync(Control page)
     {
-        var allowNavigation = true;
-
-        switch (page.DataContext)
+        try
         {
-            case null:
-                return true;
-            case INavigationLifecycleAsync asyncViewModel:
-                try
-                {
-                    allowNavigation = await asyncViewModel.OnDisappearingAsync();
-                }
-                catch
-                {
-                    // Log exception but allow navigation
-                }
-
-                break;
+            if (page.DataContext is INavigationLifecycleAsync nav)
+                return await nav.OnDisappearingAsync();
+            return true;
         }
-
-        return allowNavigation;
+        catch
+        {
+            return true;
+        }
     }
 
     private async Task InvokeAppearingAsync(Control page)
     {
-        if (page.DataContext is INavigationLifecycleAsync asyncViewModel)
+        try
         {
-            try
-            {
-                await asyncViewModel.OnAppearingAsync();
-            }
-            catch
-            {
-                // Log exception but continue
-            }
+            if (page.DataContext is INavigationLifecycleAsync nav)
+                await nav.OnAppearingAsync();
+        }
+        catch
+        {
+            // ignored
         }
     }
 }

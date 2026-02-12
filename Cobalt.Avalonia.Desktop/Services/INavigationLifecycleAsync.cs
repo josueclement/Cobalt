@@ -5,6 +5,8 @@ namespace Cobalt.Avalonia.Desktop.Services;
 /// Can be implemented by either page views (Controls) or their ViewModels.
 /// Takes precedence over INavigationLifecycle when both are implemented.
 /// </summary>
+// TODO: Rename to INavigationViewModel
+// TODO: Move to root and rename namespace
 public interface INavigationLifecycleAsync
 {
     /// <summary>
