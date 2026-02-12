@@ -126,7 +126,7 @@ public class MainWindowViewModel : ViewModelBase
         };
 
         Navigation = new NavigationService(items, footerItems);
-        Navigation.NavigateToItem(items[0]);
+        Navigation.NavigateToAsync(new GenerateKeysPageView{DataContext = new GenerateKeysPageViewModel()}).GetAwaiter().GetResult();
     }
 
     public NavigationService Navigation { get; }

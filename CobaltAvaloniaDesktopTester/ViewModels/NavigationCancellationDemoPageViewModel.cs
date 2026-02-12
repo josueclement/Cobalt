@@ -61,7 +61,7 @@ public partial class NavigationCancellationDemoPageViewModel : ViewModelBase, IN
     /// Called when user tries to navigate away from this page.
     /// Returns false to cancel navigation if there are unsaved changes and user chooses to keep editing.
     /// </summary>
-    public async Task<bool> OnDisappearingAsync(NavigationContext context)
+    public async Task<bool> OnDisappearingAsync()
     {
         if (!HasUnsavedChanges)
             return true; // No unsaved changes, allow navigation
