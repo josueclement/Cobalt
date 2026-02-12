@@ -8,7 +8,7 @@ using Cobalt.Avalonia.Desktop.Services;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
-public class ContentDialogTestingPageViewModel : ViewModelBase, INavigationLifecycle
+public class ContentDialogTestingPageViewModel : ViewModelBase
 {
     public ContentDialogTestingPageViewModel(IContentDialogService dialogService)
     {
@@ -103,20 +103,5 @@ public class ContentDialogTestingPageViewModel : ViewModelBase, INavigationLifec
         LastResult = result == Cobalt.Avalonia.Desktop.Controls.DialogResult.Primary
             ? $"Password entered: {passwordBox.Text}"
             : "Password dialog cancelled.";
-    }
-
-    public void OnAppearing()
-    {
-        // Refresh the last result when returning to this page
-        if (string.IsNullOrEmpty(LastResult))
-        {
-            LastResult = "Ready to show dialogs";
-        }
-        Debug.WriteLine("ContentDialogTestingPage appeared");
-    }
-
-    public void OnDisappearing()
-    {
-        Debug.WriteLine($"Leaving ContentDialogTesting page. Last result: {LastResult}");
     }
 }
