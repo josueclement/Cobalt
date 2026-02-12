@@ -1,8 +1,11 @@
 namespace Cobalt.Avalonia.Desktop.Services;
 
 /// <summary>
-/// Defines lifecycle methods for navigation pages.
+/// Defines synchronous lifecycle methods for navigation pages.
 /// Can be implemented by either page views (Controls) or their ViewModels.
+///
+/// For async operations or navigation cancellation support, implement
+/// INavigationLifecycleAsync instead, which takes precedence when both are present.
 /// </summary>
 public interface INavigationLifecycle
 {

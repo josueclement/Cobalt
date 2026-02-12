@@ -10,6 +10,7 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
     private object? _currentPage;
     private NavigationItemControl? _selectedItem;
     private bool _isNavigating;
+    private readonly SemaphoreSlim _navigationLock = new(1, 1);
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -20,14 +21,8 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         {
             if (_currentPage != value)
             {
-                // Call OnDisappearing on the OLD page (before the change)
-                InvokeLifecycleMethod(_currentPage, lifecycle => lifecycle.OnDisappearing());
-
                 _currentPage = value;
                 OnPropertyChanged();
-
-                // Call OnAppearing on the NEW page (after the change)
-                InvokeLifecycleMethod(_currentPage, lifecycle => lifecycle.OnAppearing());
             }
         }
     }
@@ -37,13 +32,10 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         get => _selectedItem;
         set
         {
-            if (_selectedItem != value)
+            if (_selectedItem != value && !_isNavigating)
             {
-                _selectedItem = value;
-                OnPropertyChanged();
-
-                if (!_isNavigating)
-                    CurrentPage = value?.Factory?.Invoke();
+                // Launch async navigation (fire-and-forget with proper error handling)
+                _ = TryNavigateToItemAsync(value);
             }
         }
     }
@@ -57,26 +49,41 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         FooterItems = footerItems;
     }
 
-    public void NavigateTo(Control page)
+    public async Task NavigateTo(Control page)
     {
-        _isNavigating = true;
+        if (!await _navigationLock.WaitAsync(0))
+            return;
+
         try
         {
+            _isNavigating = true;
+
+            var previousPage = _currentPage;
+            var context = new NavigationContext { TargetPage = page };
+
+            bool allowed = await InvokeDisappearingAsync(_currentPage, context);
+            if (!allowed)
+                return; // Navigation cancelled
+
             CurrentPage = page;
-            SelectedItem = FindItemForPage(page);
+
+            _selectedItem = FindItemForPage(page);
+            OnPropertyChanged(nameof(SelectedItem));
+
+            await InvokeAppearingAsync(_currentPage);
         }
         finally
         {
             _isNavigating = false;
+            _navigationLock.Release();
         }
     }
 
     public void NavigateToItem(NavigationItemControl item) => SelectedItem = item;
 
-    public Task NavigateToAsync(Control page)
+    public async Task NavigateToAsync(Control page)
     {
-        NavigateTo(page);
-        return Task.CompletedTask;
+        await NavigateTo(page);
     }
 
     public Task NavigateToItemAsync(int index)
@@ -105,6 +112,183 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         }
 
         return null;
+    }
+
+    private async Task TryNavigateToItemAsync(NavigationItemControl? targetItem)
+    {
+        // Prevent concurrent navigations
+        if (!await _navigationLock.WaitAsync(0))
+            return;
+
+        try
+        {
+            _isNavigating = true;
+
+            var previousItem = _selectedItem;
+            var previousPage = _currentPage;
+            var targetPage = targetItem?.Factory?.Invoke();
+
+            var context = new NavigationContext
+            {
+                TargetPage = targetPage,
+                TargetItem = targetItem
+            };
+
+            // Check if current page allows navigation (async)
+            bool allowed = await InvokeDisappearingAsync(_currentPage, context);
+
+            if (!allowed)
+            {
+                // Navigation cancelled - restore previous selection
+                _selectedItem = previousItem;
+                OnPropertyChanged(nameof(SelectedItem));
+                return;
+            }
+
+            // Navigation allowed - proceed
+            _selectedItem = targetItem;
+            OnPropertyChanged(nameof(SelectedItem));
+
+            CurrentPage = targetPage;
+
+            // Call OnAppearing on new page (async)
+            await InvokeAppearingAsync(_currentPage);
+        }
+        finally
+        {
+            _isNavigating = false;
+            _navigationLock.Release();
+        }
+    }
+
+    private async Task<bool> InvokeDisappearingAsync(object? page, NavigationContext context)
+    {
+        if (page == null)
+            return true; // Allow navigation from null page
+
+        bool allowNavigation = true;
+
+        // Check View first
+        if (page is Control control)
+        {
+            if (control is INavigationLifecycleAsync asyncView)
+            {
+                try
+                {
+                    allowNavigation = await asyncView.OnDisappearingAsync(context);
+                }
+                catch
+                {
+                    // Log exception but allow navigation (fail-safe)
+                    // Exception = unexpected state, proceed with caution
+                }
+
+                if (!allowNavigation)
+                    return false; // View cancelled, don't check ViewModel
+            }
+            else if (control is INavigationLifecycle syncView)
+            {
+                // Fallback to sync version (no cancellation support)
+                try
+                {
+                    syncView.OnDisappearing();
+                }
+                catch
+                {
+                    // Swallow exceptions as before
+                }
+            }
+
+            // Check ViewModel (only if View allowed or had no opinion)
+            if (allowNavigation && control.DataContext != null)
+            {
+                if (control.DataContext is INavigationLifecycleAsync asyncViewModel)
+                {
+                    try
+                    {
+                        allowNavigation = await asyncViewModel.OnDisappearingAsync(context);
+                    }
+                    catch
+                    {
+                        // Log exception but allow navigation
+                    }
+                }
+                else if (control.DataContext is INavigationLifecycle syncViewModel)
+                {
+                    // Fallback to sync version (no cancellation support)
+                    try
+                    {
+                        syncViewModel.OnDisappearing();
+                    }
+                    catch
+                    {
+                        // Swallow exceptions as before
+                    }
+                }
+            }
+        }
+
+        return allowNavigation;
+    }
+
+    private async Task InvokeAppearingAsync(object? page)
+    {
+        if (page == null)
+            return;
+
+        // Try View
+        if (page is Control control)
+        {
+            if (control is INavigationLifecycleAsync asyncView)
+            {
+                try
+                {
+                    await asyncView.OnAppearingAsync();
+                }
+                catch
+                {
+                    // Log exception but continue
+                }
+            }
+            else if (control is INavigationLifecycle syncView)
+            {
+                try
+                {
+                    syncView.OnAppearing();
+                }
+                catch
+                {
+                    // Swallow exceptions
+                }
+            }
+
+            // Try ViewModel
+            if (control.DataContext != null)
+            {
+                if (control.DataContext is INavigationLifecycleAsync asyncViewModel)
+                {
+                    try
+                    {
+                        await asyncViewModel.OnAppearingAsync();
+                    }
+                    catch
+                    {
+                        // Log exception but continue
+                    }
+                }
+                else if (control.DataContext is INavigationLifecycle syncViewModel)
+                {
+                    try
+                    {
+                        syncViewModel.OnAppearing();
+                    }
+                    catch
+                    {
+                        // Swallow exceptions
+                    }
+                }
+            }
+        }
     }
 
     /// <summary>
