@@ -12,9 +12,8 @@ public interface INavigationLifecycleAsync
     /// Return false to cancel the navigation.
     /// This is invoked BEFORE the CurrentPage property changes.
     /// </summary>
-    /// <param name="context">Context information about the navigation attempt</param>
     /// <returns>True to allow navigation, false to cancel it</returns>
-    Task<bool> OnDisappearingAsync(NavigationContext context);
+    Task<bool> OnDisappearingAsync();
 
     /// <summary>
     /// Called when the page has appeared and is now visible.

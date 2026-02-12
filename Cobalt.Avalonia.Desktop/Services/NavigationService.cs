@@ -38,11 +38,9 @@ public class NavigationService(
 
         try
         {
-            var context = new NavigationContext { TargetPage = page };
-
             if (CurrentPage is not null)
             {
-                var allowed = await InvokeDisappearingAsync(CurrentPage, context);
+                var allowed = await InvokeDisappearingAsync(CurrentPage);
                 if (!allowed)
                     return; // Navigation cancelled
             }
@@ -91,20 +89,14 @@ public class NavigationService(
         {
             var targetPage = targetItem?.Factory?.Invoke();
 
-            var context = new NavigationContext
-            {
-                TargetPage = targetPage,
-                TargetItem = targetItem
-            };
-
             if (CurrentPage is not null)
             {
-                // Check if current page allows navigation (async)
-                bool allowed = await InvokeDisappearingAsync(CurrentPage, context);
+                // Check if the current page allows navigation (async)
+                bool allowed = await InvokeDisappearingAsync(CurrentPage);
 
                 if (!allowed)
                 {
-                    // Navigation cancelled - restore previous selection
+                    // Navigation canceled - restore previous selection
                     SelectedItem = previousItem;
                     return;
                 }
@@ -113,7 +105,7 @@ public class NavigationService(
             // Navigation allowed - _selectedItem is already set to targetItem from setter
             CurrentPage = targetPage;
 
-            // Call OnAppearing on new page (async)
+            // Call OnAppearing on the new page (async)
             if (CurrentPage is not null)
                 await InvokeAppearingAsync(CurrentPage);
         }
@@ -123,7 +115,7 @@ public class NavigationService(
         }
     }
 
-    private async Task<bool> InvokeDisappearingAsync(Control page, NavigationContext context)
+    private async Task<bool> InvokeDisappearingAsync(Control page)
     {
         var allowNavigation = true;
 
@@ -134,7 +126,7 @@ public class NavigationService(
             case INavigationLifecycleAsync asyncViewModel:
                 try
                 {
-                    allowNavigation = await asyncViewModel.OnDisappearingAsync(context);
+                    allowNavigation = await asyncViewModel.OnDisappearingAsync();
                 }
                 catch
                 {
