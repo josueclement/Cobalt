@@ -12,6 +12,12 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
     private bool _isNavigating;
     private readonly SemaphoreSlim _navigationLock = new(1, 1);
 
+    public NavigationService(IReadOnlyList<NavigationItemControl> items, IReadOnlyList<NavigationItemControl>? footerItems = null)
+    {
+        Items = items;
+        FooterItems = footerItems;
+    }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public object? CurrentPage
@@ -47,12 +53,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
     public IReadOnlyList<NavigationItemControl> Items { get; }
     public IReadOnlyList<NavigationItemControl>? FooterItems { get; }
 
-    public NavigationService(IReadOnlyList<NavigationItemControl> items, IReadOnlyList<NavigationItemControl>? footerItems = null)
-    {
-        Items = items;
-        FooterItems = footerItems;
-    }
-
     public async Task NavigateToAsync(Control page)
     {
         if (!await _navigationLock.WaitAsync(0))
@@ -62,7 +62,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         {
             _isNavigating = true;
 
-            var previousPage = _currentPage;
             var context = new NavigationContext { TargetPage = page };
 
             bool allowed = await InvokeDisappearingAsync(_currentPage, context);
@@ -81,14 +80,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
             _isNavigating = false;
             _navigationLock.Release();
         }
-    }
-
-    public void NavigateToItem(NavigationItemControl item) => SelectedItem = item;
-
-    public Task NavigateToItemAsync(int index)
-    {
-        NavigateToItem(Items[index]);
-        return Task.CompletedTask;
     }
 
     private NavigationItemControl? FindItemForPage(Control page)
@@ -123,7 +114,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         {
             _isNavigating = true;
 
-            var previousPage = _currentPage;
             var targetPage = targetItem?.Factory?.Invoke();
 
             var context = new NavigationContext
