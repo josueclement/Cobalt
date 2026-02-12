@@ -115,7 +115,7 @@ public class NavigationService(
     {
         try
         {
-            if (page.DataContext is INavigationLifecycleAsync nav)
+            if (page.DataContext is INavigationViewModel nav)
                 return await nav.OnDisappearingAsync();
             return true;
         }
@@ -129,7 +129,7 @@ public class NavigationService(
     {
         try
         {
-            if (page.DataContext is INavigationLifecycleAsync nav)
+            if (page.DataContext is INavigationViewModel nav)
                 await nav.OnAppearingAsync();
         }
         catch

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Avalonia.Controls;
 using Avalonia.Media;
+using Cobalt.Avalonia.Desktop;
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Controls;
 using Cobalt.Avalonia.Desktop.Services;
@@ -12,7 +12,7 @@ namespace CobaltAvaloniaDesktopTester.ViewModels;
 /// Demonstrates navigation cancellation with INavigationLifecycleAsync.
 /// Shows a confirmation dialog when trying to navigate away with unsaved changes.
 /// </summary>
-public partial class NavigationCancellationDemoPageViewModel : ViewModelBase, INavigationLifecycleAsync
+public partial class NavigationCancellationDemoPageViewModel : ViewModelBase, INavigationViewModel
 {
     private readonly IContentDialogService _dialogService;
     private string _documentText = string.Empty;
