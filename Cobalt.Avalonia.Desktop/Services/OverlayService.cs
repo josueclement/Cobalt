@@ -11,7 +11,7 @@ public class OverlayService : IOverlayService
         _host = overlay;
     }
 
-    public void Show(Action<OverlayControl>? configure = null)
+    public Task ShowAsync(Action<OverlayControl>? configure = null)
     {
         if (_host is null)
             throw new InvalidOperationException("OverlayControl host has not been registered. Call RegisterHost first.");
@@ -19,6 +19,7 @@ public class OverlayService : IOverlayService
         ResetOverlay(_host);
         configure?.Invoke(_host);
         _host.IsOpen = true;
+        return Task.CompletedTask;
     }
 
     public void Update(Action<OverlayControl> configure)
@@ -29,10 +30,11 @@ public class OverlayService : IOverlayService
         configure(_host);
     }
 
-    public void Hide()
+    public Task HideAsync()
     {
         if (_host is not null)
             _host.IsOpen = false;
+        return Task.CompletedTask;
     }
 
     private static void ResetOverlay(OverlayControl overlay)

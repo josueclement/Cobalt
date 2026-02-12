@@ -15,7 +15,7 @@ public class InfoBarTestingPageViewModel : ViewModelBase
         ShowSuccessCommand = new AsyncRelayCommand(ShowSuccess);
         ShowWarningCommand = new AsyncRelayCommand(ShowWarning);
         ShowErrorCommand = new AsyncRelayCommand(ShowError);
-        CloseCommand = new RelayCommand(Close);
+        CloseCommand = new AsyncRelayCommand(Close);
     }
 
     private readonly IInfoBarService _infoBarService;
@@ -30,7 +30,7 @@ public class InfoBarTestingPageViewModel : ViewModelBase
     public IAsyncRelayCommand ShowSuccessCommand { get; }
     public IAsyncRelayCommand ShowWarningCommand { get; }
     public IAsyncRelayCommand ShowErrorCommand { get; }
-    public IRelayCommand CloseCommand { get; }
+    public IAsyncRelayCommand CloseCommand { get; }
 
     private async Task ShowInfo()
     {
@@ -76,8 +76,8 @@ public class InfoBarTestingPageViewModel : ViewModelBase
         LastResult = "Error closed";
     }
 
-    private void Close()
+    private async Task Close()
     {
-        _infoBarService.Hide();
+        await _infoBarService.HideAsync();
     }
 }

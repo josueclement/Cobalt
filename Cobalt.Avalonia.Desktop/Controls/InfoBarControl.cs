@@ -73,6 +73,12 @@ public class InfoBarControl : ContentControl
         Closed?.Invoke(this, EventArgs.Empty);
     }
 
+    public Task CloseAsync()
+    {
+        Close();
+        return Task.CompletedTask;
+    }
+
     public Task ShowAsync()
     {
         var tcs = new TaskCompletionSource();

@@ -21,9 +21,10 @@ public class InfoBarService : IInfoBarService
         await _host.ShowAsync();
     }
 
-    public void Hide()
+    public async Task HideAsync()
     {
-        _host?.Close();
+        if (_host is not null)
+            await _host.CloseAsync();
     }
 
     private static void ResetInfoBar(InfoBarControl infoBar)

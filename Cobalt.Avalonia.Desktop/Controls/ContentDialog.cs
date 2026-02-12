@@ -220,6 +220,26 @@ public class ContentDialog : ContentControl
         Closed?.Invoke(this, result);
     }
 
+    public Task HideAsync()
+    {
+        if (!IsOpen)
+            return Task.CompletedTask;
+
+        var tcs = new TaskCompletionSource();
+        EventHandler<DialogResult>? handler = null;
+
+        handler = (s, result) =>
+        {
+            Closed -= handler;
+            tcs.SetResult();
+        };
+
+        Closed += handler;
+        CloseDialog(DialogResult.None);
+
+        return tcs.Task;
+    }
+
     public Task<DialogResult> ShowAsync()
     {
         var tcs = new TaskCompletionSource<DialogResult>();

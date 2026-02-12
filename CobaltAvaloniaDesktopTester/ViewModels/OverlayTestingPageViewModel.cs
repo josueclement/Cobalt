@@ -49,7 +49,7 @@ public class OverlayTestingPageViewModel : ViewModelBase
         try
         {
             // Phase 1: Indeterminate - Initializing
-            _overlayService.Show(o =>
+            await _overlayService.ShowAsync(o =>
             {
                 o.Title = "Processing";
                 o.IsIndeterminate = true;
@@ -99,7 +99,7 @@ public class OverlayTestingPageViewModel : ViewModelBase
             });
             await Task.Delay(500);
 
-            _overlayService.Hide();
+            await _overlayService.HideAsync();
             sw.Stop();
             LastResult = $"Task completed in {sw.Elapsed.TotalSeconds:F1} seconds";
         }
@@ -125,7 +125,7 @@ public class OverlayTestingPageViewModel : ViewModelBase
 
         try
         {
-            _overlayService.Show(o =>
+            await _overlayService.ShowAsync(o =>
             {
                 o.Title = "Complex Operation";
                 o.IsIndeterminate = true;
@@ -158,7 +158,7 @@ public class OverlayTestingPageViewModel : ViewModelBase
             _overlayService.Update(o => o.Message = "Done!");
             await Task.Delay(500);
 
-            _overlayService.Hide();
+            await _overlayService.HideAsync();
             sw.Stop();
             LastResult = $"Task completed in {sw.Elapsed.TotalSeconds:F1} seconds";
         }

@@ -33,6 +33,12 @@ public class ContentDialogService : IContentDialogService
         return await _host.ShowAsync();
     }
 
+    public async Task HideAsync()
+    {
+        if (_host is not null)
+            await _host.HideAsync();
+    }
+
     private static void ResetDialog(ContentDialog dialog)
     {
         dialog.Title = null;

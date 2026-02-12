@@ -5,5 +5,5 @@ namespace Cobalt.Avalonia.Desktop.Services;
 public interface IInfoBarService
 {
     Task ShowAsync(Action<InfoBarControl>? configure = null);
-    void Hide();
+    Task HideAsync();
 }
