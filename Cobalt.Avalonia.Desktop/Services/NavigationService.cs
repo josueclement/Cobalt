@@ -1,15 +1,11 @@
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Avalonia.Controls;
 using Cobalt.Avalonia.Desktop.Controls.Navigation;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Cobalt.Avalonia.Desktop.Services;
 
-public class NavigationService : INavigationService, INotifyPropertyChanged
+public class NavigationService : ObservableObject, INavigationService
 {
-    private object? _currentPage;
-    private NavigationItemControl? _selectedItem;
-    private bool _isNavigating;
     private readonly SemaphoreSlim _navigationLock = new(1, 1);
 
     public NavigationService(IReadOnlyList<NavigationItemControl> items, IReadOnlyList<NavigationItemControl>? footerItems = null)
@@ -18,35 +14,20 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         FooterItems = footerItems;
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    public object? CurrentPage
+    public Control? CurrentPage
     {
-        get => _currentPage;
-        private set
-        {
-            if (_currentPage != value)
-            {
-                _currentPage = value;
-                OnPropertyChanged();
-            }
-        }
+        get;
+        set => SetProperty(ref field, value);
     }
 
     public NavigationItemControl? SelectedItem
     {
-        get => _selectedItem;
+        get;
         set
         {
-            if (_selectedItem != value && !_isNavigating)
-            {
-                var previousItem = _selectedItem;
-                _selectedItem = value;
-                OnPropertyChanged();
-
-                // Launch async navigation (will revert if cancelled)
+            var previousItem = field;
+            if (SetProperty(ref field, value))
                 _ = TryNavigateToItemAsync(value, previousItem);
-            }
         }
     }
 
@@ -60,24 +41,20 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
 
         try
         {
-            _isNavigating = true;
-
             var context = new NavigationContext { TargetPage = page };
 
-            bool allowed = await InvokeDisappearingAsync(_currentPage, context);
+            bool allowed = await InvokeDisappearingAsync(CurrentPage, context);
             if (!allowed)
                 return; // Navigation cancelled
 
             CurrentPage = page;
 
-            _selectedItem = FindItemForPage(page);
-            OnPropertyChanged(nameof(SelectedItem));
+            SelectedItem = FindItemForPage(page);
 
-            await InvokeAppearingAsync(_currentPage);
+            await InvokeAppearingAsync(CurrentPage);
         }
         finally
         {
-            _isNavigating = false;
             _navigationLock.Release();
         }
     }
@@ -112,8 +89,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
 
         try
         {
-            _isNavigating = true;
-
             var targetPage = targetItem?.Factory?.Invoke();
 
             var context = new NavigationContext
@@ -123,13 +98,12 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
             };
 
             // Check if current page allows navigation (async)
-            bool allowed = await InvokeDisappearingAsync(_currentPage, context);
+            bool allowed = await InvokeDisappearingAsync(CurrentPage, context);
 
             if (!allowed)
             {
                 // Navigation cancelled - restore previous selection
-                _selectedItem = previousItem;
-                OnPropertyChanged(nameof(SelectedItem));
+                SelectedItem = previousItem;
                 return;
             }
 
@@ -137,11 +111,10 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
             CurrentPage = targetPage;
 
             // Call OnAppearing on new page (async)
-            await InvokeAppearingAsync(_currentPage);
+            await InvokeAppearingAsync(CurrentPage);
         }
         finally
         {
-            _isNavigating = false;
             _navigationLock.Release();
         }
     }
@@ -228,10 +201,5 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
                 }
             }
         }
-    }
-
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
