@@ -34,8 +34,12 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         {
             if (_selectedItem != value && !_isNavigating)
             {
-                // Launch async navigation (fire-and-forget with proper error handling)
-                _ = TryNavigateToItemAsync(value);
+                var previousItem = _selectedItem;
+                _selectedItem = value;
+                OnPropertyChanged();
+
+                // Launch async navigation (will revert if cancelled)
+                _ = TryNavigateToItemAsync(value, previousItem);
             }
         }
     }
@@ -114,7 +118,7 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         return null;
     }
 
-    private async Task TryNavigateToItemAsync(NavigationItemControl? targetItem)
+    private async Task TryNavigateToItemAsync(NavigationItemControl? targetItem, NavigationItemControl? previousItem)
     {
         // Prevent concurrent navigations
         if (!await _navigationLock.WaitAsync(0))
@@ -124,7 +128,6 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         {
             _isNavigating = true;
 
-            var previousItem = _selectedItem;
             var previousPage = _currentPage;
             var targetPage = targetItem?.Factory?.Invoke();
 
@@ -145,10 +148,7 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
                 return;
             }
 
-            // Navigation allowed - proceed
-            _selectedItem = targetItem;
-            OnPropertyChanged(nameof(SelectedItem));
-
+            // Navigation allowed - _selectedItem is already set to targetItem from setter
             CurrentPage = targetPage;
 
             // Call OnAppearing on new page (async)
