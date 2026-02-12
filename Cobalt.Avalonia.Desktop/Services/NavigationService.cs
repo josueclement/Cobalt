@@ -20,8 +20,14 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         {
             if (_currentPage != value)
             {
+                // Call OnDisappearing on the OLD page (before the change)
+                InvokeLifecycleMethod(_currentPage, lifecycle => lifecycle.OnDisappearing());
+
                 _currentPage = value;
                 OnPropertyChanged();
+
+                // Call OnAppearing on the NEW page (after the change)
+                InvokeLifecycleMethod(_currentPage, lifecycle => lifecycle.OnAppearing());
             }
         }
     }
@@ -99,6 +105,44 @@ public class NavigationService : INavigationService, INotifyPropertyChanged
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// Invokes a lifecycle method on both the page (if it's a Control) and its DataContext (ViewModel).
+    /// Handles null checks and exception swallowing to prevent lifecycle errors from breaking navigation.
+    /// </summary>
+    private void InvokeLifecycleMethod(object? page, Action<INavigationLifecycle> action)
+    {
+        if (page == null)
+            return;
+
+        // Try to invoke on the page itself (View)
+        if (page is INavigationLifecycle lifecyclePage)
+        {
+            try
+            {
+                action(lifecyclePage);
+            }
+            catch
+            {
+                // Swallow exceptions to prevent lifecycle errors from breaking navigation
+                // In production, consider logging here
+            }
+        }
+
+        // Try to invoke on the DataContext (ViewModel)
+        if (page is Control control && control.DataContext is INavigationLifecycle lifecycleViewModel)
+        {
+            try
+            {
+                action(lifecycleViewModel);
+            }
+            catch
+            {
+                // Swallow exceptions to prevent lifecycle errors from breaking navigation
+                // In production, consider logging here
+            }
+        }
     }
 
     protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
