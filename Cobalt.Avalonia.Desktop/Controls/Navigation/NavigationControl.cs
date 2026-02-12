@@ -5,44 +5,82 @@ using Avalonia;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Navigation;
 
+/// <summary>
+/// A control that provides navigation capabilities, typically used for a side navigation bar.
+/// </summary>
 public class NavigationControl : TemplatedControl
 {
+    /// <summary>
+    /// Defines the <see cref="Items"/> property.
+    /// </summary>
     public static readonly StyledProperty<IReadOnlyList<NavigationItemControl>?> ItemsProperty =
         AvaloniaProperty.Register<NavigationControl, IReadOnlyList<NavigationItemControl>?>(nameof(Items));
 
+    /// <summary>
+    /// Defines the <see cref="FooterItems"/> property.
+    /// </summary>
     public static readonly StyledProperty<IReadOnlyList<NavigationItemControl>?> FooterItemsProperty =
         AvaloniaProperty.Register<NavigationControl, IReadOnlyList<NavigationItemControl>?>(nameof(FooterItems));
 
+    /// <summary>
+    /// Defines the <see cref="SelectedItem"/> property.
+    /// </summary>
     public static readonly StyledProperty<NavigationItemControl?> SelectedItemProperty =
         AvaloniaProperty.Register<NavigationControl, NavigationItemControl?>(
             nameof(SelectedItem),
             defaultBindingMode: BindingMode.TwoWay);
 
+    /// <summary>
+    /// Defines the <see cref="Logo"/> property.
+    /// </summary>
     public static readonly StyledProperty<object?> LogoProperty =
         AvaloniaProperty.Register<NavigationControl, object?>(nameof(Logo));
 
+    /// <summary>
+    /// The <see cref="ListBox"/> used for main navigation items.
+    /// </summary>
     private ListBox? _itemsListBox;
+
+    /// <summary>
+    /// The <see cref="ListBox"/> used for footer navigation items.
+    /// </summary>
     private ListBox? _footerListBox;
+
+    /// <summary>
+    /// Indicates whether a synchronization operation is currently in progress to avoid recursive calls.
+    /// </summary>
     private bool _isSyncing;
 
+    /// <summary>
+    /// Gets or sets the main navigation items.
+    /// </summary>
     public IReadOnlyList<NavigationItemControl>? Items
     {
         get => GetValue(ItemsProperty);
         set => SetValue(ItemsProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the footer navigation items.
+    /// </summary>
     public IReadOnlyList<NavigationItemControl>? FooterItems
     {
         get => GetValue(FooterItemsProperty);
         set => SetValue(FooterItemsProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the currently selected navigation item.
+    /// </summary>
     public NavigationItemControl? SelectedItem
     {
         get => GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the logo content to be displayed in the navigation control.
+    /// </summary>
     public object? Logo
     {
         get => GetValue(LogoProperty);
@@ -77,6 +115,11 @@ public class NavigationControl : TemplatedControl
             SyncListBoxSelection();
     }
 
+    /// <summary>
+    /// Handles the selection change event for the main items ListBox.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The event data.</param>
     private void OnItemsSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (_isSyncing)
@@ -98,6 +141,11 @@ public class NavigationControl : TemplatedControl
         }
     }
 
+    /// <summary>
+    /// Handles the selection change event for the footer items ListBox.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The event data.</param>
     private void OnFooterSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (_isSyncing)
@@ -119,6 +167,9 @@ public class NavigationControl : TemplatedControl
         }
     }
 
+    /// <summary>
+    /// Synchronizes the selection state between the <see cref="SelectedItem"/> property and the ListBoxes.
+    /// </summary>
     private void SyncListBoxSelection()
     {
         if (_isSyncing)
