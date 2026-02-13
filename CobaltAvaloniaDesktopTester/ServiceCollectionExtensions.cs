@@ -21,20 +21,6 @@ public static class ServiceCollectionExtensions
             _ = services.AddSingleton<MainWindow>();
 
             _ = services.AddSingleton<MainWindowViewModel>();
-            _ = services.AddSingleton<ChartsPageViewModel>();
-            _ = services.AddSingleton<ContentDialogTestingPageViewModel>();
-            _ = services.AddSingleton<DockingTestingPageViewModel>();
-            _ = services.AddSingleton<DummyPageViewModel>();
-            _ = services.AddSingleton<EditorsTestingPageViewModel>();
-            _ = services.AddSingleton<ExpanderTestingPageViewModel>();
-            _ = services.AddSingleton<GenerateKeysPageViewModel>();
-            _ = services.AddSingleton<InfoBarTestingPageViewModel>();
-            _ = services.AddSingleton<NavigationCancellationDemoPageViewModel>();
-            _ = services.AddSingleton<NavigationTestingPageViewModel>();
-            _ = services.AddSingleton<OverlayTestingPageViewModel>();
-            _ = services.AddSingleton<RibbonTestingPageViewModel>();
-            _ = services.AddSingleton<SchedulePageViewModel>();
-            _ = services.AddSingleton<SettingsPageViewModel>();
         }
     }
 }

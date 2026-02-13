@@ -1,3 +1,4 @@
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia;
@@ -22,10 +23,16 @@ public class NavigationItemControl : TemplatedControl
         AvaloniaProperty.Register<NavigationItemControl, Geometry?>(nameof(IconData));
 
     /// <summary>
-    /// Defines the <see cref="PageViewModelType"/> property.
+    /// Defines the <see cref="Factory"/> property.
     /// </summary>
-    public static readonly StyledProperty<Type?> PageViewModelTypeProperty =
-        AvaloniaProperty.Register<NavigationItemControl, Type?>(nameof(PageViewModelType));
+    public static readonly StyledProperty<Func<Control>?> FactoryProperty =
+        AvaloniaProperty.Register<NavigationItemControl, Func<Control>?>(nameof(Factory));
+
+    /// <summary>
+    /// Defines the <see cref="PageType"/> property.
+    /// </summary>
+    public static readonly StyledProperty<Type?> PageTypeProperty =
+        AvaloniaProperty.Register<NavigationItemControl, Type?>(nameof(PageType));
 
     /// <summary>
     /// Gets or sets the header text for the navigation item.
@@ -46,11 +53,20 @@ public class NavigationItemControl : TemplatedControl
     }
 
     /// <summary>
-    /// Gets or sets the ViewModel type to resolve from DI for this navigation item's page.
+    /// Gets or sets the factory that creates the page View (with DataContext set) for this navigation item.
     /// </summary>
-    public Type? PageViewModelType
+    public Func<Control>? Factory
     {
-        get => GetValue(PageViewModelTypeProperty);
-        set => SetValue(PageViewModelTypeProperty, value);
+        get => GetValue(FactoryProperty);
+        set => SetValue(FactoryProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the View type for this navigation item's page, used to match pages to items.
+    /// </summary>
+    public Type? PageType
+    {
+        get => GetValue(PageTypeProperty);
+        set => SetValue(PageTypeProperty, value);
     }
 }

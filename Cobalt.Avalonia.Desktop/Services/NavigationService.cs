@@ -1,15 +1,14 @@
+using System.Collections.ObjectModel;
+using Avalonia.Controls;
 using Cobalt.Avalonia.Desktop.Controls.Navigation;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Cobalt.Avalonia.Desktop.Services;
 
 /// <summary>
 /// Implementation of the navigation service for managing application navigation state and lifecycle.
 /// </summary>
-/// <param name="serviceProvider">The DI service provider used to resolve ViewModel instances.</param>
-public class NavigationService(IServiceProvider serviceProvider)
-    : ObservableObject, INavigationService
+public class NavigationService : ObservableObject, INavigationService
 {
     /// <summary>
     /// Semaphore used to synchronize navigation operations and prevent concurrent navigations.
@@ -17,9 +16,9 @@ public class NavigationService(IServiceProvider serviceProvider)
     private readonly SemaphoreSlim _navigationLock = new(1, 1);
 
     /// <summary>
-    /// Gets the currently displayed page ViewModel.
+    /// Gets the currently displayed page Control.
     /// </summary>
-    public object? CurrentPage
+    public Control? CurrentPage
     {
         get;
         set => SetProperty(ref field, value);
@@ -43,38 +42,18 @@ public class NavigationService(IServiceProvider serviceProvider)
     /// <summary>
     /// Gets the main navigation items.
     /// </summary>
-    public IReadOnlyList<NavigationItemControl> Items { get; private set; } = [];
+    public ObservableCollection<NavigationItemControl> Items { get; } = [];
 
     /// <summary>
     /// Gets the footer navigation items.
     /// </summary>
-    public IReadOnlyList<NavigationItemControl>? FooterItems { get; private set; }
+    public ObservableCollection<NavigationItemControl> FooterItems { get; } = [];
 
     /// <summary>
-    /// Initializes the navigation service with the provided navigation items.
+    /// Navigates to the specified page Control.
     /// </summary>
-    /// <param name="items">The main navigation items.</param>
-    /// <param name="footerItems">The footer navigation items.</param>
-    public void Initialize(IReadOnlyList<NavigationItemControl> items, IReadOnlyList<NavigationItemControl>? footerItems = null)
-    {
-        Items = items;
-        FooterItems = footerItems;
-    }
-
-    /// <summary>
-    /// Navigates to a page by resolving the specified ViewModel type from DI.
-    /// </summary>
-    /// <typeparam name="TViewModel">The ViewModel type to navigate to.</typeparam>
-    public Task NavigateToAsync<TViewModel>() where TViewModel : class
-    {
-        return NavigateToAsync(typeof(TViewModel));
-    }
-
-    /// <summary>
-    /// Navigates to a page by resolving the specified ViewModel type from DI.
-    /// </summary>
-    /// <param name="viewModelType">The ViewModel type to navigate to.</param>
-    public async Task NavigateToAsync(Type viewModelType)
+    /// <param name="page">The page Control to navigate to (with DataContext already set).</param>
+    public async Task NavigateToAsync(Control page)
     {
         if (!await _navigationLock.WaitAsync(0))
             return;
@@ -88,11 +67,11 @@ public class NavigationService(IServiceProvider serviceProvider)
                     return;
             }
 
-            CurrentPage = serviceProvider.GetRequiredService(viewModelType);
+            CurrentPage = page;
 
-            SelectedItem = FindItemForViewModel(viewModelType);
+            SelectedItem = FindItemForPage(page);
 
-            await InvokeAppearingAsync(CurrentPage);
+            await InvokeAppearingAsync(page);
         }
         finally
         {
@@ -101,25 +80,24 @@ public class NavigationService(IServiceProvider serviceProvider)
     }
 
     /// <summary>
-    /// Finds the navigation item that corresponds to the given ViewModel type.
+    /// Finds the navigation item that corresponds to the given page View type.
     /// </summary>
-    /// <param name="viewModelType">The ViewModel type to find an item for.</param>
+    /// <param name="page">The page Control to find an item for.</param>
     /// <returns>The matching <see cref="NavigationItemControl"/> if found; otherwise, <c>null</c>.</returns>
-    private NavigationItemControl? FindItemForViewModel(Type viewModelType)
+    private NavigationItemControl? FindItemForPage(Control page)
     {
+        var pageType = page.GetType();
+
         foreach (var item in Items)
         {
-            if (item.PageViewModelType == viewModelType)
+            if (item.PageType == pageType)
                 return item;
         }
 
-        if (FooterItems != null)
+        foreach (var item in FooterItems)
         {
-            foreach (var item in FooterItems)
-            {
-                if (item.PageViewModelType == viewModelType)
-                    return item;
-            }
+            if (item.PageType == pageType)
+                return item;
         }
 
         return null;
@@ -149,8 +127,8 @@ public class NavigationService(IServiceProvider serviceProvider)
                 }
             }
 
-            if (targetItem?.PageViewModelType is { } vmType)
-                CurrentPage = serviceProvider.GetRequiredService(vmType);
+            if (targetItem?.Factory is { } factory)
+                CurrentPage = factory();
             else
                 CurrentPage = null;
 
@@ -166,13 +144,13 @@ public class NavigationService(IServiceProvider serviceProvider)
     /// <summary>
     /// Invokes the <see cref="INavigationViewModel.OnDisappearingAsync"/> method on the ViewModel if it implements the interface.
     /// </summary>
-    /// <param name="viewModel">The current page ViewModel.</param>
+    /// <param name="page">The current page Control.</param>
     /// <returns><c>true</c> if navigation is allowed; otherwise, <c>false</c>.</returns>
-    private static async Task<bool> InvokeDisappearingAsync(object viewModel)
+    private static async Task<bool> InvokeDisappearingAsync(Control page)
     {
         try
         {
-            if (viewModel is INavigationViewModel nav)
+            if (page.DataContext is INavigationViewModel nav)
                 return await nav.OnDisappearingAsync();
             return true;
         }
@@ -185,12 +163,12 @@ public class NavigationService(IServiceProvider serviceProvider)
     /// <summary>
     /// Invokes the <see cref="INavigationViewModel.OnAppearingAsync"/> method on the ViewModel if it implements the interface.
     /// </summary>
-    /// <param name="viewModel">The current page ViewModel.</param>
-    private static async Task InvokeAppearingAsync(object viewModel)
+    /// <param name="page">The current page Control.</param>
+    private static async Task InvokeAppearingAsync(Control page)
     {
         try
         {
-            if (viewModel is INavigationViewModel nav)
+            if (page.DataContext is INavigationViewModel nav)
                 await nav.OnAppearingAsync();
         }
         catch

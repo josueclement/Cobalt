@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop;
+using CobaltAvaloniaDesktopTester.Views;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
@@ -20,11 +21,11 @@ public class NavigationTestingPageViewModel : ViewModelBase
 
     private async Task NavigateToSettings()
     {
-        await _navigation.NavigateToAsync<SettingsPageViewModel>();
+        await _navigation.NavigateToAsync(new SettingsPageView { DataContext = new SettingsPageViewModel() });
     }
 
     private async Task NavigateToDummy()
     {
-        await _navigation.NavigateToAsync<DummyPageViewModel>();
+        await _navigation.NavigateToAsync(new DummyPageView { DataContext = new DummyPageViewModel() });
     }
 }
