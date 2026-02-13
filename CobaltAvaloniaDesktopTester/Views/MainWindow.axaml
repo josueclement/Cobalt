@@ -12,10 +12,6 @@
         Title="Enigma"
         Background="{DynamicResource CobaltBackgroundBrush}">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel />
-    </Design.DataContext>
-
     <Panel>
         <DockPanel>
             <!-- Add button at top -->

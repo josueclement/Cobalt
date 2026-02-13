@@ -1,5 +1,3 @@
-using Avalonia.Controls;
-
 namespace Cobalt.Avalonia.Desktop;
 
 /// <summary>
@@ -8,14 +6,19 @@ namespace Cobalt.Avalonia.Desktop;
 public interface INavigationService
 {
     /// <summary>
-    /// Gets the currently displayed page.
+    /// Gets the currently displayed page ViewModel.
     /// </summary>
-    Control? CurrentPage { get; }
+    object? CurrentPage { get; }
 
     /// <summary>
-    /// Navigates to the specified page asynchronously.
+    /// Navigates to a page by resolving the specified ViewModel type from DI.
     /// </summary>
-    /// <param name="page">The control to navigate to.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    Task NavigateToAsync(Control page);
+    /// <typeparam name="TViewModel">The ViewModel type to navigate to.</typeparam>
+    Task NavigateToAsync<TViewModel>() where TViewModel : class;
+
+    /// <summary>
+    /// Navigates to a page by resolving the specified ViewModel type from DI.
+    /// </summary>
+    /// <param name="viewModelType">The ViewModel type to navigate to.</param>
+    Task NavigateToAsync(Type viewModelType);
 }
