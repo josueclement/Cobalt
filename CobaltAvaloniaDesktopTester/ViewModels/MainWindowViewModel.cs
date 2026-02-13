@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Media;
 using Avalonia.Styling;
+using Cobalt.Avalonia.Desktop;
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Controls.Navigation;
 using Cobalt.Avalonia.Desktop.Services;
@@ -12,7 +13,7 @@ namespace CobaltAvaloniaDesktopTester.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     public MainWindowViewModel(
-        NavigationService navigation,
+        INavigationService navigation,
         IContentDialogService dialogService,
         IOverlayService overlayService,
         IInfoBarService infoBarService)
@@ -128,7 +129,7 @@ public class MainWindowViewModel : ViewModelBase
             .GetAwaiter().GetResult();
     }
 
-    public NavigationService Navigation { get; }
+    public INavigationService Navigation { get; }
     public IContentDialogService DialogService { get; }
     public IOverlayService OverlayService { get; }
     public IInfoBarService InfoBarService { get; }

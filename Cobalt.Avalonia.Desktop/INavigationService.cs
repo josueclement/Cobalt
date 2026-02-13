@@ -1,4 +1,6 @@
+using System.Collections.ObjectModel;
 using Avalonia.Controls;
+using Cobalt.Avalonia.Desktop.Controls.Navigation;
 
 namespace Cobalt.Avalonia.Desktop;
 
@@ -17,4 +19,8 @@ public interface INavigationService
     /// </summary>
     /// <param name="page">The page Control to navigate to (with DataContext already set).</param>
     Task NavigateToAsync(Control page);
+    
+    ObservableCollection<NavigationItemControl> Items { get; }
+    ObservableCollection<NavigationItemControl> FooterItems { get; }
+    NavigationItemControl? SelectedItem { get; set; }
 }
