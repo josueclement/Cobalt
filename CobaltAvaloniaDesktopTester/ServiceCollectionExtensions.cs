@@ -18,20 +18,22 @@ public static class ServiceCollectionExtensions
             _ = services.AddSingleton<IOverlayService, OverlayService>();
 
             _ = services.AddSingleton<MainWindow>();
-            _ = services.AddSingleton<ChartsPageView>();
-            _ = services.AddSingleton<ContentDialogTestingPageView>();
-            _ = services.AddSingleton<DockingTestingPageView>();
-            _ = services.AddSingleton<DummyPageView>();
-            _ = services.AddSingleton<EditorsTestingPageView>();
-            _ = services.AddSingleton<ExpanderTestingPageView>();
-            _ = services.AddSingleton<GenerateKeysPageView>();
-            _ = services.AddSingleton<InfoBarTestingPageView>();
-            _ = services.AddSingleton<NavigationCancellationDemoPageView>();
-            _ = services.AddSingleton<NavigationTestingPageView>();
-            _ = services.AddSingleton<OverlayTestingPageView>();
-            _ = services.AddSingleton<RibbonTestingPageView>();
-            _ = services.AddSingleton<SchedulePageView>();
-            _ = services.AddSingleton<SettingsPageView>();
+            // Views are Transient so each navigation creates a new instance
+            // ViewModels remain Singleton to preserve state
+            _ = services.AddTransient<ChartsPageView>();
+            _ = services.AddTransient<ContentDialogTestingPageView>();
+            _ = services.AddTransient<DockingTestingPageView>();
+            _ = services.AddTransient<DummyPageView>();
+            _ = services.AddTransient<EditorsTestingPageView>();
+            _ = services.AddTransient<ExpanderTestingPageView>();
+            _ = services.AddTransient<GenerateKeysPageView>();
+            _ = services.AddTransient<InfoBarTestingPageView>();
+            _ = services.AddTransient<NavigationCancellationDemoPageView>();
+            _ = services.AddTransient<NavigationTestingPageView>();
+            _ = services.AddTransient<OverlayTestingPageView>();
+            _ = services.AddTransient<RibbonTestingPageView>();
+            _ = services.AddTransient<SchedulePageView>();
+            _ = services.AddTransient<SettingsPageView>();
 
             _ = services.AddSingleton<MainWindowViewModel>();
             _ = services.AddSingleton<ChartsPageViewModel>();
