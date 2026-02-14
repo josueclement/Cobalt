@@ -140,8 +140,9 @@ public class MainWindowViewModel : ViewModelBase
             Foreground = new SolidColorBrush(Color.FromRgb(99, 102, 241))
         };
 
-        Navigation.NavigateToAsync(new GenerateKeysPageView { DataContext = new GenerateKeysPageViewModel() })
-            .GetAwaiter().GetResult();
+        var generateKeysPage = _services.GetRequiredService<GenerateKeysPageView>();
+        generateKeysPage.DataContext = _services.GetRequiredService<GenerateKeysPageViewModel>();
+        Navigation.NavigateToAsync(generateKeysPage).GetAwaiter().GetResult();
     }
 
     public INavigationService Navigation { get; }
