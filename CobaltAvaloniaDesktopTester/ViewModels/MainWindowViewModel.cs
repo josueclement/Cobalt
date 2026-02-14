@@ -1,5 +1,6 @@
 using System;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Styling;
 using Cobalt.Avalonia.Desktop;
@@ -30,149 +31,97 @@ public class MainWindowViewModel : ViewModelBase
         InfoBarService = infoBarService;
         ToggleThemeCommand = new RelayCommand(ToggleTheme);
 
+        Navigation.PageFactory = navItem =>
+        {
+            var page = _services.GetRequiredService(navItem.PageType);
+            if (page is not Control ctrl)
+                throw new InvalidOperationException($"Page type {navItem.PageType} is not a Control");
+            ctrl.DataContext = _services.GetRequiredService(navItem.PageViewModelType);
+            return ctrl;
+        };
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Keys",
             IconData = IconService.CreateGeometry(Icon.key, IconType.regular),
             PageType = typeof(GenerateKeysPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<GenerateKeysPageView>();
-                page.DataContext = _services.GetRequiredService<GenerateKeysPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(GenerateKeysPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Dialogs",
             IconData = IconService.CreateGeometry(Icon.chat_circle_text, IconType.regular),
             PageType = typeof(ContentDialogTestingPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<ContentDialogTestingPageView>();
-                page.DataContext = _services.GetRequiredService<ContentDialogTestingPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(ContentDialogTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Overlay",
             IconData = IconService.CreateGeometry(Icon.check_circle, IconType.regular),
             PageType = typeof(OverlayTestingPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<OverlayTestingPageView>();
-                page.DataContext = _services.GetRequiredService<OverlayTestingPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(OverlayTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "InfoBar",
             IconData = IconService.CreateGeometry(Icon.info, IconType.regular),
             PageType = typeof(InfoBarTestingPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<InfoBarTestingPageView>();
-                page.DataContext = _services.GetRequiredService<InfoBarTestingPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(InfoBarTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Charts",
             IconData = IconService.CreateGeometry(Icon.chart_bar, IconType.regular),
             PageType = typeof(ChartsPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<ChartsPageView>();
-                page.DataContext = _services.GetRequiredService<ChartsPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(ChartsPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Expander",
             IconData = IconService.CreateGeometry(Icon.caret_circle_up_down, IconType.regular),
             PageType = typeof(ExpanderTestingPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<ExpanderTestingPageView>();
-                page.DataContext = _services.GetRequiredService<ExpanderTestingPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(ExpanderTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Schedule",
             IconData = IconService.CreateGeometry(Icon.calendar, IconType.regular),
             PageType = typeof(SchedulePageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<SchedulePageView>();
-                page.DataContext = _services.GetRequiredService<SchedulePageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(SchedulePageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Ribbon",
             IconData = IconService.CreateGeometry(Icon.app_window, IconType.regular),
             PageType = typeof(RibbonTestingPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<RibbonTestingPageView>();
-                page.DataContext = _services.GetRequiredService<RibbonTestingPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(RibbonTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Docking",
             IconData = IconService.CreateGeometry(Icon.square_split_horizontal, IconType.regular),
             PageType = typeof(DockingTestingPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<DockingTestingPageView>();
-                page.DataContext = _services.GetRequiredService<DockingTestingPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(DockingTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Navigate",
             IconData = IconService.CreateGeometry(Icon.compass, IconType.regular),
             PageType = typeof(NavigationTestingPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<NavigationTestingPageView>();
-                page.DataContext = _services.GetRequiredService<NavigationTestingPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(NavigationTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Nav Cancel",
             IconData = IconService.CreateGeometry(Icon.file_x, IconType.regular),
             PageType = typeof(NavigationCancellationDemoPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<NavigationCancellationDemoPageView>();
-                page.DataContext = _services.GetRequiredService<NavigationCancellationDemoPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(NavigationCancellationDemoPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
             Header = "Editors",
             IconData = Geometry.Parse("M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"),
             PageType = typeof(EditorsTestingPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<EditorsTestingPageView>();
-                page.DataContext = _services.GetRequiredService<EditorsTestingPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(EditorsTestingPageViewModel)
         });
 
         Navigation.FooterItems.Add(new NavigationItemControl
@@ -180,12 +129,7 @@ public class MainWindowViewModel : ViewModelBase
             Header = "Settings",
             IconData = IconService.CreateGeometry(Icon.gear, IconType.regular),
             PageType = typeof(SettingsPageView),
-            Factory = () =>
-            {
-                var page = _services.GetRequiredService<SettingsPageView>();
-                page.DataContext = _services.GetRequiredService<SettingsPageViewModel>();
-                return page;
-            }
+            PageViewModelType = typeof(SettingsPageViewModel)
         });
 
         Logo = new Avalonia.Controls.PathIcon

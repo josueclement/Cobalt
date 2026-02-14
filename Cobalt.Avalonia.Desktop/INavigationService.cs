@@ -23,4 +23,5 @@ public interface INavigationService
     ObservableCollection<NavigationItemControl> Items { get; }
     ObservableCollection<NavigationItemControl> FooterItems { get; }
     NavigationItemControl? SelectedItem { get; set; }
+    Func<NavigationItemControl, Control> PageFactory { get; set; }
 }

@@ -15,6 +15,19 @@ public class NavigationService : ObservableObject, INavigationService
     /// </summary>
     private readonly SemaphoreSlim _navigationLock = new(1, 1);
 
+    public NavigationService()
+    {
+        PageFactory = navItem =>
+        {
+            var page = Activator.CreateInstance(navItem.PageType);
+            if (page is not Control ctrl)
+                throw new InvalidOperationException($"Failed to create page instance for type {navItem.PageType.FullName}");
+            var vm = Activator.CreateInstance(navItem.PageViewModelType);
+            ctrl.DataContext = vm;
+            return ctrl;
+        };
+    }
+
     /// <summary>
     /// Gets the currently displayed page Control.
     /// </summary>
@@ -48,6 +61,8 @@ public class NavigationService : ObservableObject, INavigationService
     /// Gets the footer navigation items.
     /// </summary>
     public ObservableCollection<NavigationItemControl> FooterItems { get; } = [];
+    
+    public Func<NavigationItemControl, Control> PageFactory { get; set; }
 
     /// <summary>
     /// Navigates to the specified page Control.
@@ -127,10 +142,7 @@ public class NavigationService : ObservableObject, INavigationService
                 }
             }
 
-            if (targetItem?.Factory is { } factory)
-                CurrentPage = factory();
-            else
-                CurrentPage = null;
+            CurrentPage = targetItem is not null ? PageFactory(targetItem) : null;
 
             if (CurrentPage is not null)
                 await InvokeAppearingAsync(CurrentPage);
