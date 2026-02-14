@@ -5,6 +5,12 @@ namespace CobaltAvaloniaDesktopTester.ViewModels;
 
 public class RibbonTestingPageViewModel : ViewModelBase
 {
+    public int SelectedTabIndex
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+
     public RibbonTestingPageViewModel()
     {
         NewCommand = new RelayCommand(New);

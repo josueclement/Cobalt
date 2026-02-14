@@ -1,7 +1,7 @@
+using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Media;
 using Avalonia;
-using Avalonia.Controls;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Navigation;
 
@@ -23,16 +23,16 @@ public class NavigationItemControl : TemplatedControl
         AvaloniaProperty.Register<NavigationItemControl, Geometry?>(nameof(IconData));
 
     /// <summary>
-    /// Defines the <see cref="Factory"/> property.
-    /// </summary>
-    public static readonly StyledProperty<Func<Control>?> FactoryProperty =
-        AvaloniaProperty.Register<NavigationItemControl, Func<Control>?>(nameof(Factory));
-
-    /// <summary>
     /// Defines the <see cref="PageType"/> property.
     /// </summary>
-    public static readonly StyledProperty<Type?> PageTypeProperty =
-        AvaloniaProperty.Register<NavigationItemControl, Type?>(nameof(PageType));
+    public static readonly StyledProperty<Type> PageTypeProperty =
+        AvaloniaProperty.Register<NavigationItemControl, Type>(nameof(PageType));
+
+    /// <summary>
+    /// Defines the <see cref="PageViewModelType"/> property.
+    /// </summary>
+    public static readonly StyledProperty<Type> PageViewModelTypeProperty =
+        AvaloniaProperty.Register<NavigationItemControl, Type>(nameof(PageViewModelType));
 
     /// <summary>
     /// Gets or sets the header text for the navigation item.
@@ -53,20 +53,20 @@ public class NavigationItemControl : TemplatedControl
     }
 
     /// <summary>
-    /// Gets or sets the factory function used to create the page control associated with this item.
+    /// Gets or sets the View type for this navigation item's page, used to match pages to items.
     /// </summary>
-    public Func<Control>? Factory
-    {
-        get => GetValue(FactoryProperty);
-        set => SetValue(FactoryProperty, value);
-    }
-
-    /// <summary>
-    /// Gets or sets the type of the page associated with this item.
-    /// </summary>
-    public Type? PageType
+    public Type PageType
     {
         get => GetValue(PageTypeProperty);
         set => SetValue(PageTypeProperty, value);
+    }
+
+    /// <summary>
+    /// Gets or sets the ViewModel type for this navigation item's page
+    /// </summary>
+    public Type PageViewModelType
+    {
+        get => GetValue(PageViewModelTypeProperty);
+        set => SetValue(PageViewModelTypeProperty, value);
     }
 }

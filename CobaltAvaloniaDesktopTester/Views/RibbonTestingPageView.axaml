@@ -10,7 +10,8 @@
              x:DataType="vm:RibbonTestingPageViewModel">
 
     <DockPanel>
-        <cobalt:RibbonControl DockPanel.Dock="Top">
+        <cobalt:RibbonControl DockPanel.Dock="Top"
+                              SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
             <!-- Home Tab -->
             <cobalt:RibbonTab Header="Home">
                 <cobalt:RibbonGroup Header="File">

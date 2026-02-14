@@ -1,31 +1,41 @@
+using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using Cobalt.Avalonia.Desktop.Services;
+using Cobalt.Avalonia.Desktop;
 using CobaltAvaloniaDesktopTester.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
 public class NavigationTestingPageViewModel : ViewModelBase
 {
-    public NavigationTestingPageViewModel(NavigationService navigation)
+    public NavigationTestingPageViewModel(
+        IServiceProvider services,
+        INavigationService navigation)
     {
+        _services = services;
         _navigation = navigation;
         NavigateToSettingsCommand = new AsyncRelayCommand(NavigateToSettings);
         NavigateToDummyCommand = new AsyncRelayCommand(NavigateToDummy);
     }
 
-    private readonly NavigationService _navigation;
+    private readonly IServiceProvider _services;
+    private readonly INavigationService _navigation;
 
     public IAsyncRelayCommand NavigateToSettingsCommand { get; }
     public IAsyncRelayCommand NavigateToDummyCommand { get; }
 
     private async Task NavigateToSettings()
     {
-        await _navigation.NavigateToAsync(new SettingsPageView { DataContext = new SettingsPageViewModel() });
+        var settingsPage = _services.GetRequiredService<SettingsPageView>();
+        settingsPage.DataContext = _services.GetRequiredService<SettingsPageViewModel>();
+        await _navigation.NavigateToAsync(settingsPage);
     }
 
     private async Task NavigateToDummy()
     {
-        await _navigation.NavigateToAsync(new DummyPageView { DataContext = new DummyPageViewModel() });
+        var dummyPage = _services.GetRequiredService<DummyPageView>();
+        dummyPage.DataContext = _services.GetRequiredService<DummyPageViewModel>();
+        await _navigation.NavigateToAsync(dummyPage);
     }
 }

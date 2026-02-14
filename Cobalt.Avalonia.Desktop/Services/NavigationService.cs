@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Avalonia.Controls;
 using Cobalt.Avalonia.Desktop.Controls.Navigation;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -7,20 +8,28 @@ namespace Cobalt.Avalonia.Desktop.Services;
 /// <summary>
 /// Implementation of the navigation service for managing application navigation state and lifecycle.
 /// </summary>
-/// <param name="items">The collection of main navigation items.</param>
-/// <param name="footerItems">The collection of footer navigation items.</param>
-public class NavigationService(
-    IReadOnlyList<NavigationItemControl> items,
-    IReadOnlyList<NavigationItemControl>? footerItems = null)
-    : ObservableObject, INavigationService
+public class NavigationService : ObservableObject, INavigationService
 {
     /// <summary>
     /// Semaphore used to synchronize navigation operations and prevent concurrent navigations.
     /// </summary>
     private readonly SemaphoreSlim _navigationLock = new(1, 1);
 
+    public NavigationService()
+    {
+        PageFactory = navItem =>
+        {
+            var page = Activator.CreateInstance(navItem.PageType);
+            if (page is not Control ctrl)
+                throw new InvalidOperationException($"Failed to create page instance for type {navItem.PageType.FullName}");
+            var vm = Activator.CreateInstance(navItem.PageViewModelType);
+            ctrl.DataContext = vm;
+            return ctrl;
+        };
+    }
+
     /// <summary>
-    /// Gets the currently displayed page.
+    /// Gets the currently displayed page Control.
     /// </summary>
     public Control? CurrentPage
     {
@@ -46,18 +55,19 @@ public class NavigationService(
     /// <summary>
     /// Gets the main navigation items.
     /// </summary>
-    public IReadOnlyList<NavigationItemControl> Items { get; } = items;
+    public ObservableCollection<NavigationItemControl> Items { get; } = [];
 
     /// <summary>
     /// Gets the footer navigation items.
     /// </summary>
-    public IReadOnlyList<NavigationItemControl>? FooterItems { get; } = footerItems;
+    public ObservableCollection<NavigationItemControl> FooterItems { get; } = [];
+    
+    public Func<NavigationItemControl, Control> PageFactory { get; set; }
 
     /// <summary>
-    /// Navigates to a specific page control.
+    /// Navigates to the specified page Control.
     /// </summary>
-    /// <param name="page">The page control to navigate to.</param>
-    /// <returns>A task representing the asynchronous navigation operation.</returns>
+    /// <param name="page">The page Control to navigate to (with DataContext already set).</param>
     public async Task NavigateToAsync(Control page)
     {
         if (!await _navigationLock.WaitAsync(0))
@@ -69,14 +79,14 @@ public class NavigationService(
             {
                 var allowed = await InvokeDisappearingAsync(CurrentPage);
                 if (!allowed)
-                    return; // Navigation cancelled
+                    return;
             }
 
             CurrentPage = page;
 
             SelectedItem = FindItemForPage(page);
 
-            await InvokeAppearingAsync(CurrentPage);
+            await InvokeAppearingAsync(page);
         }
         finally
         {
@@ -85,9 +95,9 @@ public class NavigationService(
     }
 
     /// <summary>
-    /// Finds the navigation item that corresponds to the given page control.
+    /// Finds the navigation item that corresponds to the given page View type.
     /// </summary>
-    /// <param name="page">The page control to find an item for.</param>
+    /// <param name="page">The page Control to find an item for.</param>
     /// <returns>The matching <see cref="NavigationItemControl"/> if found; otherwise, <c>null</c>.</returns>
     private NavigationItemControl? FindItemForPage(Control page)
     {
@@ -99,13 +109,10 @@ public class NavigationService(
                 return item;
         }
 
-        if (FooterItems != null)
+        foreach (var item in FooterItems)
         {
-            foreach (var item in FooterItems)
-            {
-                if (item.PageType == pageType)
-                    return item;
-            }
+            if (item.PageType == pageType)
+                return item;
         }
 
         return null;
@@ -116,10 +123,8 @@ public class NavigationService(
     /// </summary>
     /// <param name="targetItem">The target navigation item.</param>
     /// <param name="previousItem">The previously selected navigation item, to be restored if navigation is cancelled.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
     private async Task TryNavigateToItemAsync(NavigationItemControl? targetItem, NavigationItemControl? previousItem)
     {
-        // Prevent concurrent navigations
         if (!await _navigationLock.WaitAsync(0))
             return;
 
@@ -137,9 +142,8 @@ public class NavigationService(
                 }
             }
 
-            CurrentPage = targetItem?.Factory?.Invoke();
+            CurrentPage = targetItem is not null ? PageFactory(targetItem) : null;
 
-            // Call OnAppearing on the new page (async)
             if (CurrentPage is not null)
                 await InvokeAppearingAsync(CurrentPage);
         }
@@ -150,11 +154,11 @@ public class NavigationService(
     }
 
     /// <summary>
-    /// Invokes the <see cref="INavigationViewModel.OnDisappearingAsync"/> method on the page's data context if available.
+    /// Invokes the <see cref="INavigationViewModel.OnDisappearingAsync"/> method on the ViewModel if it implements the interface.
     /// </summary>
-    /// <param name="page">The page control that is disappearing.</param>
-    /// <returns>A task representing the asynchronous operation, returning <c>true</c> if navigation is allowed; otherwise, <c>false</c>.</returns>
-    private async Task<bool> InvokeDisappearingAsync(Control page)
+    /// <param name="page">The current page Control.</param>
+    /// <returns><c>true</c> if navigation is allowed; otherwise, <c>false</c>.</returns>
+    private static async Task<bool> InvokeDisappearingAsync(Control page)
     {
         try
         {
@@ -169,11 +173,10 @@ public class NavigationService(
     }
 
     /// <summary>
-    /// Invokes the <see cref="INavigationViewModel.OnAppearingAsync"/> method on the page's data context if available.
+    /// Invokes the <see cref="INavigationViewModel.OnAppearingAsync"/> method on the ViewModel if it implements the interface.
     /// </summary>
-    /// <param name="page">The page control that has appeared.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    private async Task InvokeAppearingAsync(Control page)
+    /// <param name="page">The current page Control.</param>
+    private static async Task InvokeAppearingAsync(Control page)
     {
         try
         {

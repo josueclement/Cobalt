@@ -1,4 +1,6 @@
+using System.Collections.ObjectModel;
 using Avalonia.Controls;
+using Cobalt.Avalonia.Desktop.Controls.Navigation;
 
 namespace Cobalt.Avalonia.Desktop;
 
@@ -8,14 +10,18 @@ namespace Cobalt.Avalonia.Desktop;
 public interface INavigationService
 {
     /// <summary>
-    /// Gets the currently displayed page.
+    /// Gets the currently displayed page Control.
     /// </summary>
     Control? CurrentPage { get; }
 
     /// <summary>
-    /// Navigates to the specified page asynchronously.
+    /// Navigates to the specified page Control.
     /// </summary>
-    /// <param name="page">The control to navigate to.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <param name="page">The page Control to navigate to (with DataContext already set).</param>
     Task NavigateToAsync(Control page);
+    
+    ObservableCollection<NavigationItemControl> Items { get; }
+    ObservableCollection<NavigationItemControl> FooterItems { get; }
+    NavigationItemControl? SelectedItem { get; set; }
+    Func<NavigationItemControl, Control> PageFactory { get; set; }
 }
