@@ -4,6 +4,7 @@ using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using System.Linq;
 using Avalonia.Markup.Xaml;
+using Cobalt.Avalonia.Desktop.Services;
 using CobaltAvaloniaDesktopTester.ViewModels;
 using CobaltAvaloniaDesktopTester.Views;
 using LiveChartsCore;
@@ -39,6 +40,10 @@ public partial class App : Application
             var mainWindow = services.GetRequiredService<MainWindow>();
             var vm = services.GetRequiredService<MainWindowViewModel>();
             mainWindow.DataContext = vm;
+            
+            services.GetRequiredService<IContentDialogService>().RegisterHost(mainWindow.HostDialog);
+            services.GetRequiredService<IOverlayService>().RegisterHost(mainWindow.HostOverlay);
+            services.GetRequiredService<IInfoBarService>().RegisterHost(mainWindow.HostInfoBar);
             
             desktop.MainWindow = mainWindow;
         }
