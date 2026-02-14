@@ -3,6 +3,9 @@
                     xmlns:controls="using:CobaltAvaloniaDesktopTester.Controls">
 
     <ControlTheme x:Key="{x:Type controls:ProgressOverlayCard}" TargetType="controls:ProgressOverlayCard">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="ClipToBounds" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="{DynamicResource CobaltSurfaceHighBrush}"
@@ -11,7 +14,7 @@
                         CornerRadius="8"
                         MinWidth="320"
                         MaxWidth="480"
-                        BoxShadow="0 12 48 0 #99000000">
+                        BoxShadow="0 8 32 #40000000">
                     <Grid RowDefinitions="Auto,Auto,Auto,Auto" Margin="24">
                         <!-- Title -->
                         <TextBlock Grid.Row="0"

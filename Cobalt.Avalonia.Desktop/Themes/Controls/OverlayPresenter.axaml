@@ -17,7 +17,8 @@
                     <ContentPresenter Content="{TemplateBinding Content}"
                                       ContentTemplate="{TemplateBinding ContentTemplate}"
                                       HorizontalAlignment="Center"
-                                      VerticalAlignment="Center" />
+                                      VerticalAlignment="Center"
+                                      ClipToBounds="False" />
                 </Panel>
             </ControlTemplate>
         </Setter>
