@@ -1,36 +1,27 @@
-using Avalonia.Controls;
-using Avalonia.Media;
 using Avalonia;
+using Avalonia.Controls;
 
-namespace Cobalt.Avalonia.Desktop.Controls;
+namespace CobaltAvaloniaDesktopTester.Controls;
 
-public class OverlayControl : ContentControl
+public class ProgressOverlayCard : ContentControl
 {
     public static readonly StyledProperty<string?> TitleProperty =
-        AvaloniaProperty.Register<OverlayControl, string?>(nameof(Title));
+        AvaloniaProperty.Register<ProgressOverlayCard, string?>(nameof(Title));
 
     public static readonly StyledProperty<string?> MessageProperty =
-        AvaloniaProperty.Register<OverlayControl, string?>(nameof(Message));
-
-    public static readonly StyledProperty<bool> IsOpenProperty =
-        AvaloniaProperty.Register<OverlayControl, bool>(nameof(IsOpen), false);
+        AvaloniaProperty.Register<ProgressOverlayCard, string?>(nameof(Message));
 
     public static readonly StyledProperty<bool> IsIndeterminateProperty =
-        AvaloniaProperty.Register<OverlayControl, bool>(nameof(IsIndeterminate), true);
+        AvaloniaProperty.Register<ProgressOverlayCard, bool>(nameof(IsIndeterminate), true);
 
     public static readonly StyledProperty<double> ProgressProperty =
-        AvaloniaProperty.Register<OverlayControl, double>(nameof(Progress), 0);
+        AvaloniaProperty.Register<ProgressOverlayCard, double>(nameof(Progress), 0);
 
     public static readonly StyledProperty<double> MinimumProperty =
-        AvaloniaProperty.Register<OverlayControl, double>(nameof(Minimum), 0);
+        AvaloniaProperty.Register<ProgressOverlayCard, double>(nameof(Minimum), 0);
 
     public static readonly StyledProperty<double> MaximumProperty =
-        AvaloniaProperty.Register<OverlayControl, double>(nameof(Maximum), 100);
-
-    public static readonly StyledProperty<IBrush?> OverlayBrushProperty =
-        AvaloniaProperty.Register<OverlayControl, IBrush?>(
-            nameof(OverlayBrush),
-            new SolidColorBrush(Color.FromArgb(77, 0, 0, 0)));
+        AvaloniaProperty.Register<ProgressOverlayCard, double>(nameof(Maximum), 100);
 
     public string? Title
     {
@@ -42,12 +33,6 @@ public class OverlayControl : ContentControl
     {
         get => GetValue(MessageProperty);
         set => SetValue(MessageProperty, value);
-    }
-
-    public bool IsOpen
-    {
-        get => GetValue(IsOpenProperty);
-        set => SetValue(IsOpenProperty, value);
     }
 
     public bool IsIndeterminate
@@ -72,11 +57,5 @@ public class OverlayControl : ContentControl
     {
         get => GetValue(MaximumProperty);
         set => SetValue(MaximumProperty, value);
-    }
-
-    public IBrush? OverlayBrush
-    {
-        get => GetValue(OverlayBrushProperty);
-        set => SetValue(OverlayBrushProperty, value);
     }
 }

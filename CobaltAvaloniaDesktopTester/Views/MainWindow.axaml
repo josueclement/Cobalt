@@ -34,7 +34,7 @@
         </DockPanel>
 
         <controls:ContentDialog x:Name="HostDialog" />
-        <controls:OverlayControl x:Name="HostOverlay" />
+        <controls:OverlayPresenter x:Name="HostOverlay" />
         <controls:InfoBarControl x:Name="HostInfoBar" />
     </Panel>
 </Window>

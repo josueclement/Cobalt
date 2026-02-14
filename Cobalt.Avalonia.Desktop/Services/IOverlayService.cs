@@ -1,13 +1,11 @@
+using Avalonia.Controls;
 using Cobalt.Avalonia.Desktop.Controls;
 
 namespace Cobalt.Avalonia.Desktop.Services;
 
 public interface IOverlayService
 {
-    void RegisterHost(OverlayControl overlay);
-    // TODO: What is this action here ?
-    Task ShowAsync(Action<OverlayControl>? configure = null);
-    // TODO: What is this action here ?
-    void Update(Action<OverlayControl> configure);
+    void RegisterHost(OverlayPresenter presenter);
+    Task ShowAsync(Control control);
     Task HideAsync();
 }
