@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Cobalt.Avalonia.Desktop.Controls;
@@ -53,5 +54,7 @@ public class ContentDialogService : IContentDialogService
         dialog.IsSecondaryButtonEnabled = true;
         dialog.IsCloseButtonEnabled = true;
         dialog.DefaultButton = DefaultButton.None;
+        dialog.IconData = null;
+        dialog.ClearValue(ContentDialog.IconBrushProperty); // Clear to restore theme default
     }
 }
