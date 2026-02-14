@@ -1,0 +1,35 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Cobalt.Avalonia.Desktop.Controls">
+
+    <ControlTheme x:Key="{x:Type controls:OverlayPresenter}" TargetType="controls:OverlayPresenter">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <!-- Layer 1: Overlay background -->
+                    <Border Background="{DynamicResource CobaltOverlayBrush}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch" />
+
+                    <!-- Layer 2: User content (centered) -->
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      ClipToBounds="False" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Visibility control via IsOpen -->
+        <Style Selector="^[IsOpen=False]">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^[IsOpen=True]">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

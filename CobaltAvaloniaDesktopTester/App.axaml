@@ -16,6 +16,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Fluent.axaml" />
+                <!-- Tester-specific control themes -->
+                <ResourceInclude Source="avares://CobaltAvaloniaDesktopTester/Controls/ProgressOverlayCard.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

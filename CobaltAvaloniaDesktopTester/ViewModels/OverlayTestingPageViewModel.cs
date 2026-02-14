@@ -5,6 +5,7 @@ using global::Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Services;
+using CobaltAvaloniaDesktopTester.Controls;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
@@ -48,55 +49,43 @@ public class OverlayTestingPageViewModel : ViewModelBase
 
         try
         {
-            // Phase 1: Indeterminate - Initializing
-            await _overlayService.ShowAsync(o =>
+            // Create the progress card
+            var card = new ProgressOverlayCard
             {
-                o.Title = "Processing";
-                o.IsIndeterminate = true;
-                o.Message = "Initializing...";
-            });
+                Title = "Processing",
+                IsIndeterminate = true,
+                Message = "Initializing..."
+            };
+
+            // Phase 1: Indeterminate - Initializing
+            await _overlayService.ShowAsync(card);
             await Task.Delay(2000);
 
             // Phase 2: Determinate - Steps 1-2
-            _overlayService.Update(o =>
-            {
-                o.IsIndeterminate = false;
-                o.Progress = 0;
-                o.Message = "Step 1 of 4...";
-            });
+            card.IsIndeterminate = false;
+            card.Progress = 0;
+            card.Message = "Step 1 of 4...";
             await Task.Delay(1000);
 
-            _overlayService.Update(o =>
-            {
-                o.Progress = 25;
-                o.Message = "Step 2 of 4...";
-            });
+            card.Progress = 25;
+            card.Message = "Step 2 of 4...";
             await Task.Delay(1000);
 
-            _overlayService.Update(o => o.Progress = 50);
+            card.Progress = 50;
 
             // Phase 3: Indeterminate - Analyzing
-            _overlayService.Update(o =>
-            {
-                o.IsIndeterminate = true;
-                o.Message = "Analyzing results...";
-            });
+            card.IsIndeterminate = true;
+            card.Message = "Analyzing results...";
             await Task.Delay(2000);
 
             // Phase 4: Determinate - Steps 3-4
-            _overlayService.Update(o =>
-            {
-                o.IsIndeterminate = false;
-                o.Progress = 75;
-                o.Message = "Step 3 of 4...";
-            });
+            card.IsIndeterminate = false;
+            card.Progress = 75;
+            card.Message = "Step 3 of 4...";
             await Task.Delay(1000);
 
-            _overlayService.Update(o =>
-            {
-                o.Progress = 100;
-                o.Message = "Step 4 of 4...";
-            });
+            card.Progress = 100;
+            card.Message = "Step 4 of 4...";
             await Task.Delay(500);
 
             await _overlayService.HideAsync();
@@ -125,37 +114,34 @@ public class OverlayTestingPageViewModel : ViewModelBase
 
         try
         {
-            await _overlayService.ShowAsync(o =>
+            // Create the progress card with initial step list
+            var card = new ProgressOverlayCard
             {
-                o.Title = "Complex Operation";
-                o.IsIndeterminate = true;
-                o.Message = "Starting...";
-                o.Content = BuildStepList(steps, -1);
-            });
+                Title = "Complex Operation",
+                IsIndeterminate = true,
+                Message = "Starting...",
+                Content = BuildStepList(steps, -1)
+            };
+
+            await _overlayService.ShowAsync(card);
 
             for (int i = 0; i < steps.Length; i++)
             {
                 // Switch to indeterminate while "working" on this step
-                _overlayService.Update(o =>
-                {
-                    o.IsIndeterminate = true;
-                    o.Message = steps[i] + "...";
-                    o.Content = BuildStepList(steps, i - 1);
-                });
+                card.IsIndeterminate = true;
+                card.Message = steps[i] + "...";
+                card.Content = BuildStepList(steps, i - 1);
                 await Task.Delay(1500);
 
                 // Mark step complete with determinate progress
                 int completed = i + 1;
-                _overlayService.Update(o =>
-                {
-                    o.IsIndeterminate = false;
-                    o.Progress = (double)completed / steps.Length * 100;
-                    o.Content = BuildStepList(steps, i);
-                });
+                card.IsIndeterminate = false;
+                card.Progress = (double)completed / steps.Length * 100;
+                card.Content = BuildStepList(steps, i);
                 await Task.Delay(500);
             }
 
-            _overlayService.Update(o => o.Message = "Done!");
+            card.Message = "Done!";
             await Task.Delay(500);
 
             await _overlayService.HideAsync();

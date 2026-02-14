@@ -1,48 +1,37 @@
+using Avalonia.Controls;
 using Cobalt.Avalonia.Desktop.Controls;
 
 namespace Cobalt.Avalonia.Desktop.Services;
 
 public class OverlayService : IOverlayService
 {
-    private OverlayControl? _host;
+    private OverlayPresenter? _host;
 
-    public void RegisterHost(OverlayControl overlay)
+    public void RegisterHost(OverlayPresenter presenter)
     {
-        _host = overlay;
+        _host = presenter;
     }
 
-    public Task ShowAsync(Action<OverlayControl>? configure = null)
+    public Task ShowAsync(Control control)
     {
         if (_host is null)
-            throw new InvalidOperationException("OverlayControl host has not been registered. Call RegisterHost first.");
+            throw new InvalidOperationException("No OverlayPresenter registered. Call RegisterHost first.");
 
-        ResetOverlay(_host);
-        configure?.Invoke(_host);
+        if (control is null)
+            throw new ArgumentNullException(nameof(control));
+
+        _host.Content = control;
         _host.IsOpen = true;
         return Task.CompletedTask;
-    }
-
-    public void Update(Action<OverlayControl> configure)
-    {
-        if (_host is null)
-            throw new InvalidOperationException("OverlayControl host has not been registered. Call RegisterHost first.");
-
-        configure(_host);
     }
 
     public Task HideAsync()
     {
         if (_host is not null)
+        {
             _host.IsOpen = false;
+            _host.Content = null;  // Clear content to prevent memory leaks
+        }
         return Task.CompletedTask;
-    }
-
-    private static void ResetOverlay(OverlayControl overlay)
-    {
-        overlay.Title = null;
-        overlay.Message = null;
-        overlay.Content = null;
-        overlay.Progress = 0;
-        overlay.IsIndeterminate = true;
     }
 }
