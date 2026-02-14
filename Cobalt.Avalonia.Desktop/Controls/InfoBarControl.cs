@@ -62,8 +62,6 @@ public class InfoBarControl : ContentControl
             closeButton.Click += OnCloseButtonClick;
     }
 
-    // TODO: Should those method be here ??
-    
     private void OnCloseButtonClick(object? sender, RoutedEventArgs e)
     {
         Close();

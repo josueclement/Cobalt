@@ -150,7 +150,6 @@ public class ContentDialog : ContentControl
 
     public event EventHandler<DialogResult>? Closed;
 
-    // TODO: Check how to unregister events when control unloaded/destroyed
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
@@ -221,7 +220,6 @@ public class ContentDialog : ContentControl
         Closed?.Invoke(this, result);
     }
 
-    // TODO: Should Hide be here ??
     public Task HideAsync()
     {
         if (!IsOpen)
@@ -242,7 +240,6 @@ public class ContentDialog : ContentControl
         return tcs.Task;
     }
 
-    // TODO: Should Show be here ??
     public Task<DialogResult> ShowAsync()
     {
         var tcs = new TaskCompletionSource<DialogResult>();
