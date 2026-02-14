@@ -9,16 +9,21 @@
             <ControlTemplate>
                 <Panel>
                     <!-- Layer 1: Overlay background -->
-                    <Border Background="{DynamicResource CobaltOverlayBrush}"
+                    <Border Background="{TemplateBinding OverlayBrush}"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch" />
 
                     <!-- Layer 2: User content (centered) -->
-                    <ContentPresenter Content="{TemplateBinding Content}"
-                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                      HorizontalAlignment="Center"
-                                      VerticalAlignment="Center"
-                                      ClipToBounds="False" />
+                    <Border HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            CornerRadius="8"
+                            BoxShadow="0 12 48 0 #99000000">
+                        <Border CornerRadius="8"
+                                ClipToBounds="True">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Border>
+                    </Border>
                 </Panel>
             </ControlTemplate>
         </Setter>
