@@ -30,7 +30,7 @@ public class OverlayControl : ContentControl
     public static readonly StyledProperty<IBrush?> OverlayBrushProperty =
         AvaloniaProperty.Register<OverlayControl, IBrush?>(
             nameof(OverlayBrush),
-            new SolidColorBrush(Color.FromArgb(128, 0, 0, 0)));
+            new SolidColorBrush(Color.FromArgb(77, 0, 0, 0)));
 
     public string? Title
     {

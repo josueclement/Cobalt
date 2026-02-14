@@ -59,7 +59,7 @@ public class ContentDialog : ContentControl
     public static readonly StyledProperty<IBrush?> OverlayBrushProperty =
         AvaloniaProperty.Register<ContentDialog, IBrush?>(
             nameof(OverlayBrush),
-            new SolidColorBrush(Color.FromArgb(128, 0, 0, 0)));
+            new SolidColorBrush(Color.FromArgb(77, 0, 0, 0)));
 
     public static readonly StyledProperty<DialogResult> DialogResultProperty =
         AvaloniaProperty.Register<ContentDialog, DialogResult>(nameof(DialogResult), DialogResult.None);
