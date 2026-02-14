@@ -5,6 +5,7 @@ using global::Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Services;
+using PhosphorIconsAvalonia;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
@@ -32,10 +33,13 @@ public class ContentDialogTestingPageViewModel : ViewModelBase
 
     private async Task ShowSimpleDialog()
     {
-        var result = await _dialogService.ShowMessageAsync(
-            "Information",
-            "This is a simple message dialog. Click OK to close it.",
-            "OK");
+        var result = await _dialogService.ShowAsync(dialog =>
+        {
+            dialog.Title = "Information";
+            dialog.Content = "This is a simple message dialog. Click OK to close it.";
+            dialog.IconData = IconService.CreateGeometry(Icon.info, IconType.regular);
+            dialog.PrimaryButtonText = "OK";
+        });
 
         LastResult = $"Simple dialog result: {result}";
     }
@@ -45,6 +49,8 @@ public class ContentDialogTestingPageViewModel : ViewModelBase
         var result = await _dialogService.ShowAsync(dialog =>
         {
             dialog.Title = "Confirm Action";
+            dialog.IconData = IconService.CreateGeometry(Icon.warning, IconType.regular);
+            dialog.IconBrush = new SolidColorBrush(Color.Parse("#F59E0B")); // Warning orange color
             dialog.Content = new StackPanel
             {
                 Spacing = 8,
@@ -83,6 +89,7 @@ public class ContentDialogTestingPageViewModel : ViewModelBase
         var result = await _dialogService.ShowAsync(dialog =>
         {
             dialog.Title = "Password Required";
+            // dialog.IconData = IconService.CreateGeometry(Icon.key, IconType.regular);
             dialog.Content = new StackPanel
             {
                 Spacing = 12,

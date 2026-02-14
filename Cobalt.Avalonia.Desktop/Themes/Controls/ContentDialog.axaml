@@ -6,6 +6,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="IsVisible" Value="False" />
+        <Setter Property="IconBrush" Value="{DynamicResource CobaltForegroundBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>
@@ -34,11 +35,25 @@
                                      Margin="0,0,0,16"
                                      IsVisible="{TemplateBinding Title, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
 
-                            <!-- Content -->
-                            <ContentPresenter Grid.Row="1"
-                                            Content="{TemplateBinding Content}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                                            Margin="0,0,0,24" />
+                            <!-- Icon and Content -->
+                            <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Margin="0,0,0,24">
+                                <!-- Icon -->
+                                <Viewbox Grid.Column="0"
+                                        Width="48"
+                                        Height="48"
+                                        VerticalAlignment="Top"
+                                        Margin="0,0,16,0"
+                                        IsVisible="{TemplateBinding IconData, Converter={x:Static ObjectConverters.IsNotNull}}">
+                                    <Path Data="{TemplateBinding IconData}"
+                                         Fill="{TemplateBinding IconBrush}"
+                                         Stretch="Uniform" />
+                                </Viewbox>
+
+                                <!-- Content -->
+                                <ContentPresenter Grid.Column="1"
+                                                Content="{TemplateBinding Content}"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}" />
+                            </Grid>
 
                             <!-- Buttons -->
                             <StackPanel Grid.Row="2"
@@ -49,17 +64,20 @@
                                        Content="{TemplateBinding PrimaryButtonText}"
                                        IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
                                        MinWidth="80"
+                                       HorizontalContentAlignment="Center"
                                        Classes="accent"
                                        IsVisible="{TemplateBinding PrimaryButtonText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                                 <Button Name="PART_SecondaryButton"
                                        Content="{TemplateBinding SecondaryButtonText}"
                                        IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
                                        MinWidth="80"
+                                       HorizontalContentAlignment="Center"
                                        IsVisible="{TemplateBinding SecondaryButtonText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                                 <Button Name="PART_CloseButton"
                                        Content="{TemplateBinding CloseButtonText}"
                                        IsEnabled="{TemplateBinding IsCloseButtonEnabled}"
                                        MinWidth="80"
+                                       HorizontalContentAlignment="Center"
                                        IsVisible="{TemplateBinding CloseButtonText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
                             </StackPanel>
                         </Grid>
