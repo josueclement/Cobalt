@@ -8,49 +8,54 @@
         <Setter Property="IsVisible" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Name="PART_Card"
-                        Background="{DynamicResource CobaltInfoBackgroundBrush}"
-                        BorderBrush="{DynamicResource CobaltInfoBorderBrush}"
-                        BorderThickness="1"
-                        CornerRadius="8"
-                        Margin="24,24,24,0"
+                <!-- Outer Border for shadow -->
+                <Border CornerRadius="8"
+                        Margin="24"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
                         BoxShadow="0 8 32 0 #66000000">
-                    <Grid ColumnDefinitions="Auto,*,Auto" Margin="16">
-                        <!-- Icon -->
-                        <PathIcon Name="PART_Icon"
-                                  Grid.Column="0"
-                                  Width="24" Height="24"
-                                  Margin="0,0,12,0"
-                                  VerticalAlignment="Center"
-                                  Foreground="{DynamicResource CobaltForegroundBrush}"
-                                  Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z" />
+                    <!-- Inner Border for content -->
+                    <Border Name="PART_Card"
+                            Background="{DynamicResource CobaltInfoBackgroundBrush}"
+                            BorderBrush="{DynamicResource CobaltInfoBorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            ClipToBounds="True">
+                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="16">
+                            <!-- Icon -->
+                            <PathIcon Name="PART_Icon"
+                                      Grid.Column="0"
+                                      Width="24" Height="24"
+                                      Margin="0,0,12,0"
+                                      VerticalAlignment="Center"
+                                      Foreground="{DynamicResource CobaltForegroundBrush}"
+                                      Data="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-6h2v6Zm0-8h-2V7h2v2Z" />
 
-                        <!-- Text -->
-                        <StackPanel Grid.Column="1"
-                                    Orientation="Vertical"
-                                    Spacing="4"
-                                    VerticalAlignment="Center">
-                            <TextBlock Text="{TemplateBinding Title}"
-                                       FontWeight="SemiBold"
-                                       IsVisible="{TemplateBinding Title, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
-                            <TextBlock Text="{TemplateBinding Message}"
-                                       Foreground="{DynamicResource CobaltForegroundSecondaryBrush}"
-                                       TextWrapping="Wrap"
-                                       IsVisible="{TemplateBinding Message, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
-                        </StackPanel>
+                            <!-- Text -->
+                            <StackPanel Grid.Column="1"
+                                        Orientation="Vertical"
+                                        Spacing="4"
+                                        VerticalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding Title}"
+                                           FontWeight="SemiBold"
+                                           IsVisible="{TemplateBinding Title, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                <TextBlock Text="{TemplateBinding Message}"
+                                           Foreground="{DynamicResource CobaltForegroundSecondaryBrush}"
+                                           TextWrapping="Wrap"
+                                           IsVisible="{TemplateBinding Message, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                            </StackPanel>
 
-                        <!-- Close Button -->
-                        <Button Name="PART_CloseButton"
-                                Grid.Column="2"
-                                Margin="12,0,0,0"
-                                VerticalAlignment="Center"
-                                Classes="transparent">
-                            <PathIcon Width="12" Height="12"
-                                      Data="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42L10.59 12l-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0L12 13.41l4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42Z" />
-                        </Button>
-                    </Grid>
+                            <!-- Close Button -->
+                            <Button Name="PART_CloseButton"
+                                    Grid.Column="2"
+                                    Margin="12,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Classes="transparent">
+                                <PathIcon Width="12" Height="12"
+                                          Data="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42L10.59 12l-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0L12 13.41l4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42Z" />
+                            </Button>
+                        </Grid>
+                    </Border>
                 </Border>
             </ControlTemplate>
         </Setter>
