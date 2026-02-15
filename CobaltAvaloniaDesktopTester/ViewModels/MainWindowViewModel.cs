@@ -44,6 +44,13 @@ public class MainWindowViewModel : ViewModelBase
         });
         Navigation.Items.Add(new NavigationItemControl
         {
+            Header = "Dialogs",
+            IconData = IconService.CreateGeometry(Icon.files, IconType.regular),
+            PageType = typeof(DialogsTestingPageView),
+            PageViewModelType = typeof(DialogsTestingPageViewModel)
+        });
+        Navigation.Items.Add(new NavigationItemControl
+        {
             Header = "Charts",
             IconData = IconService.CreateGeometry(Icon.chart_bar, IconType.regular),
             PageType = typeof(ChartsPageView),
