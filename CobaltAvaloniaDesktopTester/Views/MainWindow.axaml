@@ -9,7 +9,7 @@
         x:Class="CobaltAvaloniaDesktopTester.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="Enigma"
+        Title="Cobalt.Avalonia.Desktop showcase app"
         Background="{DynamicResource CobaltBackgroundBrush}">
 
     <Panel>
