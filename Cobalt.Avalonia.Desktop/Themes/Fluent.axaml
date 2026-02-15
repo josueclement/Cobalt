@@ -22,6 +22,7 @@
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/OverlayPresenter.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/SettingsCardControl.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/SettingsCardExpander.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/SettingsCard.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/Editors/BaseEditor.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/Editors/MultiLineTextEditor.axaml" />
     </ResourceDictionary.MergedDictionaries>

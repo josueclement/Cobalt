@@ -1,0 +1,51 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:Cobalt.Avalonia.Desktop.Controls">
+
+    <ControlTheme x:Key="{x:Type controls:SettingsCard}" TargetType="controls:SettingsCard">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{DynamicResource CobaltSurfaceBrush}"
+                        BorderBrush="{DynamicResource CobaltBorderSubtleBrush}"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Padding="16">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+
+                        <!-- Icon container -->
+                        <Border Grid.Column="0"
+                                Width="40" Height="40"
+                                VerticalAlignment="Center"
+                                IsVisible="{Binding IconData, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static ObjectConverters.IsNotNull}}">
+                            <PathIcon Data="{Binding IconData, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Width="20" Height="20"
+                                      Foreground="{DynamicResource CobaltForegroundBrush}" />
+                        </Border>
+
+                        <!-- Header + Description -->
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Margin="12,0,12,0">
+                            <TextBlock Text="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource CobaltForegroundBrush}" />
+                            <TextBlock Text="{Binding Description, RelativeSource={RelativeSource TemplatedParent}}"
+                                       FontSize="12"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource CobaltForegroundSecondaryBrush}"
+                                       IsVisible="{Binding Description, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        </StackPanel>
+
+                        <!-- Content (hosted control) -->
+                        <ContentPresenter Grid.Column="2"
+                                          Content="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}"
+                                          VerticalAlignment="Center" />
+
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>
