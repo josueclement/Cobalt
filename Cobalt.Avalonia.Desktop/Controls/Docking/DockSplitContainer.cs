@@ -21,6 +21,12 @@ public class DockSplitContainer : TemplatedControl
     public static readonly StyledProperty<Orientation> OrientationProperty =
         AvaloniaProperty.Register<DockSplitContainer, Orientation>(nameof(Orientation), Orientation.Horizontal);
 
+    public static readonly StyledProperty<GridLength> FirstSizeProperty =
+        AvaloniaProperty.Register<DockSplitContainer, GridLength>(nameof(FirstSize), new GridLength(1, GridUnitType.Star));
+
+    public static readonly StyledProperty<GridLength> SecondSizeProperty =
+        AvaloniaProperty.Register<DockSplitContainer, GridLength>(nameof(SecondSize), new GridLength(1, GridUnitType.Star));
+
     public Control? First
     {
         get => GetValue(FirstProperty);
@@ -37,6 +43,18 @@ public class DockSplitContainer : TemplatedControl
     {
         get => GetValue(OrientationProperty);
         set => SetValue(OrientationProperty, value);
+    }
+
+    public GridLength FirstSize
+    {
+        get => GetValue(FirstSizeProperty);
+        set => SetValue(FirstSizeProperty, value);
+    }
+
+    public GridLength SecondSize
+    {
+        get => GetValue(SecondSizeProperty);
+        set => SetValue(SecondSizeProperty, value);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -61,6 +79,10 @@ public class DockSplitContainer : TemplatedControl
             ConfigureLayout();
             UpdatePseudoClasses();
         }
+        else if (change.Property == FirstSizeProperty || change.Property == SecondSizeProperty)
+        {
+            ConfigureLayout();
+        }
     }
 
     private void ConfigureLayout()
@@ -73,9 +95,9 @@ public class DockSplitContainer : TemplatedControl
 
         if (Orientation == Orientation.Horizontal)
         {
-            _grid.ColumnDefinitions.Add(new ColumnDefinition(1, GridUnitType.Star));
+            _grid.ColumnDefinitions.Add(new ColumnDefinition(FirstSize));
             _grid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
-            _grid.ColumnDefinitions.Add(new ColumnDefinition(1, GridUnitType.Star));
+            _grid.ColumnDefinitions.Add(new ColumnDefinition(SecondSize));
 
             Grid.SetColumn(_first, 0);
             Grid.SetRow(_first, 0);
@@ -96,9 +118,9 @@ public class DockSplitContainer : TemplatedControl
         }
         else
         {
-            _grid.RowDefinitions.Add(new RowDefinition(1, GridUnitType.Star));
+            _grid.RowDefinitions.Add(new RowDefinition(FirstSize));
             _grid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
-            _grid.RowDefinitions.Add(new RowDefinition(1, GridUnitType.Star));
+            _grid.RowDefinitions.Add(new RowDefinition(SecondSize));
 
             Grid.SetRow(_first, 0);
             Grid.SetColumn(_first, 0);

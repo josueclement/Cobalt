@@ -69,21 +69,27 @@ public partial class DockingTestingPageView : UserControl
         {
             Orientation = Orientation.Horizontal,
             First = solutionGroup,
-            Second = centerGroup
+            Second = centerGroup,
+            FirstSize = new GridLength(200, GridUnitType.Pixel),
+            SecondSize = new GridLength(1, GridUnitType.Star)
         };
 
         var topSplit = new DockSplitContainer
         {
             Orientation = Orientation.Horizontal,
             First = leftCenterSplit,
-            Second = propertiesGroup
+            Second = propertiesGroup,
+            FirstSize = new GridLength(1, GridUnitType.Star),
+            SecondSize = new GridLength(200, GridUnitType.Pixel)
         };
 
         var rootSplit = new DockSplitContainer
         {
             Orientation = Orientation.Vertical,
             First = topSplit,
-            Second = bottomGroup
+            Second = bottomGroup,
+            FirstSize = new GridLength(1, GridUnitType.Star),
+            SecondSize = new GridLength(200, GridUnitType.Pixel)
         };
 
         dockingControl.SetRootLayout(rootSplit);
