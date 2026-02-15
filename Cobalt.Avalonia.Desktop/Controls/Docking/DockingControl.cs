@@ -43,17 +43,49 @@ public class DockingControl : TemplatedControl
         InitializeLayout();
     }
 
+    public void SetRootLayout(Control root)
+    {
+        if (_rootHost == null)
+            throw new InvalidOperationException("Cannot set layout before OnApplyTemplate");
+
+        _rootHost.Content = root;
+        WireAllGroups(root);
+    }
+
     private void InitializeLayout()
     {
         if (_rootHost == null || Panes.Count == 0)
             return;
 
+        // Skip if layout already set programmatically
+        if (_rootHost.Content != null)
+        {
+            WireAllGroups(_rootHost.Content as Control);
+            return;
+        }
+
+        // Default: single group with all panes
         var group = new DockTabGroup();
         foreach (var pane in Panes)
             group.Panes.Add(pane);
 
         WireGroup(group);
         _rootHost.Content = group;
+    }
+
+    private void WireAllGroups(Control? control)
+    {
+        if (control is DockTabGroup group)
+        {
+            WireGroup(group);
+            return;
+        }
+
+        if (control is DockSplitContainer split)
+        {
+            if (split.First != null) WireAllGroups(split.First);
+            if (split.Second != null) WireAllGroups(split.Second);
+        }
     }
 
     private void WireGroup(DockTabGroup group)
