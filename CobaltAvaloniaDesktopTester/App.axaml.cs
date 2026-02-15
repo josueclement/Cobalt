@@ -28,7 +28,8 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         var collection = new ServiceCollection();
-        collection.AddCommonServices();
+        collection.AddCobaltServices();
+        collection.AddPagesAndViewModels();
         var services = collection.BuildServiceProvider();
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -44,6 +45,8 @@ public partial class App : Application
             services.GetRequiredService<IContentDialogService>().RegisterHost(mainWindow.HostDialog);
             services.GetRequiredService<IOverlayService>().RegisterHost(mainWindow.HostOverlay);
             services.GetRequiredService<IInfoBarService>().RegisterHost(mainWindow.HostInfoBar);
+            services.GetRequiredService<IFileDialogService>().SetStorageProvider(mainWindow.StorageProvider);
+            services.GetRequiredService<IFolderDialogService>().SetStorageProvider(mainWindow.StorageProvider);
             
             desktop.MainWindow = mainWindow;
         }

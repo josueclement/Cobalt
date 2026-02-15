@@ -10,13 +10,18 @@ public static class ServiceCollectionExtensions
 {
     extension(IServiceCollection services)
     {
-        public void AddCommonServices()
+        public void AddCobaltServices()
         {
+            _ = services.AddSingleton<IFileDialogService, FileDialogService>();
+            _ = services.AddSingleton<IFolderDialogService, FolderDialogService>();
             _ = services.AddSingleton<INavigationService, NavigationService>();
             _ = services.AddSingleton<IContentDialogService, ContentDialogService>();
             _ = services.AddSingleton<IInfoBarService, InfoBarService>();
             _ = services.AddSingleton<IOverlayService, OverlayService>();
-
+        }
+        
+        public void AddPagesAndViewModels()
+        {
             _ = services.AddSingleton<MainWindow>();
             // Views are Transient so each navigation creates a new instance
             // ViewModels remain Singleton to preserve state
