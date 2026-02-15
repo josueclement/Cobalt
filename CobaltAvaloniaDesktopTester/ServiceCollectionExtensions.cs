@@ -24,7 +24,6 @@ public static class ServiceCollectionExtensions
             _ = services.AddTransient<DockingTestingPageView>();
             _ = services.AddTransient<DummyPageView>();
             _ = services.AddTransient<EditorsTestingPageView>();
-            _ = services.AddTransient<GenerateKeysPageView>();
             _ = services.AddTransient<NavigationDemoPageView>();
             _ = services.AddTransient<RibbonTestingPageView>();
             _ = services.AddTransient<SchedulePageView>();
@@ -36,7 +35,6 @@ public static class ServiceCollectionExtensions
             _ = services.AddSingleton<DockingTestingPageViewModel>();
             _ = services.AddSingleton<DummyPageViewModel>();
             _ = services.AddSingleton<EditorsTestingPageViewModel>();
-            _ = services.AddSingleton<GenerateKeysPageViewModel>();
             _ = services.AddSingleton<NavigationDemoPageViewModel>();
             _ = services.AddSingleton<RibbonTestingPageViewModel>();
             _ = services.AddSingleton<SchedulePageViewModel>();

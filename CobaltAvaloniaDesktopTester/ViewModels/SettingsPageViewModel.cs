@@ -11,6 +11,10 @@ public class SettingsPageViewModel : ViewModelBase
     {
         CardClickedCommand = new RelayCommand<string?>(CardClicked);
         ToggleThemeCommand = new RelayCommand(ToggleTheme);
+        ConfigureNotificationsCommand = new RelayCommand(() =>
+        {
+            LastAction = "Configuring notifications...";
+        });
 
         // Initialize theme state
         UpdateThemeState();
@@ -34,8 +38,30 @@ public class SettingsPageViewModel : ViewModelBase
         }
     }
 
+    public string? SelectedRegion
+    {
+        get;
+        set => SetProperty(ref field, value);
+    }
+
+    public bool IsAutoSaveEnabled
+    {
+        get;
+        set
+        {
+            if (SetProperty(ref field, value))
+            {
+                LastAction = $"Auto-save {(value ? "enabled" : "disabled")}";
+                OnPropertyChanged(nameof(AutoSaveButtonText));
+            }
+        }
+    }
+
+    public string AutoSaveButtonText => IsAutoSaveEnabled ? "Enabled" : "Disabled";
+
     public IRelayCommand CardClickedCommand { get; }
     public IRelayCommand ToggleThemeCommand { get; }
+    public IRelayCommand ConfigureNotificationsCommand { get; }
 
     private void CardClicked(string? parameter)
     {

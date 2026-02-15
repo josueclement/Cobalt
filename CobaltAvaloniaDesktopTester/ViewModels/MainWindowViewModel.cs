@@ -37,13 +37,6 @@ public class MainWindowViewModel : ViewModelBase
         };
         Navigation.Items.Add(new NavigationItemControl
         {
-            Header = "Keys",
-            IconData = IconService.CreateGeometry(Icon.key, IconType.regular),
-            PageType = typeof(GenerateKeysPageView),
-            PageViewModelType = typeof(GenerateKeysPageViewModel)
-        });
-        Navigation.Items.Add(new NavigationItemControl
-        {
             Header = "Services",
             IconData = IconService.CreateGeometry(Icon.chat_circle_text, IconType.regular),
             PageType = typeof(ServicesTestingPageView),
@@ -108,9 +101,9 @@ public class MainWindowViewModel : ViewModelBase
             Foreground = new SolidColorBrush(Color.FromRgb(99, 102, 241))
         };
 
-        var generateKeysPage = _services.GetRequiredService<GenerateKeysPageView>();
-        generateKeysPage.DataContext = _services.GetRequiredService<GenerateKeysPageViewModel>();
-        Navigation.NavigateToAsync(generateKeysPage).GetAwaiter().GetResult();
+        var servicesPage = _services.GetRequiredService<ServicesTestingPageView>();
+        servicesPage.DataContext = _services.GetRequiredService<ServicesTestingPageViewModel>();
+        Navigation.NavigateToAsync(servicesPage).GetAwaiter().GetResult();
     }
 
     public INavigationService Navigation { get; }
