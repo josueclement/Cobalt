@@ -2,10 +2,23 @@ using Avalonia.Platform.Storage;
 
 namespace Cobalt.Avalonia.Desktop.Services;
 
+/// <summary>
+/// Provides convenient extension methods for <see cref="IFolderDialogService"/> that simplify common folder dialog operations.
+/// These methods automatically create and configure dialog options and return folder paths as strings.
+/// </summary>
 public static class FolderDialogServiceExtensions
 {
     extension(IFolderDialogService service)
     {
+        /// <summary>
+        /// Shows an open folder dialog with simplified parameters and returns the selected folder paths as strings.
+        /// </summary>
+        /// <param name="title">The title to display in the dialog window.</param>
+        /// <param name="allowMultiple">Whether to allow selecting multiple folders.</param>
+        /// <param name="suggestedStartLocation">The initial directory path to display in the dialog.</param>
+        /// <param name="suggestedFileName">The default folder name to display in the dialog.</param>
+        /// <returns>A task that represents the asynchronous operation, containing the paths of selected folders as strings.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if no storage provider has been set.</exception>
         public async Task<IEnumerable<string>> ShowOpenFolderDialogAsync(
             string? title = null,
             bool allowMultiple = false,

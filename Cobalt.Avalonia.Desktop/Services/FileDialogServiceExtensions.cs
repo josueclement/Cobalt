@@ -2,10 +2,24 @@ using Avalonia.Platform.Storage;
 
 namespace Cobalt.Avalonia.Desktop.Services;
 
+/// <summary>
+/// Provides convenient extension methods for <see cref="IFileDialogService"/> that simplify common file dialog operations.
+/// These methods automatically create and configure dialog options and return file paths as strings.
+/// </summary>
 public static class FileDialogServiceExtensions
 {
     extension(IFileDialogService service)
     {
+        /// <summary>
+        /// Shows an open file dialog with simplified parameters and returns the selected file paths as strings.
+        /// </summary>
+        /// <param name="title">The title to display in the dialog window.</param>
+        /// <param name="allowMultiple">Whether to allow selecting multiple files.</param>
+        /// <param name="suggestedStartLocation">The initial directory path to display in the dialog.</param>
+        /// <param name="suggestedFileName">The default file name to display in the dialog.</param>
+        /// <param name="fileTypeFilter">The list of file type filters to apply (e.g., only show .txt files).</param>
+        /// <returns>A task that represents the asynchronous operation, containing the paths of selected files as strings.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if no storage provider has been set.</exception>
         public async Task<IEnumerable<string>> ShowOpenFileDialogAsync(
             string? title = null,
             bool allowMultiple = false,
@@ -36,6 +50,17 @@ public static class FileDialogServiceExtensions
             return paths;
         }
 
+        /// <summary>
+        /// Shows a save file dialog with simplified parameters and returns the selected file path as a string.
+        /// </summary>
+        /// <param name="title">The title to display in the dialog window.</param>
+        /// <param name="suggestedStartLocation">The initial directory path to display in the dialog.</param>
+        /// <param name="suggestedFileName">The default file name to display in the dialog.</param>
+        /// <param name="defaultExtension">The default file extension to append if the user doesn't specify one.</param>
+        /// <param name="showOverwritePrompt">Whether to show a confirmation prompt if the selected file already exists.</param>
+        /// <param name="fileTypeChoices">The list of file type options to present in the save dialog.</param>
+        /// <returns>A task that represents the asynchronous operation, containing the selected file path as a string, or null if cancelled.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if no storage provider has been set.</exception>
         public async Task<string?> ShowSaveFileDialogAsync(
             string? title = null,
             string? suggestedStartLocation = null,
