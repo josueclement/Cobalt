@@ -26,6 +26,7 @@ public static class ServiceCollectionExtensions
             // Views are Transient so each navigation creates a new instance
             // ViewModels remain Singleton to preserve state
             _ = services.AddTransient<ChartsPageView>();
+            _ = services.AddTransient<DialogsTestingPageView>();
             _ = services.AddTransient<DockingTestingPageView>();
             _ = services.AddTransient<DummyPageView>();
             _ = services.AddTransient<EditorsTestingPageView>();
@@ -37,6 +38,7 @@ public static class ServiceCollectionExtensions
 
             _ = services.AddSingleton<MainWindowViewModel>();
             _ = services.AddSingleton<ChartsPageViewModel>();
+            _ = services.AddSingleton<DialogsTestingPageViewModel>();
             _ = services.AddSingleton<DockingTestingPageViewModel>();
             _ = services.AddSingleton<DummyPageViewModel>();
             _ = services.AddSingleton<EditorsTestingPageViewModel>();
