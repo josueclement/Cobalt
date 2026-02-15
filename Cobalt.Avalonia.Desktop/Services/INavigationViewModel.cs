@@ -1,4 +1,4 @@
-namespace Cobalt.Avalonia.Desktop;
+namespace Cobalt.Avalonia.Desktop.Services;
 
 /// <summary>
 /// Defines async lifecycle methods for navigation with cancellation support.

@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop;
+using Cobalt.Avalonia.Desktop.Services;
 using CobaltAvaloniaDesktopTester.Views;
 using Microsoft.Extensions.DependencyInjection;
 

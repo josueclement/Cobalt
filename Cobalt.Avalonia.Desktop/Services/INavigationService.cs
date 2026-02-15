@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using Avalonia.Controls;
 using Cobalt.Avalonia.Desktop.Controls.Navigation;
 
-namespace Cobalt.Avalonia.Desktop;
+namespace Cobalt.Avalonia.Desktop.Services;
 
 /// <summary>
 /// Defines a service for managing navigation within the application.
@@ -19,9 +19,26 @@ public interface INavigationService
     /// </summary>
     /// <param name="page">The page Control to navigate to (with DataContext already set).</param>
     Task NavigateToAsync(Control page);
-    
+
+    /// <summary>
+    /// Gets the collection of main navigation items displayed in the primary navigation area.
+    /// </summary>
     ObservableCollection<NavigationItemControl> Items { get; }
+
+    /// <summary>
+    /// Gets the collection of footer navigation items displayed at the bottom of the navigation area.
+    /// </summary>
     ObservableCollection<NavigationItemControl> FooterItems { get; }
+
+    /// <summary>
+    /// Gets or sets the currently selected navigation item.
+    /// Setting this property triggers navigation to the corresponding page.
+    /// </summary>
     NavigationItemControl? SelectedItem { get; set; }
+
+    /// <summary>
+    /// Gets or sets the factory function that creates page Control instances from navigation items.
+    /// Takes a <see cref="NavigationItemControl"/> and returns the corresponding page Control with its DataContext set.
+    /// </summary>
     Func<NavigationItemControl, Control> PageFactory { get; set; }
 }

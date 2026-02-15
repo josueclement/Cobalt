@@ -15,6 +15,10 @@ public class NavigationService : ObservableObject, INavigationService
     /// </summary>
     private readonly SemaphoreSlim _navigationLock = new(1, 1);
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="NavigationService"/> class.
+    /// Sets up the default <see cref="PageFactory"/> that creates page instances and their ViewModels.
+    /// </summary>
     public NavigationService()
     {
         PageFactory = navItem =>
@@ -61,7 +65,12 @@ public class NavigationService : ObservableObject, INavigationService
     /// Gets the footer navigation items.
     /// </summary>
     public ObservableCollection<NavigationItemControl> FooterItems { get; } = [];
-    
+
+    /// <summary>
+    /// Gets or sets the factory function that creates page Control instances from navigation items.
+    /// The default factory uses Activator.CreateInstance to create both the page and its ViewModel,
+    /// setting the ViewModel as the page's DataContext.
+    /// </summary>
     public Func<NavigationItemControl, Control> PageFactory { get; set; }
 
     /// <summary>
