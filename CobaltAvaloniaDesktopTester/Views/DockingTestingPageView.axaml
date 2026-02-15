@@ -8,8 +8,23 @@
              x:Class="CobaltAvaloniaDesktopTester.Views.DockingTestingPageView"
              x:DataType="vm:DockingTestingPageViewModel">
 
-    <cobalt:DockingControl x:Name="MainDockingControl">
-        <!-- Panes will be added programmatically in code-behind -->
+    <UserControl.DataTemplates>
+        <!-- DataTemplate for PaneContentViewModel -->
+        <DataTemplate DataType="vm:PaneContentViewModel">
+            <Border Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding Title}"
+                               FontSize="18"
+                               FontWeight="SemiBold" />
+                    <TextBlock Text="{Binding Description}"
+                               Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+    </UserControl.DataTemplates>
+
+    <cobalt:DockingControl LayoutRoot="{Binding RootLayout}">
+        <!-- Layout is bound from ViewModel -->
     </cobalt:DockingControl>
 
 </UserControl>

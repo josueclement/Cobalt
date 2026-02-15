@@ -20,6 +20,15 @@ public class DockingControl : TemplatedControl
     [Content]
     public AvaloniaList<DockPane> Panes { get; } = new();
 
+    public static readonly StyledProperty<DockLayoutNode?> LayoutRootProperty =
+        AvaloniaProperty.Register<DockingControl, DockLayoutNode?>(nameof(LayoutRoot));
+
+    public DockLayoutNode? LayoutRoot
+    {
+        get => GetValue(LayoutRootProperty);
+        set => SetValue(LayoutRootProperty, value);
+    }
+
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
@@ -43,6 +52,16 @@ public class DockingControl : TemplatedControl
         InitializeLayout();
     }
 
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
+    {
+        base.OnPropertyChanged(change);
+
+        if (change.Property == LayoutRootProperty)
+        {
+            BuildLayoutFromModel();
+        }
+    }
+
     public void SetRootLayout(Control root)
     {
         if (_rootHost == null)
@@ -52,9 +71,89 @@ public class DockingControl : TemplatedControl
         WireAllGroups(root);
     }
 
+    private void BuildLayoutFromModel()
+    {
+        if (_rootHost == null || LayoutRoot == null)
+            return;
+
+        var visualRoot = BuildVisualTree(LayoutRoot);
+        if (visualRoot != null)
+        {
+            _rootHost.Content = visualRoot;
+            WireAllGroups(visualRoot);
+        }
+    }
+
+    private Control? BuildVisualTree(DockLayoutNode node)
+    {
+        return node switch
+        {
+            DockPaneModel paneModel => BuildPane(paneModel),
+            DockTabGroupModel groupModel => BuildTabGroup(groupModel),
+            DockSplitModel splitModel => BuildSplit(splitModel),
+            _ => null
+        };
+    }
+
+    private DockPane BuildPane(DockPaneModel model)
+    {
+        return new DockPane
+        {
+            Header = model.Header,
+            PaneContent = model.Content,
+            CanClose = model.CanClose,
+            CanMove = model.CanMove
+        };
+    }
+
+    private DockTabGroup BuildTabGroup(DockTabGroupModel model)
+    {
+        var group = new DockTabGroup();
+
+        foreach (var paneModel in model.Panes)
+        {
+            var pane = BuildPane(paneModel);
+            group.Panes.Add(pane);
+
+            if (paneModel == model.SelectedPane)
+                group.SelectedPane = pane;
+        }
+
+        return group;
+    }
+
+    private DockSplitContainer BuildSplit(DockSplitModel model)
+    {
+        var split = new DockSplitContainer
+        {
+            Orientation = model.Orientation,
+            FirstSize = model.FirstSize,
+            SecondSize = model.SecondSize
+        };
+
+        if (model.First != null)
+            split.First = BuildVisualTree(model.First);
+
+        if (model.Second != null)
+            split.Second = BuildVisualTree(model.Second);
+
+        return split;
+    }
+
     private void InitializeLayout()
     {
-        if (_rootHost == null || Panes.Count == 0)
+        if (_rootHost == null)
+            return;
+
+        // If LayoutRoot model is set, build from model
+        if (LayoutRoot != null)
+        {
+            BuildLayoutFromModel();
+            return;
+        }
+
+        // If no panes, nothing to do
+        if (Panes.Count == 0)
             return;
 
         // Skip if layout already set programmatically
