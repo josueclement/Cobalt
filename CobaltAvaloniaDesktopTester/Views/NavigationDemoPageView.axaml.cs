@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace CobaltAvaloniaDesktopTester.Views;
 
-public partial class ContentDialogTestingPageView : UserControl
+public partial class NavigationDemoPageView : UserControl
 {
-    public ContentDialogTestingPageView()
+    public NavigationDemoPageView()
     {
         InitializeComponent();
     }

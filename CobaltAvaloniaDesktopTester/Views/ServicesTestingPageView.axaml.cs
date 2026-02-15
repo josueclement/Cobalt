@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace CobaltAvaloniaDesktopTester.Views;
 
-public partial class OverlayTestingPageView : UserControl
+public partial class ServicesTestingPageView : UserControl
 {
-    public OverlayTestingPageView()
+    public ServicesTestingPageView()
     {
         InitializeComponent();
     }

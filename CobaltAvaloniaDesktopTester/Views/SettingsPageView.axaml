@@ -23,6 +23,44 @@
                        FontWeight="SemiBold"
                        Margin="0,8,0,0" />
 
+            <Border Background="{DynamicResource CobaltSurfaceBrush}"
+                    BorderBrush="{DynamicResource CobaltBorderSubtleBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="16">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <!-- Icon container -->
+                    <Border Grid.Column="0"
+                            Width="40" Height="40"
+                            VerticalAlignment="Center">
+                        <PathIcon Data="{pia:IconGeometry Icon=moon}"
+                                  Width="20" Height="20"
+                                  Foreground="{DynamicResource CobaltForegroundBrush}" />
+                    </Border>
+
+                    <!-- Header + Description -->
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Margin="12,0,12,0">
+                        <TextBlock Text="Theme"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource CobaltForegroundBrush}" />
+                        <TextBlock Text="Switch between light and dark mode"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+                    </StackPanel>
+
+                    <!-- Toggle Switch -->
+                    <ToggleSwitch Grid.Column="2"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"
+                                  OnContent="Dark"
+                                  OffContent="Light" />
+                </Grid>
+            </Border>
+
             <cobalt:SettingsCardControl Header="Appearance"
                                         Description="Change theme, colors, and display options"
                                         IconData="{pia:IconGeometry Icon=palette}"
@@ -59,17 +97,37 @@
                        FontWeight="SemiBold"
                        Margin="0,8,0,0" />
 
+            <!-- SettingsCardExpander Examples -->
+            <cobalt:SettingsCardExpander Header="About this app"
+                                         Description="View application details"
+                                         IconData="{pia:IconGeometry Icon=info}">
+                <TextBlock Text="Enigma is a desktop application for encryption and key management, built with Avalonia and the Enigma.Cryptography library."
+                           TextWrapping="Wrap"
+                           Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+            </cobalt:SettingsCardExpander>
+
+            <cobalt:SettingsCardExpander Header="Preferences"
+                                         Description="Configure display and behavior options"
+                                         IconData="{pia:IconGeometry Icon=gear}">
+                <StackPanel Spacing="12">
+                    <TextBox Watermark="Display name" />
+                    <CheckBox Content="Enable notifications" />
+                    <CheckBox Content="Use dark theme" />
+                </StackPanel>
+            </cobalt:SettingsCardExpander>
+
+            <cobalt:SettingsCardExpander Header="Advanced"
+                                         Description="Additional configuration options">
+                <TextBlock Text="Advanced settings will be available in a future release."
+                           TextWrapping="Wrap"
+                           Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+            </cobalt:SettingsCardExpander>
+
             <cobalt:SettingsCardControl Header="Updates"
                                         Description="Check for application updates"
                                         IconData="{pia:IconGeometry Icon=arrow_clockwise}"
                                         Command="{Binding CardClickedCommand}"
                                         CommandParameter="Updates" />
-
-            <cobalt:SettingsCardControl Header="About Enigma"
-                                        Description="Version info, licenses, and acknowledgements"
-                                        IconData="{pia:IconGeometry Icon=info}"
-                                        Command="{Binding CardClickedCommand}"
-                                        CommandParameter="About Enigma" />
 
             <!-- Feedback -->
             <TextBlock Text="{Binding LastAction}"

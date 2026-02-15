@@ -1,29 +1,46 @@
+using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Cobalt.Avalonia.Desktop;
-using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Controls;
 using Cobalt.Avalonia.Desktop.Services;
+using CobaltAvaloniaDesktopTester.Views;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
 
 /// <summary>
-/// Demonstrates navigation cancellation with INavigationLifecycleAsync.
-/// Shows a confirmation dialog when trying to navigate away with unsaved changes.
+/// Demonstrates navigation features including NavigateTo and navigation cancellation with INavigationLifecycleAsync.
 /// </summary>
-public partial class NavigationCancellationDemoPageViewModel : ViewModelBase, INavigationViewModel
+public partial class NavigationDemoPageViewModel : ViewModelBase, INavigationViewModel
 {
+    private readonly IServiceProvider _services;
+    private readonly INavigationService _navigation;
     private readonly IContentDialogService _dialogService;
     private string _documentText = string.Empty;
     private string _savedText = string.Empty;
     private bool _hasUnsavedChanges;
 
-    public NavigationCancellationDemoPageViewModel(IContentDialogService dialogService)
+    public NavigationDemoPageViewModel(
+        IServiceProvider services,
+        INavigationService navigation,
+        IContentDialogService dialogService)
     {
+        _services = services;
+        _navigation = navigation;
         _dialogService = dialogService;
+
+        NavigateToSettingsCommand = new AsyncRelayCommand(NavigateToSettings);
+        NavigateToDummyCommand = new AsyncRelayCommand(NavigateToDummy);
     }
 
+    // Navigation properties
+    public IAsyncRelayCommand NavigateToSettingsCommand { get; }
+    public IAsyncRelayCommand NavigateToDummyCommand { get; }
+
+    // Cancellation properties
     public string DocumentText
     {
         get => _documentText;
@@ -31,7 +48,6 @@ public partial class NavigationCancellationDemoPageViewModel : ViewModelBase, IN
         {
             if (SetProperty(ref _documentText, value))
             {
-                // Mark as having unsaved changes whenever text changes
                 HasUnsavedChanges = _documentText != _savedText;
             }
         }
@@ -43,6 +59,22 @@ public partial class NavigationCancellationDemoPageViewModel : ViewModelBase, IN
         private set => SetProperty(ref _hasUnsavedChanges, value);
     }
 
+    // Navigation methods
+    private async Task NavigateToSettings()
+    {
+        var settingsPage = _services.GetRequiredService<SettingsPageView>();
+        settingsPage.DataContext = _services.GetRequiredService<SettingsPageViewModel>();
+        await _navigation.NavigateToAsync(settingsPage);
+    }
+
+    private async Task NavigateToDummy()
+    {
+        var dummyPage = _services.GetRequiredService<DummyPageView>();
+        dummyPage.DataContext = _services.GetRequiredService<DummyPageViewModel>();
+        await _navigation.NavigateToAsync(dummyPage);
+    }
+
+    // Cancellation methods
     [RelayCommand]
     private void Save()
     {
@@ -64,9 +96,8 @@ public partial class NavigationCancellationDemoPageViewModel : ViewModelBase, IN
     public async Task<bool> OnDisappearingAsync()
     {
         if (!HasUnsavedChanges)
-            return true; // No unsaved changes, allow navigation
+            return true;
 
-        // Show confirmation dialog
         var result = await _dialogService.ShowAsync(dialog =>
         {
             dialog.Title = "Unsaved Changes";
@@ -90,19 +121,14 @@ public partial class NavigationCancellationDemoPageViewModel : ViewModelBase, IN
             };
             dialog.PrimaryButtonText = "Discard Changes";
             dialog.SecondaryButtonText = "Keep Editing";
-            dialog.DefaultButton = DefaultButton.Secondary; // Default to safe option
+            dialog.DefaultButton = DefaultButton.Secondary;
         });
 
-        // Return true (allow navigation) only if user chose "Discard Changes"
         return result == DialogResult.Primary;
     }
 
-    /// <summary>
-    /// Called when the page appears.
-    /// </summary>
     public Task OnAppearingAsync()
     {
-        // Reset state when page appears
         return Task.CompletedTask;
     }
 }

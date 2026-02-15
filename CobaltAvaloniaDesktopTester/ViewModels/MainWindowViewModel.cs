@@ -1,10 +1,7 @@
 using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Avalonia.Styling;
 using Cobalt.Avalonia.Desktop;
-using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Controls.Navigation;
 using Cobalt.Avalonia.Desktop.Services;
 using CobaltAvaloniaDesktopTester.Views;
@@ -29,7 +26,6 @@ public class MainWindowViewModel : ViewModelBase
         DialogService = dialogService;
         OverlayService = overlayService;
         InfoBarService = infoBarService;
-        ToggleThemeCommand = new RelayCommand(ToggleTheme);
 
         Navigation.PageFactory = navItem =>
         {
@@ -48,24 +44,10 @@ public class MainWindowViewModel : ViewModelBase
         });
         Navigation.Items.Add(new NavigationItemControl
         {
-            Header = "Dialogs",
+            Header = "Services",
             IconData = IconService.CreateGeometry(Icon.chat_circle_text, IconType.regular),
-            PageType = typeof(ContentDialogTestingPageView),
-            PageViewModelType = typeof(ContentDialogTestingPageViewModel)
-        });
-        Navigation.Items.Add(new NavigationItemControl
-        {
-            Header = "Overlay",
-            IconData = IconService.CreateGeometry(Icon.check_circle, IconType.regular),
-            PageType = typeof(OverlayTestingPageView),
-            PageViewModelType = typeof(OverlayTestingPageViewModel)
-        });
-        Navigation.Items.Add(new NavigationItemControl
-        {
-            Header = "InfoBar",
-            IconData = IconService.CreateGeometry(Icon.info, IconType.regular),
-            PageType = typeof(InfoBarTestingPageView),
-            PageViewModelType = typeof(InfoBarTestingPageViewModel)
+            PageType = typeof(ServicesTestingPageView),
+            PageViewModelType = typeof(ServicesTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
@@ -73,13 +55,6 @@ public class MainWindowViewModel : ViewModelBase
             IconData = IconService.CreateGeometry(Icon.chart_bar, IconType.regular),
             PageType = typeof(ChartsPageView),
             PageViewModelType = typeof(ChartsPageViewModel)
-        });
-        Navigation.Items.Add(new NavigationItemControl
-        {
-            Header = "Expander",
-            IconData = IconService.CreateGeometry(Icon.caret_circle_up_down, IconType.regular),
-            PageType = typeof(ExpanderTestingPageView),
-            PageViewModelType = typeof(ExpanderTestingPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
@@ -104,17 +79,10 @@ public class MainWindowViewModel : ViewModelBase
         });
         Navigation.Items.Add(new NavigationItemControl
         {
-            Header = "Navigate",
+            Header = "Navigation",
             IconData = IconService.CreateGeometry(Icon.compass, IconType.regular),
-            PageType = typeof(NavigationTestingPageView),
-            PageViewModelType = typeof(NavigationTestingPageViewModel)
-        });
-        Navigation.Items.Add(new NavigationItemControl
-        {
-            Header = "Nav Cancel",
-            IconData = IconService.CreateGeometry(Icon.file_x, IconType.regular),
-            PageType = typeof(NavigationCancellationDemoPageView),
-            PageViewModelType = typeof(NavigationCancellationDemoPageViewModel)
+            PageType = typeof(NavigationDemoPageView),
+            PageViewModelType = typeof(NavigationDemoPageViewModel)
         });
         Navigation.Items.Add(new NavigationItemControl
         {
@@ -150,17 +118,4 @@ public class MainWindowViewModel : ViewModelBase
     public IOverlayService OverlayService { get; }
     public IInfoBarService InfoBarService { get; }
     public object Logo { get; }
-
-    public IRelayCommand ToggleThemeCommand { get; }
-
-    private void ToggleTheme()
-    {
-        var app = Application.Current;
-        if (app != null)
-        {
-            app.RequestedThemeVariant = app.ActualThemeVariant == ThemeVariant.Dark
-                ? ThemeVariant.Light
-                : ThemeVariant.Dark;
-        }
-    }
 }
