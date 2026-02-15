@@ -15,7 +15,25 @@ public partial class EditorsTestingPageViewModel : ViewModelBase
     private int? _intValue = 42;
 
     [ObservableProperty]
+    private uint? _uintValue = 42;
+
+    [ObservableProperty]
+    private short? _shortValue = -100;
+
+    [ObservableProperty]
+    private ushort? _ushortValue = 500;
+
+    [ObservableProperty]
+    private long? _longValue = 9876543210;
+
+    [ObservableProperty]
     private ulong? _ulongValue = 1024;
+
+    [ObservableProperty]
+    private float? _singleValue = 2.718f;
+
+    [ObservableProperty]
+    private decimal? _decimalValue = 99.95m;
 
     [ObservableProperty]
     private string? _multiLineTextValue = "Line one\nLine two\nLine three";
