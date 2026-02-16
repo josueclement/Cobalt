@@ -16,3 +16,20 @@ public enum CalendarViewMode
     Week,
     Month
 }
+
+public enum ScheduleInteractionMode
+{
+    None,
+    Move,
+    ResizeTop,
+    ResizeBottom
+}
+
+public class CalendarScheduleItemChangedEventArgs : EventArgs
+{
+    public required CalendarScheduleItem Item { get; init; }
+    public DateTimeOffset OriginalStart { get; init; }
+    public DateTimeOffset OriginalEnd { get; init; }
+    public DateTimeOffset NewStart { get; init; }
+    public DateTimeOffset NewEnd { get; init; }
+}

@@ -12,6 +12,31 @@ namespace Cobalt.Avalonia.Desktop.Controls.CalendarSchedule;
 public class CalendarScheduleControl : TemplatedControl
 {
     private const double HourHeight = 60.0;
+    private const double DragThreshold = 5.0;
+    private const double ResizeZonePixels = 6.0;
+    private const double SnapMinutes = 15.0;
+    private const double MinDurationMinutes = 15.0;
+    private const double AutoScrollZonePixels = 30.0;
+    private const double AutoScrollStep = 20.0;
+
+    public event EventHandler<CalendarScheduleItemChangedEventArgs>? ItemMoved;
+    public event EventHandler<CalendarScheduleItemChangedEventArgs>? ItemResized;
+
+    private sealed class ScheduleDragSession
+    {
+        public ScheduleInteractionMode Mode;
+        public CalendarScheduleItem Item = null!;
+        public Border Border = null!;
+        public DateTimeOffset OriginalStart;
+        public DateTimeOffset OriginalEnd;
+        public Point StartPointerPosition;
+        public double PointerToTopOffset;
+        public Border? Ghost;
+        public bool ThresholdExceeded;
+        public int OriginalDayIndex;
+    }
+
+    private ScheduleDragSession? _dragSession;
 
     public static readonly StyledProperty<DateTimeOffset> DisplayDateProperty =
         AvaloniaProperty.Register<CalendarScheduleControl, DateTimeOffset>(
@@ -154,8 +179,13 @@ public class CalendarScheduleControl : TemplatedControl
         if (_weekViewTimeGrid != null)
         {
             _weekViewTimeGrid.Background = Brushes.Transparent;
-            _weekViewTimeGrid.PointerPressed += (_, _) => SelectedItem = null;
+            _weekViewTimeGrid.PointerPressed += OnWeekGridPointerPressed;
+            _weekViewTimeGrid.PointerMoved += OnWeekGridPointerMoved;
+            _weekViewTimeGrid.PointerReleased += OnWeekGridPointerReleased;
+            _weekViewTimeGrid.PointerCaptureLost += OnWeekGridPointerCaptureLost;
         }
+
+        KeyDown += OnScheduleKeyDown;
 
         _miniCalDisplayMonth = new DateTimeOffset(DisplayDate.Year, DisplayDate.Month, 1, 0, 0, 0, DisplayDate.Offset);
         _initialScrollDone = false;
@@ -172,6 +202,7 @@ public class CalendarScheduleControl : TemplatedControl
             change.Property == ItemsProperty ||
             change.Property == FirstDayOfWeekProperty)
         {
+            CancelDrag();
             if (change.Property == DisplayDateProperty)
             {
                 _miniCalDisplayMonth = new DateTimeOffset(DisplayDate.Year, DisplayDate.Month, 1, 0, 0, 0, DisplayDate.Offset);
@@ -181,6 +212,7 @@ public class CalendarScheduleControl : TemplatedControl
         }
         else if (change.Property == ViewModeProperty)
         {
+            CancelDrag();
             UpdatePseudoClasses();
             _initialScrollDone = false;
             Rebuild();
@@ -634,7 +666,7 @@ public class CalendarScheduleControl : TemplatedControl
 
                 appointmentBorder.Child = textPanel;
 
-                SetupAppointmentInteraction(appointmentBorder, item);
+                SetupAppointmentInteraction(appointmentBorder, item, isWeekView: true);
 
                 Grid.SetColumn(appointmentBorder, dayIdx + 1);
                 Grid.SetRow(appointmentBorder, startRow);
@@ -671,7 +703,7 @@ public class CalendarScheduleControl : TemplatedControl
         }
     }
 
-    private void SetupAppointmentInteraction(Border border, CalendarScheduleItem item)
+    private void SetupAppointmentInteraction(Border border, CalendarScheduleItem item, bool isWeekView = false)
     {
         var baseBrush = border.Background ?? GetBrush("CobaltCalendarAppointmentBrush");
         bool isSelected = SelectedItem == item;
@@ -685,19 +717,79 @@ public class CalendarScheduleControl : TemplatedControl
 
         border.PointerEntered += (_, _) =>
         {
-            border.Opacity = 0.8;
+            if (_dragSession == null)
+                border.Opacity = 0.8;
         };
 
         border.PointerExited += (_, _) =>
         {
-            border.Opacity = 1.0;
+            if (_dragSession == null)
+            {
+                border.Opacity = 1.0;
+                border.Cursor = new Cursor(StandardCursorType.Hand);
+            }
         };
 
-        border.PointerPressed += (_, e) =>
+        if (isWeekView)
         {
-            SelectedItem = item;
-            e.Handled = true;
-        };
+            bool isMultiDay = item.Start.Date != item.End.Date;
+
+            border.PointerMoved += (_, e) =>
+            {
+                if (_dragSession != null) return;
+                if (isMultiDay) return;
+
+                var pos = e.GetPosition(border);
+                bool nearTop = pos.Y <= ResizeZonePixels && border.Bounds.Height >= 24;
+                bool nearBottom = pos.Y >= border.Bounds.Height - ResizeZonePixels && border.Bounds.Height >= 24;
+
+                border.Cursor = (nearTop || nearBottom)
+                    ? new Cursor(StandardCursorType.SizeNorthSouth)
+                    : new Cursor(StandardCursorType.Hand);
+            };
+
+            border.PointerPressed += (_, e) =>
+            {
+                SelectedItem = item;
+                e.Handled = true;
+
+                if (isMultiDay || _weekViewTimeGrid == null) return;
+
+                var posOnBorder = e.GetPosition(border);
+                bool nearTop = posOnBorder.Y <= ResizeZonePixels && border.Bounds.Height >= 24;
+                bool nearBottom = posOnBorder.Y >= border.Bounds.Height - ResizeZonePixels && border.Bounds.Height >= 24;
+
+                ScheduleInteractionMode mode;
+                if (nearTop) mode = ScheduleInteractionMode.ResizeTop;
+                else if (nearBottom) mode = ScheduleInteractionMode.ResizeBottom;
+                else mode = ScheduleInteractionMode.Move;
+
+                var posOnGrid = e.GetPosition(_weekViewTimeGrid);
+                int dayIndex = PointerXToDayIndex(posOnGrid.X);
+
+                _dragSession = new ScheduleDragSession
+                {
+                    Mode = mode,
+                    Item = item,
+                    Border = border,
+                    OriginalStart = item.Start,
+                    OriginalEnd = item.End,
+                    StartPointerPosition = posOnGrid,
+                    PointerToTopOffset = posOnBorder.Y,
+                    OriginalDayIndex = dayIndex
+                };
+
+                e.Pointer.Capture(_weekViewTimeGrid);
+            };
+        }
+        else
+        {
+            border.PointerPressed += (_, e) =>
+            {
+                SelectedItem = item;
+                e.Handled = true;
+            };
+        }
     }
 
     private void UpdateAppointmentSelection()
@@ -707,6 +799,301 @@ public class CalendarScheduleControl : TemplatedControl
             bool isSelected = SelectedItem == item;
             border.BorderBrush = isSelected ? Brushes.White : null;
             border.BorderThickness = new Thickness(isSelected ? 1.5 : 0);
+        }
+    }
+
+    // --- Drag / Resize helpers ---
+
+    private TimeSpan PointerYToTime(double y)
+    {
+        double hours = y / HourHeight;
+        hours = Math.Clamp(hours, 0, 24);
+        return TimeSpan.FromHours(hours);
+    }
+
+    private static TimeSpan SnapToInterval(TimeSpan time)
+    {
+        int totalMinutes = (int)Math.Round(time.TotalMinutes / SnapMinutes) * (int)SnapMinutes;
+        totalMinutes = Math.Clamp(totalMinutes, 0, 24 * 60);
+        return TimeSpan.FromMinutes(totalMinutes);
+    }
+
+    private int PointerXToDayIndex(double x)
+    {
+        if (_weekViewTimeGrid == null) return 0;
+
+        // Column 0 is time labels; columns 1-7 are days
+        var colDefs = _weekViewTimeGrid.ColumnDefinitions;
+        if (colDefs.Count < 2) return 0;
+
+        double timeLabelWidth = colDefs[0].ActualWidth;
+        double dayAreaWidth = _weekViewTimeGrid.Bounds.Width - timeLabelWidth;
+        if (dayAreaWidth <= 0) return 0;
+
+        double dayColumnWidth = dayAreaWidth / 7.0;
+        int index = (int)((x - timeLabelWidth) / dayColumnWidth);
+        return Math.Clamp(index, 0, 6);
+    }
+
+    private void RepositionAppointmentBorder(Border border, TimeSpan start, TimeSpan end, int dayIndex)
+    {
+        double topOffset = start.TotalHours * HourHeight;
+        double height = Math.Max((end - start).TotalHours * HourHeight, 20);
+
+        int startRow = (int)start.TotalHours;
+        if (startRow >= 24) startRow = 23;
+
+        Grid.SetColumn(border, dayIndex + 1);
+        Grid.SetRow(border, startRow);
+        border.Margin = new Thickness(2, topOffset - (startRow * HourHeight), 2, 0);
+        border.Height = height;
+    }
+
+    private void CreateDragGhost(ScheduleDragSession session)
+    {
+        if (session.Ghost != null || _weekViewTimeGrid == null) return;
+
+        var start = session.OriginalStart.TimeOfDay;
+        var end = session.OriginalEnd.TimeOfDay;
+        double topOffset = start.TotalHours * HourHeight;
+        double height = Math.Max((end - start).TotalHours * HourHeight, 20);
+        int startRow = (int)start.TotalHours;
+        if (startRow >= 24) startRow = 23;
+
+        var ghost = new Border
+        {
+            Background = session.Border.Background,
+            Opacity = 0.3,
+            CornerRadius = new CornerRadius(4),
+            Height = height,
+            Margin = new Thickness(2, topOffset - (startRow * HourHeight), 2, 0),
+            VerticalAlignment = VerticalAlignment.Top,
+            IsHitTestVisible = false
+        };
+
+        Grid.SetColumn(ghost, session.OriginalDayIndex + 1);
+        Grid.SetRow(ghost, startRow);
+        _weekViewTimeGrid.Children.Add(ghost);
+        session.Ghost = ghost;
+    }
+
+    private void RemoveDragGhost(ScheduleDragSession session)
+    {
+        if (session.Ghost != null && _weekViewTimeGrid != null)
+        {
+            _weekViewTimeGrid.Children.Remove(session.Ghost);
+            session.Ghost = null;
+        }
+    }
+
+    private void CancelDrag()
+    {
+        if (_dragSession == null) return;
+
+        var session = _dragSession;
+        _dragSession = null;
+
+        // Revert item times
+        session.Item.Start = session.OriginalStart;
+        session.Item.End = session.OriginalEnd;
+
+        // Revert border position
+        var start = session.OriginalStart.TimeOfDay;
+        var end = session.OriginalEnd.TimeOfDay;
+        RepositionAppointmentBorder(session.Border, start, end, session.OriginalDayIndex);
+
+        RemoveDragGhost(session);
+        RefreshAppointmentContent(session.Border, session.Item);
+
+        session.Border.Opacity = 1.0;
+        Cursor = Cursor.Default;
+    }
+
+    private static void RefreshAppointmentContent(Border border, CalendarScheduleItem item)
+    {
+        if (border.Child is StackPanel panel && panel.Children.Count >= 2 &&
+            panel.Children[1] is TextBlock timeText)
+        {
+            timeText.Text = $"{item.Start:HH:mm} – {item.End:HH:mm}";
+        }
+        else if (border.Child is StackPanel panel2 && panel2.Children.Count == 1 &&
+                 border.Height > 36)
+        {
+            // Duration became long enough to show time text
+            var newTimeText = new TextBlock
+            {
+                Text = $"{item.Start:HH:mm} – {item.End:HH:mm}",
+                FontSize = 10,
+                Foreground = new SolidColorBrush(Color.FromArgb(200, 255, 255, 255))
+            };
+            panel2.Children.Add(newTimeText);
+        }
+    }
+
+    // --- Week grid pointer event handlers ---
+
+    private void OnWeekGridPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        // If no drag session was started by an appointment border, this is a click on empty space
+        if (_dragSession == null)
+            SelectedItem = null;
+    }
+
+    private void OnWeekGridPointerMoved(object? sender, PointerEventArgs e)
+    {
+        if (_dragSession == null || _weekViewTimeGrid == null) return;
+
+        var session = _dragSession;
+        var pos = e.GetPosition(_weekViewTimeGrid);
+
+        // Check threshold
+        if (!session.ThresholdExceeded)
+        {
+            var delta = pos - session.StartPointerPosition;
+            if (Math.Sqrt(delta.X * delta.X + delta.Y * delta.Y) < DragThreshold)
+                return;
+
+            session.ThresholdExceeded = true;
+            CreateDragGhost(session);
+
+            Cursor = session.Mode == ScheduleInteractionMode.Move
+                ? new Cursor(StandardCursorType.SizeAll)
+                : new Cursor(StandardCursorType.SizeNorthSouth);
+        }
+
+        var weekStart = GetWeekStart(DisplayDate);
+        var duration = session.OriginalEnd - session.OriginalStart;
+
+        switch (session.Mode)
+        {
+            case ScheduleInteractionMode.Move:
+            {
+                var rawTime = PointerYToTime(pos.Y - session.PointerToTopOffset);
+                var snappedStart = SnapToInterval(rawTime);
+                var snappedEnd = snappedStart + duration;
+
+                // Clamp to 0-24h
+                if (snappedEnd > TimeSpan.FromHours(24))
+                {
+                    snappedEnd = TimeSpan.FromHours(24);
+                    snappedStart = snappedEnd - duration;
+                }
+                if (snappedStart < TimeSpan.Zero)
+                {
+                    snappedStart = TimeSpan.Zero;
+                    snappedEnd = snappedStart + duration;
+                }
+
+                int dayIndex = PointerXToDayIndex(pos.X);
+                var newDateBase = new DateTimeOffset(weekStart.AddDays(dayIndex).Date, session.OriginalStart.Offset);
+
+                session.Item.Start = newDateBase + snappedStart;
+                session.Item.End = newDateBase + snappedEnd;
+
+                RepositionAppointmentBorder(session.Border, snappedStart, snappedEnd, dayIndex);
+                RefreshAppointmentContent(session.Border, session.Item);
+                break;
+            }
+            case ScheduleInteractionMode.ResizeTop:
+            {
+                var rawTime = PointerYToTime(pos.Y);
+                var snappedStart = SnapToInterval(rawTime);
+                var currentEnd = session.Item.End.TimeOfDay;
+
+                // Enforce minimum duration
+                if (currentEnd - snappedStart < TimeSpan.FromMinutes(MinDurationMinutes))
+                    snappedStart = currentEnd - TimeSpan.FromMinutes(MinDurationMinutes);
+
+                if (snappedStart < TimeSpan.Zero)
+                    snappedStart = TimeSpan.Zero;
+
+                int dayIndex = Grid.GetColumn(session.Border) - 1;
+                var dateBase = new DateTimeOffset(session.Item.Start.Date, session.OriginalStart.Offset);
+
+                session.Item.Start = dateBase + snappedStart;
+
+                RepositionAppointmentBorder(session.Border, snappedStart, currentEnd, dayIndex);
+                RefreshAppointmentContent(session.Border, session.Item);
+                break;
+            }
+            case ScheduleInteractionMode.ResizeBottom:
+            {
+                var rawTime = PointerYToTime(pos.Y);
+                var snappedEnd = SnapToInterval(rawTime);
+                var currentStart = session.Item.Start.TimeOfDay;
+
+                // Enforce minimum duration
+                if (snappedEnd - currentStart < TimeSpan.FromMinutes(MinDurationMinutes))
+                    snappedEnd = currentStart + TimeSpan.FromMinutes(MinDurationMinutes);
+
+                if (snappedEnd > TimeSpan.FromHours(24))
+                    snappedEnd = TimeSpan.FromHours(24);
+
+                int dayIndex = Grid.GetColumn(session.Border) - 1;
+                var dateBase = new DateTimeOffset(session.Item.End.Date, session.OriginalEnd.Offset);
+
+                session.Item.End = dateBase + snappedEnd;
+
+                RepositionAppointmentBorder(session.Border, currentStart, snappedEnd, dayIndex);
+                RefreshAppointmentContent(session.Border, session.Item);
+                break;
+            }
+        }
+
+        // Auto-scroll when near edges of scroll viewer
+        if (_weekViewScrollViewer != null)
+        {
+            var posInScroller = e.GetPosition(_weekViewScrollViewer);
+            if (posInScroller.Y < AutoScrollZonePixels)
+                _weekViewScrollViewer.Offset = new Vector(_weekViewScrollViewer.Offset.X,
+                    Math.Max(0, _weekViewScrollViewer.Offset.Y - AutoScrollStep));
+            else if (posInScroller.Y > _weekViewScrollViewer.Bounds.Height - AutoScrollZonePixels)
+                _weekViewScrollViewer.Offset = new Vector(_weekViewScrollViewer.Offset.X,
+                    _weekViewScrollViewer.Offset.Y + AutoScrollStep);
+        }
+    }
+
+    private void OnWeekGridPointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (_dragSession == null) return;
+
+        var session = _dragSession;
+        _dragSession = null;
+
+        e.Pointer.Capture(null);
+        RemoveDragGhost(session);
+        session.Border.Opacity = 1.0;
+        Cursor = Cursor.Default;
+
+        if (!session.ThresholdExceeded)
+            return; // Was just a click — selection already handled
+
+        var args = new CalendarScheduleItemChangedEventArgs
+        {
+            Item = session.Item,
+            OriginalStart = session.OriginalStart,
+            OriginalEnd = session.OriginalEnd,
+            NewStart = session.Item.Start,
+            NewEnd = session.Item.End
+        };
+
+        if (session.Mode == ScheduleInteractionMode.Move)
+            ItemMoved?.Invoke(this, args);
+        else
+            ItemResized?.Invoke(this, args);
+    }
+
+    private void OnWeekGridPointerCaptureLost(object? sender, PointerCaptureLostEventArgs e)
+    {
+        CancelDrag();
+    }
+
+    private void OnScheduleKeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Escape && _dragSession != null)
+        {
+            CancelDrag();
+            e.Handled = true;
         }
     }
 
