@@ -47,7 +47,7 @@ public class Displayer2DPageViewModel : ViewModelBase
             new PathShape
             {
                 X = 20, Y = 220,
-                Geometry = global::Avalonia.Media.Geometry.Parse("M 0,0 L 40,0 L 40,40 L 0,40 Z M 10,10 L 30,10 L 30,30 L 10,30 Z"),
+                Geometry = global::Avalonia.Media.Geometry.Parse("M 0,10 L 30,10 L 30,0 L 50,20 L 30,40 L 30,30 L 0,30 Z"),
                 Fill = new SolidColorBrush(Color.Parse("#E8A33D")),
                 Stroke = new SolidColorBrush(Color.Parse("#C48832")),
                 StrokeThickness = 1.5,
@@ -65,14 +65,53 @@ public class Displayer2DPageViewModel : ViewModelBase
             },
             new ImageShape
             {
-                X = 200, Y = 310, Width = 120, Height = 80,
+                X = 200, Y = 220, Width = 120, Height = 80,
+                Source = CreateTestImage(),
                 ZIndex = 6
+            },
+            new RectangleShape
+            {
+                X = 8, Y = 8, Width = 240, Height = 28,
+                Fill = new SolidColorBrush(Color.FromArgb(200, 30, 30, 50)),
+                Stroke = new SolidColorBrush(Color.Parse("#3574F0")),
+                StrokeThickness = 1,
+                IsFixed = true, ZIndex = 100
+            },
+            new TextShape
+            {
+                X = 14, Y = 14,
+                Text = "Fixed overlay — pan/zoom freely",
+                FontSize = 13,
+                Foreground = new SolidColorBrush(Color.Parse("#BCBEC4")),
+                IsFixed = true, ZIndex = 101
             }
         ];
 
         Groups = [new SampleDrawingObjectGroup()];
 
         Interaction = new PanZoomInteraction();
+    }
+
+    private static IImage CreateTestImage()
+    {
+        var group = new DrawingGroup();
+        group.Children.Add(new GeometryDrawing
+        {
+            Brush = new SolidColorBrush(Color.Parse("#1E1E2E")),
+            Geometry = new RectangleGeometry(new Rect(0, 0, 120, 80))
+        });
+        group.Children.Add(new GeometryDrawing
+        {
+            Pen = new Pen(new SolidColorBrush(Color.Parse("#3574F0")), 2),
+            Geometry = Geometry.Parse("M 0,0 L 120,80 M 120,0 L 0,80")
+        });
+        group.Children.Add(new GeometryDrawing
+        {
+            Brush = new SolidColorBrush(Color.Parse("#E8A33D")),
+            Pen = new Pen(new SolidColorBrush(Color.Parse("#C48832")), 1.5),
+            Geometry = new EllipseGeometry(new Rect(40, 25, 40, 30))
+        });
+        return new DrawingImage(group);
     }
 }
 

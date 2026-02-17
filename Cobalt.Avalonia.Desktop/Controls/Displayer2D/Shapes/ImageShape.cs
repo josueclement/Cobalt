@@ -10,7 +10,6 @@ public partial class ImageShape : DrawingObject
     public override void Render(DrawingContext context)
     {
         if (Source is null) return;
-        using var _ = context.PushTransform(RenderTransform);
-        context.DrawImage(Source, new global::Avalonia.Rect(X, Y, Width, Height));
+        context.DrawImage(Source, new global::Avalonia.Rect(CanvasX, CanvasY, CanvasWidth, CanvasHeight));
     }
 }

@@ -15,7 +15,6 @@ public partial class TextShape : DrawingObject
     public override void Render(DrawingContext context)
     {
         if (string.IsNullOrEmpty(Text)) return;
-        using var _ = context.PushTransform(RenderTransform);
         var typeface = new Typeface(FontFamily, global::Avalonia.Media.FontStyle.Normal, FontWeight);
         var ft = new FormattedText(
             Text,
@@ -24,6 +23,6 @@ public partial class TextShape : DrawingObject
             typeface,
             FontSize,
             Foreground ?? global::Avalonia.Media.Brushes.Black);
-        context.DrawText(ft, new global::Avalonia.Point(X, Y));
+        context.DrawText(ft, new global::Avalonia.Point(CanvasX, CanvasY));
     }
 }

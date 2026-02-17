@@ -18,10 +18,8 @@ internal sealed class Displayer2DCanvas : Control
         using var clip = context.PushClip(new global::Avalonia.Rect(Bounds.Size));
 
         var zoom = Owner.ZoomFactor;
-        var viewportMatrix = global::Avalonia.Matrix.CreateScale(zoom, zoom)
-                           * global::Avalonia.Matrix.CreateTranslation(Owner.PanX, Owner.PanY);
-
-        using var _ = context.PushTransform(viewportMatrix);
+        var panX = Owner.PanX;
+        var panY = Owner.PanY;
 
         var objects = Enumerable.Empty<DrawingObject>();
 
@@ -36,8 +34,9 @@ internal sealed class Displayer2DCanvas : Control
 
         foreach (var obj in objects.OrderBy(o => o.ZIndex))
         {
-            if (obj.IsVisible)
-                obj.Render(context);
+            if (!obj.IsVisible) continue;
+            obj.RecalculateCoordinates(zoom, panX, panY);
+            obj.Render(context);
         }
     }
 }

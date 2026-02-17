@@ -13,9 +13,8 @@ public sealed partial class PointShape : Shape
 
     public override void Render(DrawingContext context)
     {
-        using var _ = context.PushTransform(RenderTransform);
         context.DrawEllipse(Fill, BuildPen(),
-            new global::Avalonia.Point(X, Y),
+            new global::Avalonia.Point(CanvasX, CanvasY),
             Width / 2, Height / 2);
     }
 }
