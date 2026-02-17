@@ -23,6 +23,7 @@ public class Displayer2DPageViewModel : ViewModelBase
                 Fill = new SolidColorBrush(Color.Parse("#3574F0")),
                 FillHover = new SolidColorBrush(Color.Parse("#7AB0FF")),
                 StrokeHover = new SolidColorBrush(Color.Parse("#FFFFFF")),
+                Rotation = 45,
                 ZIndex = 0
             },
             new EllipseShape

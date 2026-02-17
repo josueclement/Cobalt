@@ -1,3 +1,4 @@
+using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using global::Avalonia;
 using global::Avalonia.Media;
@@ -11,7 +12,7 @@ public abstract partial class DrawingObject : ObservableObject
     [ObservableProperty] private int _zIndex;
     [ObservableProperty] private double _width = 100;
     [ObservableProperty] private double _height = 100;
-    [ObservableProperty] private Matrix _renderTransform = Matrix.Identity;
+    [ObservableProperty] private double _rotation;
     [ObservableProperty] private bool _isVisible = true;
     [ObservableProperty] private bool _isFixed;
 
@@ -38,6 +39,22 @@ public abstract partial class DrawingObject : ObservableObject
     }
 
     protected virtual void RecalculateExtraCoordinates(double zoom, double panX, double panY) { }
+
+    /// <summary>
+    /// Pushes a rotation transform around the bounding-box centre.
+    /// Returns null (and does nothing) when <see cref="Rotation"/> is zero.
+    /// </summary>
+    protected IDisposable? PushRotation(DrawingContext context)
+    {
+        if (Rotation == 0.0) return null;
+        var cx  = CanvasX + CanvasWidth  / 2;
+        var cy  = CanvasY + CanvasHeight / 2;
+        var rad = Rotation * Math.PI / 180.0;
+        var m   = Matrix.CreateTranslation(-cx, -cy)
+                * Matrix.CreateRotation(rad)
+                * Matrix.CreateTranslation(cx, cy);
+        return context.PushTransform(m);
+    }
 
     public abstract void Render(DrawingContext context);
 }

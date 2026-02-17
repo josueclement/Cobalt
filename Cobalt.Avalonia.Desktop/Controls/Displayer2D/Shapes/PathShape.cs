@@ -22,7 +22,8 @@ public sealed partial class PathShape : Shape
     public override void Render(DrawingContext context)
     {
         if (Geometry is null) return;
-        var combined = RenderTransform * Matrix.CreateTranslation(X, Y) * _viewportMatrix;
+        var rotation = Matrix.CreateRotation(Rotation * Math.PI / 180.0);
+        var combined = rotation * Matrix.CreateTranslation(X, Y) * _viewportMatrix;
         using var _ = context.PushTransform(combined);
         // Compensate stroke thickness for zoom so it remains constant in screen pixels
         var pen = EffectiveStroke is null ? null : new Pen(EffectiveStroke, StrokeThickness / _zoom);

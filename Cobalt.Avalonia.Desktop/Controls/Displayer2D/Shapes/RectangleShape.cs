@@ -7,6 +7,7 @@ public sealed partial class RectangleShape : Shape
 {
     public override void Render(DrawingContext context)
     {
+        using var _ = PushRotation(context);
         context.DrawRectangle(EffectiveFill, BuildPen(), new Rect(CanvasX, CanvasY, CanvasWidth, CanvasHeight));
     }
 }
