@@ -42,7 +42,8 @@ public class Displayer2DPageViewModel : ViewModelBase
             {
                 X = 200, Y = 130,
                 Fill = new SolidColorBrush(Color.Parse("#BCBEC4")),
-                ZIndex = 3
+                ZIndex = 3,
+                Width = 15, Height = 15
             },
             new PathShape
             {
@@ -50,7 +51,7 @@ public class Displayer2DPageViewModel : ViewModelBase
                 Geometry = global::Avalonia.Media.Geometry.Parse("M 0,10 L 30,10 L 30,0 L 50,20 L 30,40 L 30,30 L 0,30 Z"),
                 Fill = new SolidColorBrush(Color.Parse("#E8A33D")),
                 Stroke = new SolidColorBrush(Color.Parse("#C48832")),
-                StrokeThickness = 1.5,
+                StrokeThickness = 8.5,
                 ZIndex = 4
             },
             new TextShape
