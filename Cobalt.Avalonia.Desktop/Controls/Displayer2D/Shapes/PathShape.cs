@@ -20,7 +20,7 @@ public sealed partial class PathShape : Shape
     public override void Render(DrawingContext context)
     {
         if (Geometry is null) return;
-        var combined = _viewportMatrix * RenderTransform * Matrix.CreateTranslation(X, Y);
+        var combined = RenderTransform * Matrix.CreateTranslation(X, Y) * _viewportMatrix;
         using var _ = context.PushTransform(combined);
         context.DrawGeometry(Fill, BuildPen(), Geometry);
     }
