@@ -21,6 +21,8 @@ public class Displayer2DPageViewModel : ViewModelBase
             {
                 X = 20, Y = 20, Width = 150, Height = 80,
                 Fill = new SolidColorBrush(Color.Parse("#3574F0")),
+                FillHover = new SolidColorBrush(Color.Parse("#7AB0FF")),
+                StrokeHover = new SolidColorBrush(Color.Parse("#FFFFFF")),
                 ZIndex = 0
             },
             new EllipseShape
@@ -29,6 +31,8 @@ public class Displayer2DPageViewModel : ViewModelBase
                 Fill = new SolidColorBrush(Color.Parse("#59A869")),
                 Stroke = new SolidColorBrush(Color.Parse("#3B8C4B")),
                 StrokeThickness = 2,
+                FillHover = new SolidColorBrush(Color.Parse("#90E09F")),
+                StrokeHover = new SolidColorBrush(Color.Parse("#FFFFFF")),
                 ZIndex = 1
             },
             new LineShape
@@ -36,12 +40,15 @@ public class Displayer2DPageViewModel : ViewModelBase
                 X = 20, Y = 180, X2 = 340, Y2 = 180,
                 Stroke = new SolidColorBrush(Color.Parse("#F75464")),
                 StrokeThickness = 3,
+                StrokeHover = new SolidColorBrush(Color.Parse("#FFD700")),
                 ZIndex = 2
             },
             new PointShape
             {
                 X = 200, Y = 130,
                 Fill = new SolidColorBrush(Color.Parse("#BCBEC4")),
+                FillHover = new SolidColorBrush(Color.Parse("#FFFFFF")),
+                StrokeHover = new SolidColorBrush(Color.Parse("#3574F0")),
                 ZIndex = 3,
                 Width = 15, Height = 15
             },
@@ -52,6 +59,8 @@ public class Displayer2DPageViewModel : ViewModelBase
                 Fill = new SolidColorBrush(Color.Parse("#E8A33D")),
                 Stroke = new SolidColorBrush(Color.Parse("#C48832")),
                 StrokeThickness = 8.5,
+                FillHover = new SolidColorBrush(Color.Parse("#FFD580")),
+                StrokeHover = new SolidColorBrush(Color.Parse("#FFFFFF")),
                 ZIndex = 4
             },
             new TextShape
@@ -72,7 +81,7 @@ public class Displayer2DPageViewModel : ViewModelBase
             },
             new RectangleShape
             {
-                X = 8, Y = 8, Width = 240, Height = 28,
+                X = 8, Y = 8, Width = 490, Height = 28,
                 Fill = new SolidColorBrush(Color.FromArgb(200, 30, 30, 50)),
                 Stroke = new SolidColorBrush(Color.Parse("#3574F0")),
                 StrokeThickness = 1,
@@ -81,7 +90,7 @@ public class Displayer2DPageViewModel : ViewModelBase
             new TextShape
             {
                 X = 14, Y = 14,
-                Text = "Fixed overlay — pan/zoom freely",
+                Text = "Fixed overlay — pan/zoom freely — hover shapes to see FillHover/StrokeHover",
                 FontSize = 13,
                 Foreground = new SolidColorBrush(Color.Parse("#BCBEC4")),
                 IsFixed = true, ZIndex = 101

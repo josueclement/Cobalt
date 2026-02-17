@@ -25,7 +25,7 @@ public sealed partial class PathShape : Shape
         var combined = RenderTransform * Matrix.CreateTranslation(X, Y) * _viewportMatrix;
         using var _ = context.PushTransform(combined);
         // Compensate stroke thickness for zoom so it remains constant in screen pixels
-        var pen = Stroke is null ? null : new Pen(Stroke, StrokeThickness / _zoom);
-        context.DrawGeometry(Fill, pen, Geometry);
+        var pen = EffectiveStroke is null ? null : new Pen(EffectiveStroke, StrokeThickness / _zoom);
+        context.DrawGeometry(EffectiveFill, pen, Geometry);
     }
 }

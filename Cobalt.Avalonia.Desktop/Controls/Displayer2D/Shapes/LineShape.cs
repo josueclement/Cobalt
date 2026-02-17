@@ -25,4 +25,18 @@ public sealed partial class LineShape : Shape
         context.DrawLine(pen, new global::Avalonia.Point(CanvasX, CanvasY),
                               new global::Avalonia.Point(CanvasX2, CanvasY2));
     }
+
+    // Point-to-segment distance, 5px tolerance for easier hovering
+    public override bool HitTest(Point p)
+    {
+        const double tolerance = 5.0;
+        var ax = CanvasX2 - CanvasX;
+        var ay = CanvasY2 - CanvasY;
+        var lenSq = ax * ax + ay * ay;
+        if (lenSq == 0) return Math.Abs(p.X - CanvasX) <= tolerance && Math.Abs(p.Y - CanvasY) <= tolerance;
+        var t = Math.Clamp(((p.X - CanvasX) * ax + (p.Y - CanvasY) * ay) / lenSq, 0, 1);
+        var dx = p.X - (CanvasX + t * ax);
+        var dy = p.Y - (CanvasY + t * ay);
+        return dx * dx + dy * dy <= tolerance * tolerance;
+    }
 }

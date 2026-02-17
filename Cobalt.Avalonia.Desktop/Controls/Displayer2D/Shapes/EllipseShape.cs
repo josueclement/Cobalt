@@ -7,7 +7,7 @@ public sealed partial class EllipseShape : Shape
 {
     public override void Render(DrawingContext context)
     {
-        context.DrawEllipse(Fill, BuildPen(),
+        context.DrawEllipse(EffectiveFill, BuildPen(),
             new global::Avalonia.Point(CanvasX + CanvasWidth / 2, CanvasY + CanvasHeight / 2),
             CanvasWidth / 2, CanvasHeight / 2);
     }

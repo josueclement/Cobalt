@@ -7,6 +7,6 @@ public sealed partial class RectangleShape : Shape
 {
     public override void Render(DrawingContext context)
     {
-        context.DrawRectangle(Fill, BuildPen(), new Rect(CanvasX, CanvasY, CanvasWidth, CanvasHeight));
+        context.DrawRectangle(EffectiveFill, BuildPen(), new Rect(CanvasX, CanvasY, CanvasWidth, CanvasHeight));
     }
 }
