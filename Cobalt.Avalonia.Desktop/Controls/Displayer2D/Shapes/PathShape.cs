@@ -1,12 +1,11 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using global::Avalonia;
 using global::Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
-public sealed partial class PathShape : Shape
+public sealed class PathShape : Shape
 {
-    [ObservableProperty] private Geometry? _geometry;
+    public Geometry? Geometry { get; set => SetProperty(ref field, value); }
 
     private Matrix _viewportMatrix = Matrix.Identity;
     private double _zoom = 1.0;

@@ -1,13 +1,12 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using global::Avalonia;
 using global::Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
-public sealed partial class LineShape : Shape
+public sealed class LineShape : Shape
 {
-    [ObservableProperty] private double _x2;
-    [ObservableProperty] private double _y2;
+    public double X2 { get; set => SetProperty(ref field, value); }
+    public double Y2 { get; set => SetProperty(ref field, value); }
 
     public double CanvasX2 { get; private set; }
     public double CanvasY2 { get; private set; }

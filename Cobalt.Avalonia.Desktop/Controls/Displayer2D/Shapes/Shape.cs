@@ -1,17 +1,16 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using global::Avalonia;
 using global::Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
-public abstract partial class Shape : DrawingObject
+public abstract class Shape : DrawingObject
 {
-    [ObservableProperty] private IBrush? _fill;
-    [ObservableProperty] private IBrush? _stroke;
-    [ObservableProperty] private double _strokeThickness = 1.0;
+    public IBrush? Fill           { get; set => SetProperty(ref field, value); }
+    public IBrush? Stroke         { get; set => SetProperty(ref field, value); }
+    public double  StrokeThickness { get; set => SetProperty(ref field, value); } = 1.0;
 
-    [ObservableProperty] private IBrush? _fillHover;
-    [ObservableProperty] private IBrush? _strokeHover;
+    public IBrush? FillHover   { get; set => SetProperty(ref field, value); }
+    public IBrush? StrokeHover { get; set => SetProperty(ref field, value); }
 
     internal bool IsHovered { get; set; }
 

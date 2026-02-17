@@ -1,16 +1,15 @@
 using System.Globalization;
-using CommunityToolkit.Mvvm.ComponentModel;
 using global::Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
-public partial class TextShape : DrawingObject
+public class TextShape : DrawingObject
 {
-    [ObservableProperty] private string? _text;
-    [ObservableProperty] private double _fontSize = 14;
-    [ObservableProperty] private global::Avalonia.Media.FontFamily _fontFamily = global::Avalonia.Media.FontFamily.Default;
-    [ObservableProperty] private global::Avalonia.Media.FontWeight _fontWeight = global::Avalonia.Media.FontWeight.Normal;
-    [ObservableProperty] private IBrush? _foreground;
+    public string? Text       { get; set => SetProperty(ref field, value); }
+    public double  FontSize   { get; set => SetProperty(ref field, value); } = 14;
+    public global::Avalonia.Media.FontFamily FontFamily { get; set => SetProperty(ref field, value); } = global::Avalonia.Media.FontFamily.Default;
+    public global::Avalonia.Media.FontWeight FontWeight { get; set => SetProperty(ref field, value); } = global::Avalonia.Media.FontWeight.Normal;
+    public IBrush? Foreground { get; set => SetProperty(ref field, value); }
 
     public override void Render(DrawingContext context)
     {

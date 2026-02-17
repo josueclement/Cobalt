@@ -14,7 +14,7 @@ namespace CobaltAvaloniaDesktopTester.ViewModels;
 /// <summary>
 /// Demonstrates navigation features including NavigateTo and navigation cancellation with INavigationLifecycleAsync.
 /// </summary>
-public partial class NavigationDemoPageViewModel : ViewModelBase, INavigationViewModel
+public class NavigationDemoPageViewModel : ViewModelBase, INavigationViewModel
 {
     private readonly IServiceProvider _services;
     private readonly INavigationService _navigation;
@@ -33,7 +33,9 @@ public partial class NavigationDemoPageViewModel : ViewModelBase, INavigationVie
         _dialogService = dialogService;
 
         NavigateToSettingsCommand = new AsyncRelayCommand(NavigateToSettings);
-        NavigateToDummyCommand = new AsyncRelayCommand(NavigateToDummy);
+        NavigateToDummyCommand    = new AsyncRelayCommand(NavigateToDummy);
+        SaveCommand               = new RelayCommand(Save);
+        DiscardCommand            = new RelayCommand(Discard);
     }
 
     // Navigation properties
@@ -41,6 +43,9 @@ public partial class NavigationDemoPageViewModel : ViewModelBase, INavigationVie
     public IAsyncRelayCommand NavigateToDummyCommand { get; }
 
     // Cancellation properties
+    public IRelayCommand SaveCommand    { get; }
+    public IRelayCommand DiscardCommand { get; }
+
     public string DocumentText
     {
         get => _documentText;
@@ -75,14 +80,12 @@ public partial class NavigationDemoPageViewModel : ViewModelBase, INavigationVie
     }
 
     // Cancellation methods
-    [RelayCommand]
     private void Save()
     {
         _savedText = _documentText;
         HasUnsavedChanges = false;
     }
 
-    [RelayCommand]
     private void Discard()
     {
         DocumentText = _savedText;

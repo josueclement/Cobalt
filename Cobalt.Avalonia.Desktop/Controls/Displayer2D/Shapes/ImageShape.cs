@@ -1,12 +1,11 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using global::Avalonia;
 using global::Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
-public partial class ImageShape : DrawingObject
+public class ImageShape : DrawingObject
 {
-    [ObservableProperty] private IImage? _source;
+    public IImage? Source { get; set => SetProperty(ref field, value); }
 
     public override void Render(DrawingContext context)
     {

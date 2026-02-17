@@ -5,16 +5,16 @@ using global::Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 
-public abstract partial class DrawingObject : ObservableObject
+public abstract class DrawingObject : ObservableObject
 {
-    [ObservableProperty] private double _x;
-    [ObservableProperty] private double _y;
-    [ObservableProperty] private int _zIndex;
-    [ObservableProperty] private double _width = 100;
-    [ObservableProperty] private double _height = 100;
-    [ObservableProperty] private double _rotation;
-    [ObservableProperty] private bool _isVisible = true;
-    [ObservableProperty] private bool _isFixed;
+    public double X      { get; set => SetProperty(ref field, value); }
+    public double Y      { get; set => SetProperty(ref field, value); }
+    public int    ZIndex { get; set => SetProperty(ref field, value); }
+    public double Width  { get; set => SetProperty(ref field, value); } = 100;
+    public double Height { get; set => SetProperty(ref field, value); } = 100;
+    public double Rotation  { get; set => SetProperty(ref field, value); }
+    public bool   IsVisible { get; set => SetProperty(ref field, value); } = true;
+    public bool   IsFixed   { get; set => SetProperty(ref field, value); }
 
     // Canvas-space coords (computed, not observable — no notification needed)
     public double CanvasX      { get; private set; }
