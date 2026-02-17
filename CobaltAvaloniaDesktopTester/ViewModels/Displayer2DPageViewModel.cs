@@ -52,6 +52,21 @@ public class Displayer2DPageViewModel : ViewModelBase
                 Stroke = new SolidColorBrush(Color.Parse("#C48832")),
                 StrokeThickness = 1.5,
                 ZIndex = 4
+            },
+            new TextShape
+            {
+                X = 20, Y = 310,
+                Text = "Hello, Cobalt!",
+                FontSize = 18,
+                FontFamily = new global::Avalonia.Media.FontFamily("Segoe UI"),
+                FontWeight = global::Avalonia.Media.FontWeight.Bold,
+                Foreground = new SolidColorBrush(Color.Parse("#BCBEC4")),
+                ZIndex = 5
+            },
+            new ImageShape
+            {
+                X = 200, Y = 310, Width = 120, Height = 80,
+                ZIndex = 6
             }
         ];
 

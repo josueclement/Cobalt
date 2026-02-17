@@ -13,6 +13,7 @@ public abstract partial class DrawingObject : ObservableObject
     [ObservableProperty] private double _height = 100;
     [ObservableProperty] private Matrix _renderTransform = Matrix.Identity;
     [ObservableProperty] private bool _isVisible = true;
+    [ObservableProperty] private bool _isFixed;
 
     public abstract void Render(DrawingContext context);
 }

@@ -14,6 +14,9 @@ internal sealed class Displayer2DCanvas : Control
 
         if (Owner is null) return;
 
+        // Clip to canvas bounds to prevent overflow artifacts during rapid zoom
+        using var clip = context.PushClip(new global::Avalonia.Rect(Bounds.Size));
+
         var zoom = Owner.ZoomFactor;
         var viewportMatrix = global::Avalonia.Matrix.CreateScale(zoom, zoom)
                            * global::Avalonia.Matrix.CreateTranslation(Owner.PanX, Owner.PanY);
