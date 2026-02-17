@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
             _ = services.AddTransient<RibbonTestingPageView>();
             _ = services.AddTransient<SchedulePageView>();
             _ = services.AddTransient<ServicesTestingPageView>();
+            _ = services.AddTransient<Displayer2DPageView>();
             _ = services.AddTransient<SettingsPageView>();
 
             _ = services.AddSingleton<MainWindowViewModel>();
@@ -46,6 +47,7 @@ public static class ServiceCollectionExtensions
             _ = services.AddSingleton<RibbonTestingPageViewModel>();
             _ = services.AddSingleton<SchedulePageViewModel>();
             _ = services.AddSingleton<ServicesTestingPageViewModel>();
+            _ = services.AddSingleton<Displayer2DPageViewModel>();
             _ = services.AddSingleton<SettingsPageViewModel>();
         }
     }

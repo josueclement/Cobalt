@@ -25,6 +25,7 @@
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/SettingsCard.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/Editors/BaseEditor.axaml" />
         <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/Editors/MultiLineTextEditor.axaml" />
+        <ResourceInclude Source="avares://Cobalt.Avalonia.Desktop/Themes/Controls/Displayer2D/Displayer2DControl.axaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
