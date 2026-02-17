@@ -57,7 +57,7 @@ public class Displayer2DPageViewModel : ViewModelBase
 
         Groups = [new SampleDrawingObjectGroup()];
 
-        Interaction = new PanZoomInteraction(Objects);
+        Interaction = new PanZoomInteraction();
     }
 }
 
@@ -95,21 +95,15 @@ internal sealed class SampleDrawingObjectGroup : DrawingObjectGroup
 
 internal sealed class PanZoomInteraction : UserInteraction
 {
-    private readonly ObservableCollection<DrawingObject> _objects;
     private bool _isPanning;
     private global::Avalonia.Point _lastPoint;
-
-    public PanZoomInteraction(ObservableCollection<DrawingObject> objects)
-    {
-        _objects = objects;
-    }
 
     public override void OnMouseDown(PointerPressedEventArgs e)
     {
         if (e.GetCurrentPoint(null).Properties.IsLeftButtonPressed)
         {
             _isPanning = true;
-            _lastPoint = e.GetPosition(null);
+            _lastPoint = e.GetPosition(Owner);
             e.Pointer.Capture(e.Source as global::Avalonia.Input.IInputElement);
         }
     }
@@ -122,32 +116,25 @@ internal sealed class PanZoomInteraction : UserInteraction
 
     public override void OnMouseMove(PointerEventArgs e)
     {
-        if (!_isPanning) return;
+        if (!_isPanning || Owner is null) return;
 
-        var pos = e.GetPosition(null);
-        var deltaX = pos.X - _lastPoint.X;
-        var deltaY = pos.Y - _lastPoint.Y;
+        var pos = e.GetPosition(Owner);
+        Owner.PanX += pos.X - _lastPoint.X;
+        Owner.PanY += pos.Y - _lastPoint.Y;
         _lastPoint = pos;
-
-        foreach (var obj in _objects)
-        {
-            obj.X += deltaX;
-            obj.Y += deltaY;
-        }
     }
 
     public override void OnMouseWheel(PointerWheelEventArgs e)
     {
-        // Simple zoom: scale all objects' positions toward the mouse cursor
-        var delta = e.Delta.Y > 0 ? 1.1 : 1.0 / 1.1;
-        var pivot = e.GetPosition(null);
+        if (Owner is null) return;
 
-        foreach (var obj in _objects)
-        {
-            obj.X = pivot.X + (obj.X - pivot.X) * delta;
-            obj.Y = pivot.Y + (obj.Y - pivot.Y) * delta;
-            obj.Width *= delta;
-            obj.Height *= delta;
-        }
+        var zoomDelta = e.Delta.Y > 0 ? 1.1 : 1.0 / 1.1;
+        var pivot = e.GetPosition(Owner);
+        var worldPivot = Owner.CanvasToWorld(pivot);
+        var newZoom = Owner.ZoomFactor * zoomDelta;
+
+        Owner.ZoomFactor = newZoom;
+        Owner.PanX = pivot.X - worldPivot.X * newZoom;
+        Owner.PanY = pivot.Y - worldPivot.Y * newZoom;
     }
 }

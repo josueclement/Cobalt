@@ -14,6 +14,12 @@ internal sealed class Displayer2DCanvas : Control
 
         if (Owner is null) return;
 
+        var zoom = Owner.ZoomFactor;
+        var viewportMatrix = global::Avalonia.Matrix.CreateScale(zoom, zoom)
+                           * global::Avalonia.Matrix.CreateTranslation(Owner.PanX, Owner.PanY);
+
+        using var _ = context.PushTransform(viewportMatrix);
+
         var objects = Enumerable.Empty<DrawingObject>();
 
         if (Owner.DrawingObjects != null)

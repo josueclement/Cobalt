@@ -19,6 +19,15 @@ public class Displayer2DControl : TemplatedControl
     public static readonly StyledProperty<UserInteraction?> UserInteractionProperty =
         AvaloniaProperty.Register<Displayer2DControl, UserInteraction?>(nameof(UserInteraction));
 
+    public static readonly StyledProperty<double> ZoomFactorProperty =
+        AvaloniaProperty.Register<Displayer2DControl, double>(nameof(ZoomFactor), defaultValue: 1.0);
+
+    public static readonly StyledProperty<double> PanXProperty =
+        AvaloniaProperty.Register<Displayer2DControl, double>(nameof(PanX), defaultValue: 0.0);
+
+    public static readonly StyledProperty<double> PanYProperty =
+        AvaloniaProperty.Register<Displayer2DControl, double>(nameof(PanY), defaultValue: 0.0);
+
     public ObservableCollection<DrawingObject>? DrawingObjects
     {
         get => GetValue(DrawingObjectsProperty);
@@ -37,6 +46,23 @@ public class Displayer2DControl : TemplatedControl
         set => SetValue(UserInteractionProperty, value);
     }
 
+    public double ZoomFactor { get => GetValue(ZoomFactorProperty); set => SetValue(ZoomFactorProperty, value); }
+    public double PanX       { get => GetValue(PanXProperty);       set => SetValue(PanXProperty,       value); }
+    public double PanY       { get => GetValue(PanYProperty);       set => SetValue(PanYProperty,       value); }
+
+    public Point WorldToCanvas(Point worldPoint)
+    {
+        var zoom = ZoomFactor;
+        return new Point(worldPoint.X * zoom + PanX, worldPoint.Y * zoom + PanY);
+    }
+
+    public Point CanvasToWorld(Point canvasPoint)
+    {
+        var zoom = ZoomFactor;
+        if (zoom == 0.0) return canvasPoint;
+        return new Point((canvasPoint.X - PanX) / zoom, (canvasPoint.Y - PanY) / zoom);
+    }
+
     private Displayer2DCanvas? _canvas;
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -51,6 +77,9 @@ public class Displayer2DControl : TemplatedControl
 
         if (_canvas != null)
             _canvas.Owner = this;
+
+        if (UserInteraction != null)
+            UserInteraction.Owner = this;
 
         // Detach old pointer/key events then reattach
         PointerPressed -= OnPointerPressed;
@@ -92,6 +121,19 @@ public class Displayer2DControl : TemplatedControl
                     obj.PropertyChanged += OnDrawingObjectPropertyChanged;
             }
 
+            InvalidateCanvas();
+        }
+        else if (change.Property == UserInteractionProperty)
+        {
+            if (change.OldValue is UserInteraction oldInteraction)
+                oldInteraction.Owner = null;
+            if (change.NewValue is UserInteraction newInteraction)
+                newInteraction.Owner = this;
+        }
+        else if (change.Property == ZoomFactorProperty
+              || change.Property == PanXProperty
+              || change.Property == PanYProperty)
+        {
             InvalidateCanvas();
         }
         else if (change.Property == DrawingObjectGroupsProperty)
