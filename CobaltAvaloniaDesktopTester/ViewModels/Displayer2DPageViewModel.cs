@@ -191,4 +191,12 @@ internal sealed class PanZoomInteraction : UserInteraction
         Owner.PanX = pivot.X - worldPivot.X * newZoom;
         Owner.PanY = pivot.Y - worldPivot.Y * newZoom;
     }
+
+    public override void OnMouseDoubleClick(TappedEventArgs e)
+    {
+        if (Owner is null) return;
+        Owner.ZoomFactor = 1.0;
+        Owner.PanX = 0;
+        Owner.PanY = 0;
+    }
 }

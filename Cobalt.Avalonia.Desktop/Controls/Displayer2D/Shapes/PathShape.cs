@@ -9,9 +9,11 @@ public sealed partial class PathShape : Shape
     [ObservableProperty] private Geometry? _geometry;
 
     private Matrix _viewportMatrix = Matrix.Identity;
+    private double _zoom = 1.0;
 
     protected override void RecalculateExtraCoordinates(double zoom, double panX, double panY)
     {
+        _zoom = IsFixed ? 1.0 : zoom;
         _viewportMatrix = IsFixed
             ? Matrix.Identity
             : Matrix.CreateScale(zoom, zoom) * Matrix.CreateTranslation(panX, panY);
@@ -22,6 +24,8 @@ public sealed partial class PathShape : Shape
         if (Geometry is null) return;
         var combined = RenderTransform * Matrix.CreateTranslation(X, Y) * _viewportMatrix;
         using var _ = context.PushTransform(combined);
-        context.DrawGeometry(Fill, BuildPen(), Geometry);
+        // Compensate stroke thickness for zoom so it remains constant in screen pixels
+        var pen = Stroke is null ? null : new Pen(Stroke, StrokeThickness / _zoom);
+        context.DrawGeometry(Fill, pen, Geometry);
     }
 }
