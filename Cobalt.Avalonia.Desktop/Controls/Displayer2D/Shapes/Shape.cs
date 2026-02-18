@@ -1,10 +1,30 @@
+using System;
 using Avalonia;
 using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
+public sealed class MovedEventArgs : EventArgs
+{
+    public double DeltaX { get; init; }
+    public double DeltaY { get; init; }
+    public double NewX   { get; init; }
+    public double NewY   { get; init; }
+}
+
 public abstract class Shape : DrawingObject
 {
+    public bool IsMovable { get; set; }
+
+    public event EventHandler<MovedEventArgs>? Moved;
+
+    public void Move(double deltaX, double deltaY)
+    {
+        X += deltaX;
+        Y += deltaY;
+        Moved?.Invoke(this, new MovedEventArgs { DeltaX = deltaX, DeltaY = deltaY, NewX = X, NewY = Y });
+    }
+
     public IBrush? Fill           { get; set => SetProperty(ref field, value); }
     public IBrush? Stroke         { get; set => SetProperty(ref field, value); }
     public double  StrokeThickness { get; set => SetProperty(ref field, value); } = 1.0;

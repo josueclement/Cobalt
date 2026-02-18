@@ -7,7 +7,7 @@ namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 
 public sealed class DragInteraction : UserInteraction
 {
-    private IMovableDrawingObject? _dragging;
+    private Shape? _dragging;
     private Point _lastPos;
 
     public override void OnMouseDown(PointerPressedEventArgs e)
@@ -55,12 +55,12 @@ public sealed class DragInteraction : UserInteraction
 
     public override void OnMouseDoubleClick(TappedEventArgs e) => ResetZoom_OnMouseDoubleClick(e);
 
-    private IMovableDrawingObject? FindDraggable(Point canvasPoint)
+    private Shape? FindDraggable(Point canvasPoint)
     {
         if (Owner is null) return null;
 
-        IMovableDrawingObject? best       = null;
-        int                    bestZIndex = int.MinValue;
+        Shape? best       = null;
+        int    bestZIndex = int.MinValue;
 
         var objects = Enumerable.Empty<DrawingObject>();
         if (Owner.DrawingObjects != null)
@@ -71,12 +71,12 @@ public sealed class DragInteraction : UserInteraction
 
         foreach (var obj in objects)
         {
-            if (obj is IMovableDrawingObject movable && obj is Shape shape && shape.HitTest(canvasPoint))
+            if (obj is Shape shape && shape.IsMovable && shape.HitTest(canvasPoint))
             {
-                if (obj.ZIndex > bestZIndex)
+                if (shape.ZIndex > bestZIndex)
                 {
-                    bestZIndex = obj.ZIndex;
-                    best       = movable;
+                    bestZIndex = shape.ZIndex;
+                    best       = shape;
                 }
             }
         }

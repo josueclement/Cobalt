@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 
@@ -19,8 +20,8 @@ public abstract class DrawingObjectGroup : ObservableObject
         {
             foreach (var item in e.OldItems)
             {
-                if (item is IMovableDrawingObject movable)
-                    movable.Moved -= OnItemMoved;
+                if (item is Shape shape)
+                    shape.Moved -= OnItemMoved;
             }
         }
 
@@ -28,8 +29,8 @@ public abstract class DrawingObjectGroup : ObservableObject
         {
             foreach (var item in e.NewItems)
             {
-                if (item is IMovableDrawingObject movable)
-                    movable.Moved += OnItemMoved;
+                if (item is Shape shape)
+                    shape.Moved += OnItemMoved;
             }
         }
 
@@ -49,8 +50,8 @@ public abstract class DrawingObjectGroup : ObservableObject
     {
         foreach (var item in Items)
         {
-            if (item is IMovableDrawingObject movable)
-                movable.Moved -= OnItemMoved;
+            if (item is Shape shape)
+                shape.Moved -= OnItemMoved;
         }
         Items.CollectionChanged -= OnItemsCollectionChanged;
     }

@@ -10,8 +10,8 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
 
     private readonly LineShape _line;
     private readonly LineHitboxShape _hitbox;
-    private readonly MovablePointShape _point1;
-    private readonly MovablePointShape _point2;
+    private readonly PointShape _point1;
+    private readonly PointShape _point2;
 
     public IBrush? LineStroke        { get => _line.Stroke;          set => _line.Stroke          = value; }
     public double  LineStrokeThickness { get => _line.StrokeThickness; set => _line.StrokeThickness = value; }
@@ -32,8 +32,9 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
             ZIndex = 1
         };
 
-        _point1 = new MovablePointShape
+        _point1 = new PointShape
         {
+            IsMovable = true,
             Fill = new SolidColorBrush(Color.Parse("#3574F0")),
             FillHover = new SolidColorBrush(Colors.White),
             Stroke = new SolidColorBrush(Colors.White),
@@ -41,8 +42,9 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
             ZIndex = 2
         };
 
-        _point2 = new MovablePointShape
+        _point2 = new PointShape
         {
+            IsMovable = true,
             Fill = new SolidColorBrush(Color.Parse("#3574F0")),
             FillHover = new SolidColorBrush(Colors.White),
             Stroke = new SolidColorBrush(Colors.White),
