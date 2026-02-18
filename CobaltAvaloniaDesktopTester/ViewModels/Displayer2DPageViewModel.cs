@@ -44,14 +44,14 @@ public class Displayer2DPageViewModel : ViewModelBase
                 StrokeHover = new SolidColorBrush(Color.Parse("#FFD700")),
                 ZIndex = 2
             },
-            new PointShape
+            new CircleShape
             {
-                X = 200, Y = 130,
+                Width = 15, Height = 15,
+                CenterX = 200, CenterY = 130,
                 Fill = new SolidColorBrush(Color.Parse("#BCBEC4")),
                 FillHover = new SolidColorBrush(Color.Parse("#FFFFFF")),
                 StrokeHover = new SolidColorBrush(Color.Parse("#3574F0")),
                 ZIndex = 3,
-                Width = 15, Height = 15
             },
             new PathShape
             {
