@@ -160,54 +160,29 @@ internal sealed class SampleDrawingObjectGroup : DrawingObjectGroup
 
 internal sealed class PanZoomInteraction : UserInteraction
 {
-    private bool _isPanning;
-    private Point _lastPoint;
-
     public override void OnMouseDown(PointerPressedEventArgs e)
     {
-        if (e.GetCurrentPoint(null).Properties.IsLeftButtonPressed)
-        {
-            _isPanning = true;
-            _lastPoint = e.GetPosition(Owner);
-            e.Pointer.Capture(e.Source as IInputElement);
-        }
+        if (e.GetCurrentPoint(null).Properties.IsMiddleButtonPressed)
+            StartPan_OnMouseDown(e);
     }
 
     public override void OnMouseUp(PointerReleasedEventArgs e)
     {
-        _isPanning = false;
-        e.Pointer.Capture(null);
+        StopPan_OnMouseUp(e);
     }
 
     public override void OnMouseMove(PointerEventArgs e)
     {
-        if (!_isPanning || Owner is null) return;
-
-        var pos = e.GetPosition(Owner);
-        Owner.PanX += pos.X - _lastPoint.X;
-        Owner.PanY += pos.Y - _lastPoint.Y;
-        _lastPoint = pos;
+        Pan_OnMouseMove(e);
     }
 
     public override void OnMouseWheel(PointerWheelEventArgs e)
     {
-        if (Owner is null) return;
-
-        var zoomDelta = e.Delta.Y > 0 ? 1.4 : 1.0 / 1.4;
-        var pivot = e.GetPosition(Owner);
-        var worldPivot = Owner.CanvasToWorld(pivot);
-        var newZoom = Owner.ZoomFactor * zoomDelta;
-
-        Owner.ZoomFactor = newZoom;
-        Owner.PanX = pivot.X - worldPivot.X * newZoom;
-        Owner.PanY = pivot.Y - worldPivot.Y * newZoom;
+        Zoom_OnMouseWheel(e);
     }
 
     public override void OnMouseDoubleClick(TappedEventArgs e)
     {
-        if (Owner is null) return;
-        Owner.ZoomFactor = 1.0;
-        Owner.PanX = 0;
-        Owner.PanY = 0;
+        ResetZoom_OnMouseDoubleClick(e);
     }
 }
