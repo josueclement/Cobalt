@@ -34,11 +34,13 @@ public abstract class DrawingObjectGroup : ObservableObject
             }
         }
 
+        Console.WriteLine($"{DateTime.Now} Recalculating coordinates in DrawingObjectGroup");
         RecalculateCoordinates();
     }
 
     private void OnItemMoved(object? sender, MovedEventArgs e)
     {
+        Console.WriteLine($"{DateTime.Now} Recalculating coordinates in DrawingObjectGroup 2");
         RecalculateCoordinates();
     }
 

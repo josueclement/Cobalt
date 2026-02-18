@@ -6,16 +6,16 @@ namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 
 public abstract class DrawingObject : ObservableObject
 {
-    public double X      { get; set => SetProperty(ref field, value); }
-    public double Y      { get; set => SetProperty(ref field, value); }
+    public double X      { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } }
+    public double Y      { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } }
     public int    ZIndex { get; set => SetProperty(ref field, value); }
-    public double Width  { get; set => SetProperty(ref field, value); } = 100;
-    public double Height { get; set => SetProperty(ref field, value); } = 100;
+    public double Width  { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } } = 100;
+    public double Height { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } } = 100;
     public double Rotation  { get; set => SetProperty(ref field, value); }
     public bool   IsVisible     { get; set => SetProperty(ref field, value); } = true;
-    public bool   IsFixed       { get; set => SetProperty(ref field, value); }
-    public bool   IsFixedWidth  { get; set => SetProperty(ref field, value); }
-    public bool   IsFixedHeight { get; set => SetProperty(ref field, value); }
+    public bool   IsFixed       { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } }
+    public bool   IsFixedWidth  { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } }
+    public bool   IsFixedHeight { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } }
 
     // Canvas-space coords (computed, not observable — no notification needed)
     public double CanvasX      { get; protected set; }
@@ -23,8 +23,16 @@ public abstract class DrawingObject : ObservableObject
     public double CanvasWidth  { get; protected set; }
     public double CanvasHeight { get; protected set; }
 
+    private bool   _coordinatesDirty = true;
+    private double _lastZoom, _lastPanX, _lastPanY;
+
+    protected void MarkCoordinatesDirty() => _coordinatesDirty = true;
+
     public void RecalculateCoordinates(double zoom, double panX, double panY)
     {
+        if (!_coordinatesDirty && _lastZoom == zoom && _lastPanX == panX && _lastPanY == panY)
+            return;
+
         if (IsFixed)
         {
             CanvasX = X; CanvasY = Y; CanvasWidth = Width; CanvasHeight = Height;
@@ -53,6 +61,10 @@ public abstract class DrawingObject : ObservableObject
                 CanvasHeight = Height * zoom;
             }
         }
+
+        _coordinatesDirty = false;
+        _lastZoom = zoom; _lastPanX = panX; _lastPanY = panY;
+
         RecalculateExtraCoordinates(zoom, panX, panY);
     }
 

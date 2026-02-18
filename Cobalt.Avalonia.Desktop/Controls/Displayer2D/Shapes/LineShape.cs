@@ -5,8 +5,8 @@ namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
 public sealed class LineShape : Shape
 {
-    public double X2 { get; set => SetProperty(ref field, value); }
-    public double Y2 { get; set => SetProperty(ref field, value); }
+    public double X2 { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } }
+    public double Y2 { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } }
 
     public double CanvasX2 { get; private set; }
     public double CanvasY2 { get; private set; }

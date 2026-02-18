@@ -5,7 +5,7 @@ namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
 public sealed class PathShape : Shape
 {
-    public Geometry? Geometry { get; set => SetProperty(ref field, value); }
+    public Geometry? Geometry { get; set { SetProperty(ref field, value); MarkCoordinatesDirty(); } }
 
     private Matrix _viewportMatrix = Matrix.Identity;
     private double _zoom = 1.0;

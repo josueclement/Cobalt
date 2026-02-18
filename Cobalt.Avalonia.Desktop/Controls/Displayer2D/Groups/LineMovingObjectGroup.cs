@@ -74,6 +74,7 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
 
     public override void RecalculateCoordinates()
     {
+        Console.WriteLine($"{DateTime.Now} Recalculating coordinates in LineMovingObjectGroup");
         var x1 = _point1.CenterX;
         var y1 = _point1.CenterY;
         var x2 = _point2.CenterX;
