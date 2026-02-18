@@ -27,6 +27,7 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
 
         _hitbox = new RectangleShape
         {
+            IsMovable = true,
             IsFixedHeight = true,
             Fill = new SolidColorBrush(Color.Parse("#33ffffff")),
             Stroke = null,
@@ -70,11 +71,14 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
         Items.Add(_hitbox);
         Items.Add(_point1);
         Items.Add(_point2);
+
+        _point1.Moved += OnPointMoved;
+        _point2.Moved += OnPointMoved;
+        _hitbox.Moved += OnHitboxMoved;
     }
 
     public override void RecalculateCoordinates()
     {
-        Console.WriteLine($"{DateTime.Now} Recalculating coordinates in LineMovingObjectGroup");
         var x1 = _point1.CenterX;
         var y1 = _point1.CenterY;
         var x2 = _point2.CenterX;
@@ -95,8 +99,25 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
         _hitbox.Rotation = angle;
     }
 
+    private void OnPointMoved(object? sender, MovedEventArgs e)
+    {
+        RecalculateCoordinates();
+    }
+
+    private void OnHitboxMoved(object? sender, MovedEventArgs e)
+    {
+        _point1.CenterX += e.DeltaX;
+        _point1.CenterY += e.DeltaY;
+        _point2.CenterX += e.DeltaX;
+        _point2.CenterY += e.DeltaY;
+        RecalculateCoordinates();
+    }
+
     public override void UnregisterEvents()
     {
-        UnregisterAllItemEvents();
+        _point1.Moved -= OnPointMoved;
+        _point2.Moved -= OnPointMoved;
+        _hitbox.Moved -= OnHitboxMoved;
+        UnregisterCollectionEvents();
     }
 }

@@ -154,6 +154,6 @@ internal sealed class SampleDrawingObjectGroup : DrawingObjectGroup
 
     public override void UnregisterEvents()
     {
-        UnregisterAllItemEvents();
+        UnregisterCollectionEvents();
     }
 }
