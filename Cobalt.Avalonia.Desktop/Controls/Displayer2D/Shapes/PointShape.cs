@@ -1,5 +1,5 @@
-using global::Avalonia;
-using global::Avalonia.Media;
+using Avalonia;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
@@ -14,7 +14,7 @@ public sealed partial class PointShape : Shape
     public override void Render(DrawingContext context)
     {
         context.DrawEllipse(EffectiveFill, BuildPen(),
-            new global::Avalonia.Point(CanvasX, CanvasY),
+            new Point(CanvasX, CanvasY),
             Width / 2, Height / 2);
     }
 

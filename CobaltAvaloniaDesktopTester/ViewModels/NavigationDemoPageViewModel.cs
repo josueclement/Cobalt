@@ -112,12 +112,12 @@ public class NavigationDemoPageViewModel : ViewModelBase, INavigationViewModel
                     new TextBlock
                     {
                         Text = "You have unsaved changes in your document.",
-                        TextWrapping = global::Avalonia.Media.TextWrapping.Wrap
+                        TextWrapping = TextWrapping.Wrap
                     },
                     new TextBlock
                     {
                         Text = "Do you want to discard these changes and navigate away?",
-                        TextWrapping = global::Avalonia.Media.TextWrapping.Wrap,
+                        TextWrapping = TextWrapping.Wrap,
                         Foreground = new SolidColorBrush(Colors.Orange)
                     }
                 }

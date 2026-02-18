@@ -58,6 +58,6 @@ Colors are defined in `Cobalt.Avalonia.Desktop/Themes/Colors.axaml` using `Resou
 
 ### Gotchas
 
-- **Namespace collision**: The `Cobalt.Avalonia.Desktop` namespace causes `Avalonia.Media` (and similar) to resolve incorrectly as `Cobalt.Avalonia.Media`. Use `global::Avalonia.Media` or `using global::Avalonia.Media;` in C# files that need Avalonia sub-namespaces.
+- **Namespace collision**: The `Cobalt.Avalonia.Desktop` namespace causes `Avalonia.Media` (and similar) to resolve incorrectly as `Cobalt.Avalonia.Media`. Use `global::Avalonia.Media` or `using global::Avalonia.Media;` in C# files that need Avalonia sub-namespaces, BUT ONLY WHEN ABSOLUTELY NECESSARY.
 - **Compiled bindings require `x:DataType`**: Every UserControl/DataTemplate using `{Binding}` needs an explicit `x:DataType` or the build fails with AVLN2100.
 - **Hit testing requires a Background**: A `Border` or `Panel` with no `Background` (null) is invisible to pointer events. Set `Background="Transparent"` on elements that need to receive clicks/hover across their full area.

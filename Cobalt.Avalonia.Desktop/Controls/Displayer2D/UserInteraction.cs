@@ -1,5 +1,4 @@
-using global::Avalonia;
-using global::Avalonia.Input;
+using Avalonia.Input;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 

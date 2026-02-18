@@ -98,7 +98,7 @@ public class RibbonControl : TemplatedControl
             SelectedTab = tab;
     }
 
-    private void OnAttachedToVisualTree(object? sender, global::Avalonia.VisualTreeAttachmentEventArgs e)
+    private void OnAttachedToVisualTree(object? sender, VisualTreeAttachmentEventArgs e)
     {
         // Force sync after being attached to visual tree
         // This ensures the ListBox selection is correct after navigation

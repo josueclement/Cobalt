@@ -1,7 +1,6 @@
-using System;
 using CommunityToolkit.Mvvm.ComponentModel;
-using global::Avalonia;
-using global::Avalonia.Media;
+using Avalonia;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 

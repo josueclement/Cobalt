@@ -64,8 +64,8 @@ public class ContentDialog : ContentControl
     public static readonly StyledProperty<DialogResult> DialogResultProperty =
         AvaloniaProperty.Register<ContentDialog, DialogResult>(nameof(DialogResult), DialogResult.None);
 
-    public static readonly StyledProperty<global::Avalonia.Media.Geometry?> IconDataProperty =
-        AvaloniaProperty.Register<ContentDialog, global::Avalonia.Media.Geometry?>(nameof(IconData));
+    public static readonly StyledProperty<Geometry?> IconDataProperty =
+        AvaloniaProperty.Register<ContentDialog, Geometry?>(nameof(IconData));
 
     public static readonly StyledProperty<IBrush?> IconBrushProperty =
         AvaloniaProperty.Register<ContentDialog, IBrush?>(nameof(IconBrush));
@@ -154,7 +154,7 @@ public class ContentDialog : ContentControl
         set => SetValue(DialogResultProperty, value);
     }
 
-    public global::Avalonia.Media.Geometry? IconData
+    public Geometry? IconData
     {
         get => GetValue(IconDataProperty);
         set => SetValue(IconDataProperty, value);

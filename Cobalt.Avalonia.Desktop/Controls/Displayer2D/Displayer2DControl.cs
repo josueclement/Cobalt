@@ -1,10 +1,10 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using global::Avalonia;
-using global::Avalonia.Controls;
-using global::Avalonia.Controls.Primitives;
-using global::Avalonia.Input;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Input;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 
@@ -211,7 +211,7 @@ public class Displayer2DControl : TemplatedControl
         InvalidateCanvas();
     }
 
-    protected override global::Avalonia.Size ArrangeOverride(global::Avalonia.Size finalSize)
+    protected override Size ArrangeOverride(Size finalSize)
     {
         var result = base.ArrangeOverride(finalSize);
         UserInteraction?.OnRenderSizeChanged(result);

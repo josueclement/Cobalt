@@ -1,5 +1,5 @@
-using global::Avalonia;
-using global::Avalonia.Media;
+using Avalonia;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
@@ -21,8 +21,8 @@ public sealed class LineShape : Shape
     {
         var pen = BuildPen();
         if (pen is null) return;
-        context.DrawLine(pen, new global::Avalonia.Point(CanvasX, CanvasY),
-                              new global::Avalonia.Point(CanvasX2, CanvasY2));
+        context.DrawLine(pen, new Point(CanvasX, CanvasY),
+                              new Point(CanvasX2, CanvasY2));
     }
 
     // Point-to-segment distance, 5px tolerance for easier hovering

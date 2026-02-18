@@ -5,7 +5,7 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Metadata;
-using global::Avalonia.Media;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Ribbon;
 

@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
-using global::Avalonia.Media;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Ribbon;
 

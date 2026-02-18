@@ -1,7 +1,6 @@
-using System.Linq;
-using global::Avalonia.Controls;
-using global::Avalonia.Input;
-using global::Avalonia.Media;
+using Avalonia.Controls;
+using Avalonia.Input;
+using Avalonia.Media;
 using Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;

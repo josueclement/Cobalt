@@ -1,5 +1,4 @@
-using global::Avalonia;
-using global::Avalonia.Media;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 

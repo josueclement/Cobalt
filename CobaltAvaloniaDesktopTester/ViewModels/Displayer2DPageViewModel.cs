@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel;
-using global::Avalonia;
-using global::Avalonia.Input;
-using global::Avalonia.Media;
+using Avalonia;
+using Avalonia.Input;
+using Avalonia.Media;
 using Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 using Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
@@ -56,7 +56,7 @@ public class Displayer2DPageViewModel : ViewModelBase
             new PathShape
             {
                 X = 20, Y = 220,
-                Geometry = global::Avalonia.Media.Geometry.Parse("M 0,10 L 30,10 L 30,0 L 50,20 L 30,40 L 30,30 L 0,30 Z"),
+                Geometry = Geometry.Parse("M 0,10 L 30,10 L 30,0 L 50,20 L 30,40 L 30,30 L 0,30 Z"),
                 Fill = new SolidColorBrush(Color.Parse("#E8A33D")),
                 Stroke = new SolidColorBrush(Color.Parse("#C48832")),
                 StrokeThickness = 8.5,
@@ -69,8 +69,8 @@ public class Displayer2DPageViewModel : ViewModelBase
                 X = 20, Y = 310,
                 Text = "Hello, Cobalt!",
                 FontSize = 18,
-                FontFamily = new global::Avalonia.Media.FontFamily("Segoe UI"),
-                FontWeight = global::Avalonia.Media.FontWeight.Bold,
+                FontFamily = new FontFamily("Segoe UI"),
+                FontWeight = FontWeight.Bold,
                 Foreground = new SolidColorBrush(Color.Parse("#BCBEC4")),
                 ZIndex = 5
             },
@@ -161,7 +161,7 @@ internal sealed class SampleDrawingObjectGroup : DrawingObjectGroup
 internal sealed class PanZoomInteraction : UserInteraction
 {
     private bool _isPanning;
-    private global::Avalonia.Point _lastPoint;
+    private Point _lastPoint;
 
     public override void OnMouseDown(PointerPressedEventArgs e)
     {
@@ -169,7 +169,7 @@ internal sealed class PanZoomInteraction : UserInteraction
         {
             _isPanning = true;
             _lastPoint = e.GetPosition(Owner);
-            e.Pointer.Capture(e.Source as global::Avalonia.Input.IInputElement);
+            e.Pointer.Capture(e.Source as IInputElement);
         }
     }
 
