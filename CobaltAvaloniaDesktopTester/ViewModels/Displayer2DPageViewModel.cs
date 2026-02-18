@@ -1,8 +1,8 @@
 using System.Collections.ObjectModel;
 using Avalonia;
-using Avalonia.Input;
 using Avalonia.Media;
 using Cobalt.Avalonia.Desktop.Controls.Displayer2D;
+using Cobalt.Avalonia.Desktop.Controls.Displayer2D.Groups;
 using Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
@@ -98,9 +98,9 @@ public class Displayer2DPageViewModel : ViewModelBase
             }
         ];
 
-        Groups = [new SampleDrawingObjectGroup()];
+        Groups = [new SampleDrawingObjectGroup(), new LineMovingObjectGroup(100, 380, 400, 480)];
 
-        Interaction = new PanZoomInteraction();
+        Interaction = new DragInteraction();
     }
 
     private static IImage CreateTestImage()
@@ -155,34 +155,5 @@ internal sealed class SampleDrawingObjectGroup : DrawingObjectGroup
     public override void UnregisterEvents()
     {
         UnregisterAllItemEvents();
-    }
-}
-
-internal sealed class PanZoomInteraction : UserInteraction
-{
-    public override void OnMouseDown(PointerPressedEventArgs e)
-    {
-        if (e.GetCurrentPoint(null).Properties.IsMiddleButtonPressed)
-            StartPan_OnMouseDown(e);
-    }
-
-    public override void OnMouseUp(PointerReleasedEventArgs e)
-    {
-        StopPan_OnMouseUp(e);
-    }
-
-    public override void OnMouseMove(PointerEventArgs e)
-    {
-        Pan_OnMouseMove(e);
-    }
-
-    public override void OnMouseWheel(PointerWheelEventArgs e)
-    {
-        Zoom_OnMouseWheel(e);
-    }
-
-    public override void OnMouseDoubleClick(TappedEventArgs e)
-    {
-        ResetZoom_OnMouseDoubleClick(e);
     }
 }
