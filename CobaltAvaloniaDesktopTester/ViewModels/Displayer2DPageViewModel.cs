@@ -193,7 +193,7 @@ internal sealed class PanZoomInteraction : UserInteraction
     {
         if (Owner is null) return;
 
-        var zoomDelta = e.Delta.Y > 0 ? 1.1 : 1.0 / 1.1;
+        var zoomDelta = e.Delta.Y > 0 ? 1.4 : 1.0 / 1.4;
         var pivot = e.GetPosition(Owner);
         var worldPivot = Owner.CanvasToWorld(pivot);
         var newZoom = Owner.ZoomFactor * zoomDelta;
