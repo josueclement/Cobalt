@@ -40,7 +40,24 @@ public abstract class Shape : DrawingObject
     protected IPen? BuildPen() => EffectiveStroke is null ? null : new Pen(EffectiveStroke, StrokeThickness);
 
     /// <summary>Returns true if the given canvas-space point is over this shape.</summary>
-    public virtual bool HitTest(Point canvasPoint) =>
-        canvasPoint.X >= CanvasX && canvasPoint.X <= CanvasX + CanvasWidth &&
-        canvasPoint.Y >= CanvasY && canvasPoint.Y <= CanvasY + CanvasHeight;
+    /// <remarks>
+    /// Inverse-rotates the point into local (unrotated) space, then performs an AABB check.
+    /// Subclasses with non-rectangular geometry (ellipse, line…) should override.
+    /// </remarks>
+    public virtual bool HitTest(Point canvasPoint)
+    {
+        var dx = canvasPoint.X - (CanvasX + CanvasWidth  / 2);
+        var dy = canvasPoint.Y - (CanvasY + CanvasHeight / 2);
+
+        if (Rotation != 0.0)
+        {
+            var rad = -Rotation * Math.PI / 180.0;
+            var cos = Math.Cos(rad);
+            var sin = Math.Sin(rad);
+            (dx, dy) = (cos * dx - sin * dy, sin * dx + cos * dy);
+        }
+
+        return Math.Abs(dx) <= CanvasWidth  / 2 &&
+               Math.Abs(dy) <= CanvasHeight / 2;
+    }
 }
