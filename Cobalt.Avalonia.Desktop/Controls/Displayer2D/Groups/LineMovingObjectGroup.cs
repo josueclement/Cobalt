@@ -9,11 +9,11 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
     private const double HitboxThickness = 20.0;
 
     private readonly LineShape _line;
-    private readonly LineHitboxShape _hitbox;
-    private readonly PointShape _point1;
-    private readonly PointShape _point2;
+    private readonly RectangleShape _hitbox;
+    private readonly CircleShape _point1;
+    private readonly CircleShape _point2;
 
-    public IBrush? LineStroke        { get => _line.Stroke;          set => _line.Stroke          = value; }
+    public IBrush? LineStroke          { get => _line.Stroke;          set => _line.Stroke          = value; }
     public double  LineStrokeThickness { get => _line.StrokeThickness; set => _line.StrokeThickness = value; }
 
     public LineMovingObjectGroup(double x1, double y1, double x2, double y2)
@@ -25,16 +25,21 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
             ZIndex = 0
         };
 
-        _hitbox = new LineHitboxShape
+        _hitbox = new RectangleShape
         {
-            Fill = null,
+            IsFixedHeight = true,
+            Fill = new SolidColorBrush(Color.Parse("#33ffffff")),
             Stroke = null,
             ZIndex = 1
         };
 
-        _point1 = new PointShape
+        _point1 = new CircleShape
         {
             IsMovable = true,
+            IsFixedWidth = true,
+            IsFixedHeight = true,
+            Width = 12,
+            Height = 12,
             Fill = new SolidColorBrush(Color.Parse("#3574F0")),
             FillHover = new SolidColorBrush(Colors.White),
             Stroke = new SolidColorBrush(Colors.White),
@@ -42,9 +47,13 @@ public sealed class LineMovingObjectGroup : DrawingObjectGroup
             ZIndex = 2
         };
 
-        _point2 = new PointShape
+        _point2 = new CircleShape
         {
             IsMovable = true,
+            IsFixedWidth = true,
+            IsFixedHeight = true,
+            Width = 12,
+            Height = 12,
             Fill = new SolidColorBrush(Color.Parse("#3574F0")),
             FillHover = new SolidColorBrush(Colors.White),
             Stroke = new SolidColorBrush(Colors.White),

@@ -12,8 +12,10 @@ public abstract class DrawingObject : ObservableObject
     public double Width  { get; set => SetProperty(ref field, value); } = 100;
     public double Height { get; set => SetProperty(ref field, value); } = 100;
     public double Rotation  { get; set => SetProperty(ref field, value); }
-    public bool   IsVisible { get; set => SetProperty(ref field, value); } = true;
-    public bool   IsFixed   { get; set => SetProperty(ref field, value); }
+    public bool   IsVisible     { get; set => SetProperty(ref field, value); } = true;
+    public bool   IsFixed       { get; set => SetProperty(ref field, value); }
+    public bool   IsFixedWidth  { get; set => SetProperty(ref field, value); }
+    public bool   IsFixedHeight { get; set => SetProperty(ref field, value); }
 
     // Canvas-space coords (computed, not observable — no notification needed)
     public double CanvasX      { get; protected set; }
@@ -29,10 +31,27 @@ public abstract class DrawingObject : ObservableObject
         }
         else
         {
-            CanvasX      = X * zoom + panX;
-            CanvasY      = Y * zoom + panY;
-            CanvasWidth  = Width  * zoom;
-            CanvasHeight = Height * zoom;
+            if (IsFixedWidth)
+            {
+                CanvasWidth = Width;
+                CanvasX     = (X + Width / 2) * zoom + panX - Width / 2;
+            }
+            else
+            {
+                CanvasX     = X * zoom + panX;
+                CanvasWidth = Width * zoom;
+            }
+
+            if (IsFixedHeight)
+            {
+                CanvasHeight = Height;
+                CanvasY      = (Y + Height / 2) * zoom + panY - Height / 2;
+            }
+            else
+            {
+                CanvasY      = Y * zoom + panY;
+                CanvasHeight = Height * zoom;
+            }
         }
         RecalculateExtraCoordinates(zoom, panX, panY);
     }
