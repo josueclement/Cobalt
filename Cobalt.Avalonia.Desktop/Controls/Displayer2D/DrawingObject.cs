@@ -16,10 +16,10 @@ public abstract class DrawingObject : ObservableObject
     public bool   IsFixed   { get; set => SetProperty(ref field, value); }
 
     // Canvas-space coords (computed, not observable — no notification needed)
-    public double CanvasX      { get; private set; }
-    public double CanvasY      { get; private set; }
-    public double CanvasWidth  { get; private set; }
-    public double CanvasHeight { get; private set; }
+    public double CanvasX      { get; protected set; }
+    public double CanvasY      { get; protected set; }
+    public double CanvasWidth  { get; protected set; }
+    public double CanvasHeight { get; protected set; }
 
     public void RecalculateCoordinates(double zoom, double panX, double panY)
     {

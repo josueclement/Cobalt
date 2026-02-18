@@ -3,7 +3,7 @@ using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
-public sealed partial class RectangleShape : Shape
+public partial class RectangleShape : Shape
 {
     public double CenterX { get => X + Width / 2;  set => X = value - Width  / 2; }
     public double CenterY { get => Y + Height / 2; set => Y = value - Height / 2; }
