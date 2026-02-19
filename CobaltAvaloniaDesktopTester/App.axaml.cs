@@ -70,6 +70,7 @@ public partial class App : Application
     private static IServiceProvider BuildDesignerServices()
     {
         var collection = new ServiceCollection();
+        collection.AddHostedServices();
         collection.AddCobaltServices();
         collection.AddPagesAndViewModels();
         return collection.BuildServiceProvider();

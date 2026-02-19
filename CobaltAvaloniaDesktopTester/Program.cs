@@ -25,6 +25,7 @@ sealed class Program
         AppHost = Host.CreateDefaultBuilder(args)
             .ConfigureServices((_, services) =>
             {
+                services.AddHostedServices();
                 services.AddCobaltServices();
                 services.AddPagesAndViewModels();
             })

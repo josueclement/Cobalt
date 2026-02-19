@@ -3,6 +3,7 @@ using Cobalt.Avalonia.Desktop.Services;
 using CobaltAvaloniaDesktopTester.ViewModels;
 using CobaltAvaloniaDesktopTester.Views;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace CobaltAvaloniaDesktopTester;
 
@@ -10,6 +11,11 @@ public static class ServiceCollectionExtensions
 {
     extension(IServiceCollection services)
     {
+        public void AddHostedServices()
+        {
+            _ = services.AddHostedService<ApiHostedService>(); 
+        }
+        
         public void AddCobaltServices()
         {
             _ = services.AddSingleton<IFileDialogService, FileDialogService>();
