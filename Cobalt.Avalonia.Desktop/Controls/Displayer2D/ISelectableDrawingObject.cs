@@ -1,5 +1,3 @@
-using System;
-
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 
 public interface ISelectableDrawingObject

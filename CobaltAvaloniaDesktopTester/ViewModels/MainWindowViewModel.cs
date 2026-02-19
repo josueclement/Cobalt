@@ -1,7 +1,6 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Cobalt.Avalonia.Desktop;
 using Cobalt.Avalonia.Desktop.Controls.Navigation;
 using Cobalt.Avalonia.Desktop.Services;
 using CobaltAvaloniaDesktopTester.Views;

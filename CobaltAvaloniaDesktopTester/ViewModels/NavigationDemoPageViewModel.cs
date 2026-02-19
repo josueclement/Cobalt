@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
-using Cobalt.Avalonia.Desktop;
 using Cobalt.Avalonia.Desktop.Controls;
 using Cobalt.Avalonia.Desktop.Services;
 using CobaltAvaloniaDesktopTester.Views;

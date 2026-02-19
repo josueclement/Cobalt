@@ -1,4 +1,3 @@
-using System.Linq;
 using Avalonia;
 using Avalonia.Input;
 using Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;

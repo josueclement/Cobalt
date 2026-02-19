@@ -1,9 +1,7 @@
-using Cobalt.Avalonia.Desktop;
 using Cobalt.Avalonia.Desktop.Services;
 using CobaltAvaloniaDesktopTester.ViewModels;
 using CobaltAvaloniaDesktopTester.Views;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace CobaltAvaloniaDesktopTester;
 

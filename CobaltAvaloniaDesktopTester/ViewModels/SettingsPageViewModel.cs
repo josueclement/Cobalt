@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Styling;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace CobaltAvaloniaDesktopTester.ViewModels;
