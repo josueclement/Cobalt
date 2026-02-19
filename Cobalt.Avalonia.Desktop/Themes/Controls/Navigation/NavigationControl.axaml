@@ -9,7 +9,7 @@
                        Background="{DynamicResource CobaltSurfaceBrush}"
                        BorderBrush="{DynamicResource CobaltBorderSubtleBrush}"
                        BorderThickness="0,0,1,0"
-                       Width="80">
+                       Width="90">
                     <DockPanel>
                         <ContentPresenter x:Name="PART_Logo"
                                           Content="{TemplateBinding Logo}"
@@ -27,7 +27,7 @@
                                 <Style Selector="ListBoxItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
-                                    <Setter Property="Padding" Value="4,8" />
+                                    <Setter Property="Padding" Value="8" />
                                 </Style>
                                 <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
                                     <Setter Property="Background" Value="{DynamicResource CobaltHoverBrush}" />
@@ -52,7 +52,7 @@
                                 <Style Selector="ListBoxItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
-                                    <Setter Property="Padding" Value="4,8" />
+                                    <Setter Property="Padding" Value="8" />
                                 </Style>
                                 <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
                                     <Setter Property="Background" Value="{DynamicResource CobaltHoverBrush}" />
@@ -75,9 +75,9 @@
 
         <!-- Horizontal position: border on bottom, horizontal layout -->
         <Style Selector="^:horizontal /template/ Border#PART_Border">
-            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="BorderThickness" Value="0,1,0,0" />
             <Setter Property="Width" Value="NaN" />
-            <Setter Property="Height" Value="66" />
+            <Setter Property="Height" Value="70" />
         </Style>
 
         <!-- Horizontal position: scroll horizontally instead of vertically -->
