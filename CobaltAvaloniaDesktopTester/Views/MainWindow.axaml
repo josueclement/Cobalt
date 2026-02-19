@@ -19,7 +19,7 @@
                                    Items="{Binding Navigation.Items}"
                                    FooterItems="{Binding Navigation.FooterItems}"
                                    SelectedItem="{Binding Navigation.SelectedItem}"
-                                   Position="Vertical" />
+                                   Orientation="Vertical" />
             <ContentControl Content="{Binding Navigation.CurrentPage}"
                             Margin="0" />
         </DockPanel>

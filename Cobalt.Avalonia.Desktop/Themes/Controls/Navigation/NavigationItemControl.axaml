@@ -29,6 +29,9 @@
                 </StackPanel>
             </ControlTemplate>
         </Setter>
+        <Style Selector="^:horizontal /template/ StackPanel">
+            <Setter Property="MaxWidth" Value="72" />
+        </Style>
     </ControlTheme>
 
 </ResourceDictionary>

@@ -185,7 +185,7 @@ public class NavigationControl : TemplatedControl
     }
 
     /// <summary>
-    /// Updates the pseudo-classes of the navigation control based on the current <see cref="Orientation"/>.
+    /// Updates the pseudo-classes of the navigation control and its items based on the current <see cref="Orientation"/>.
     /// </summary>
     private void ApplyOrientationLayout()
     {
@@ -193,6 +193,20 @@ public class NavigationControl : TemplatedControl
 
         PseudoClasses.Set(":vertical", !horizontal);
         PseudoClasses.Set(":horizontal", horizontal);
+
+        ApplyItemOrientationClasses(Items, horizontal);
+        ApplyItemOrientationClasses(FooterItems, horizontal);
+    }
+
+    private static void ApplyItemOrientationClasses(IReadOnlyList<NavigationItemControl>? items, bool horizontal)
+    {
+        if (items == null) return;
+
+        foreach (var item in items)
+        {
+            ((IPseudoClasses)item.Classes).Set(":horizontal", horizontal);
+            ((IPseudoClasses)item.Classes).Set(":vertical", !horizontal);
+        }
     }
 
     /// <summary>
