@@ -5,12 +5,14 @@
     <ControlTheme x:Key="{x:Type controls:NavigationControl}" TargetType="controls:NavigationControl">
         <Setter Property="Template">
             <ControlTemplate>
-                <Border Background="{DynamicResource CobaltSurfaceBrush}"
+                <Border x:Name="PART_Border"
+                       Background="{DynamicResource CobaltSurfaceBrush}"
                        BorderBrush="{DynamicResource CobaltBorderSubtleBrush}"
                        BorderThickness="0,0,1,0"
                        Width="80">
                     <DockPanel>
-                        <ContentPresenter Content="{TemplateBinding Logo}"
+                        <ContentPresenter x:Name="PART_Logo"
+                                          Content="{TemplateBinding Logo}"
                                           DockPanel.Dock="Top"
                                           HorizontalAlignment="Center"
                                           Margin="0,12,0,8"
@@ -70,6 +72,19 @@
                 </Border>
             </ControlTemplate>
         </Setter>
+
+        <!-- Horizontal position: border on bottom, horizontal layout -->
+        <Style Selector="^:horizontal /template/ Border#PART_Border">
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="Width" Value="NaN" />
+            <Setter Property="Height" Value="66" />
+        </Style>
+
+        <!-- Horizontal position: scroll horizontally instead of vertically -->
+        <Style Selector="^:horizontal /template/ ListBox">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        </Style>
     </ControlTheme>
 
 </ResourceDictionary>
