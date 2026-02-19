@@ -8,8 +8,8 @@ public sealed class MovedEventArgs : EventArgs
 {
     public double DeltaX { get; init; }
     public double DeltaY { get; init; }
-    public double NewX   { get; init; }
-    public double NewY   { get; init; }
+    public double NewX { get; init; }
+    public double NewY { get; init; }
 }
 
 public abstract class Shape : DrawingObject
@@ -25,16 +25,15 @@ public abstract class Shape : DrawingObject
         Moved?.Invoke(this, new MovedEventArgs { DeltaX = deltaX, DeltaY = deltaY, NewX = X, NewY = Y });
     }
 
-    public IBrush? Fill           { get; set => SetProperty(ref field, value); }
-    public IBrush? Stroke         { get; set => SetProperty(ref field, value); }
-    public double  StrokeThickness { get; set => SetProperty(ref field, value); } = 1.0;
-
-    public IBrush? FillHover   { get; set => SetProperty(ref field, value); }
+    public IBrush? Fill { get; set => SetProperty(ref field, value); }
+    public IBrush? Stroke { get; set => SetProperty(ref field, value); }
+    public double StrokeThickness { get; set => SetProperty(ref field, value); } = 1.0;
+    public IBrush? FillHover { get; set => SetProperty(ref field, value); }
     public IBrush? StrokeHover { get; set => SetProperty(ref field, value); }
 
     internal bool IsHovered { get; set; }
 
-    protected IBrush? EffectiveFill   => IsHovered && FillHover   is not null ? FillHover   : Fill;
+    protected IBrush? EffectiveFill => IsHovered && FillHover is not null ? FillHover : Fill;
     protected IBrush? EffectiveStroke => IsHovered && StrokeHover is not null ? StrokeHover : Stroke;
 
     protected IPen? BuildPen() => EffectiveStroke is null ? null : new Pen(EffectiveStroke, StrokeThickness);

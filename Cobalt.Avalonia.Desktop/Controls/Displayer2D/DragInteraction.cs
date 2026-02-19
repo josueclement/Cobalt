@@ -27,7 +27,7 @@ public sealed class DragInteraction : UserInteraction
             if (target is not null)
             {
                 _dragging = target;
-                _lastPos  = canvasPoint;
+                _lastPos = canvasPoint;
                 e.Pointer.Capture(e.Source as IInputElement);
             }
         }
@@ -39,8 +39,8 @@ public sealed class DragInteraction : UserInteraction
 
         if (_dragging is null || Owner is null) return;
 
-        var pos      = e.GetPosition(Owner);
-        var zoom     = Owner.ZoomFactor;
+        var pos = e.GetPosition(Owner);
+        var zoom = Owner.ZoomFactor;
         _dragging.Move((pos.X - _lastPos.X) / zoom, (pos.Y - _lastPos.Y) / zoom);
         _lastPos = pos;
     }
@@ -59,8 +59,8 @@ public sealed class DragInteraction : UserInteraction
     {
         if (Owner is null) return null;
 
-        Shape? best       = null;
-        int    bestZIndex = int.MinValue;
+        Shape? best = null;
+        int bestZIndex = int.MinValue;
 
         var objects = Enumerable.Empty<DrawingObject>();
         if (Owner.DrawingObjects != null)
@@ -76,7 +76,7 @@ public sealed class DragInteraction : UserInteraction
                 if (shape.ZIndex > bestZIndex)
                 {
                     bestZIndex = shape.ZIndex;
-                    best       = shape;
+                    best = shape;
                 }
             }
         }

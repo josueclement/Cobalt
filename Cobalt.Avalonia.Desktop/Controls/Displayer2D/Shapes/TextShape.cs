@@ -5,8 +5,8 @@ namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
 public class TextShape : DrawingObject
 {
-    public string? Text       { get; set => SetProperty(ref field, value); }
-    public double  FontSize   { get; set => SetProperty(ref field, value); } = 14;
+    public string? Text { get; set => SetProperty(ref field, value); }
+    public double FontSize { get; set => SetProperty(ref field, value); } = 14;
     public FontFamily FontFamily { get; set => SetProperty(ref field, value); } = FontFamily.Default;
     public FontWeight FontWeight { get; set => SetProperty(ref field, value); } = FontWeight.Normal;
     public IBrush? Foreground { get; set => SetProperty(ref field, value); }

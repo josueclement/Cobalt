@@ -47,8 +47,8 @@ public class Displayer2DControl : TemplatedControl
     }
 
     public double ZoomFactor { get => GetValue(ZoomFactorProperty); set => SetValue(ZoomFactorProperty, value); }
-    public double PanX       { get => GetValue(PanXProperty);       set => SetValue(PanXProperty,       value); }
-    public double PanY       { get => GetValue(PanYProperty);       set => SetValue(PanYProperty,       value); }
+    public double PanX { get => GetValue(PanXProperty); set => SetValue(PanXProperty, value); }
+    public double PanY { get => GetValue(PanYProperty); set => SetValue(PanYProperty, value); }
 
     public Point WorldToCanvas(Point worldPoint)
     {

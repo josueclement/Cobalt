@@ -2,7 +2,7 @@ using Avalonia;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
-public partial class CircleShape : EllipseShape
+public class CircleShape : EllipseShape
 {
     public CircleShape()
     {

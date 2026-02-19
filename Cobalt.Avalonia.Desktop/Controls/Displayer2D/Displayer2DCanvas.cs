@@ -11,7 +11,7 @@ internal sealed class Displayer2DCanvas : Control
 
     public Displayer2DCanvas()
     {
-        PointerMoved  += OnPointerMoved;
+        PointerMoved += OnPointerMoved;
         PointerExited += OnPointerExited;
     }
 
