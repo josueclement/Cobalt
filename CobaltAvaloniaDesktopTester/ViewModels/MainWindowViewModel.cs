@@ -37,7 +37,7 @@ public class MainWindowViewModel : ViewModelBase
         };
         Navigation.Items.Add(new NavigationItemControl
         {
-            Header = "Services",
+            Header = "Services with a very long header",
             IconData = IconService.CreateGeometry(Icon.chat_circle_text, IconType.regular),
             PageType = typeof(ServicesTestingPageView),
             PageViewModelType = typeof(ServicesTestingPageViewModel)

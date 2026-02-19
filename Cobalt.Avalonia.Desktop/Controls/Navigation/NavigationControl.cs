@@ -1,10 +1,7 @@
 using global::Avalonia;
 using global::Avalonia.Controls;
-using global::Avalonia.Controls.Presenters;
 using global::Avalonia.Controls.Primitives;
-using global::Avalonia.Controls.Templates;
 using global::Avalonia.Data;
-using global::Avalonia.Layout;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Navigation;
 
@@ -40,10 +37,10 @@ public class NavigationControl : TemplatedControl
         AvaloniaProperty.Register<NavigationControl, object?>(nameof(Logo));
 
     /// <summary>
-    /// Defines the <see cref="Position"/> property.
+    /// Defines the <see cref="Orientation"/> property.
     /// </summary>
-    public static readonly StyledProperty<NavigationPosition> PositionProperty =
-        AvaloniaProperty.Register<NavigationControl, NavigationPosition>(nameof(Position), NavigationPosition.Vertical);
+    public static readonly StyledProperty<NavigationOrientation> OrientationProperty =
+        AvaloniaProperty.Register<NavigationControl, NavigationOrientation>(nameof(Orientation), NavigationOrientation.Vertical);
 
     /// <summary>
     /// The <see cref="ListBox"/> used for main navigation items.
@@ -54,11 +51,6 @@ public class NavigationControl : TemplatedControl
     /// The <see cref="ListBox"/> used for footer navigation items.
     /// </summary>
     private ListBox? _footerListBox;
-
-    /// <summary>
-    /// The <see cref="ContentPresenter"/> used for the logo.
-    /// </summary>
-    private ContentPresenter? _logoPresenter;
 
     /// <summary>
     /// Indicates whether a synchronization operation is currently in progress to avoid recursive calls.
@@ -102,12 +94,12 @@ public class NavigationControl : TemplatedControl
     }
 
     /// <summary>
-    /// Gets or sets the position of the navigation control along the edge of a layout.
+    /// Gets or sets the orientation of the navigation control.
     /// </summary>
-    public NavigationPosition Position
+    public NavigationOrientation Orientation
     {
-        get => GetValue(PositionProperty);
-        set => SetValue(PositionProperty, value);
+        get => GetValue(OrientationProperty);
+        set => SetValue(OrientationProperty, value);
     }
 
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
@@ -121,15 +113,13 @@ public class NavigationControl : TemplatedControl
 
         _itemsListBox = e.NameScope.Find<ListBox>("PART_ItemsListBox");
         _footerListBox = e.NameScope.Find<ListBox>("PART_FooterListBox");
-        _logoPresenter = e.NameScope.Find<ContentPresenter>("PART_Logo");
-
         if (_itemsListBox != null)
             _itemsListBox.SelectionChanged += OnItemsSelectionChanged;
         if (_footerListBox != null)
             _footerListBox.SelectionChanged += OnFooterSelectionChanged;
 
         SyncListBoxSelection();
-        ApplyPositionLayout();
+        ApplyOrientationLayout();
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -138,8 +128,8 @@ public class NavigationControl : TemplatedControl
 
         if (change.Property == SelectedItemProperty)
             SyncListBoxSelection();
-        else if (change.Property == PositionProperty)
-            ApplyPositionLayout();
+        else if (change.Property == OrientationProperty)
+            ApplyOrientationLayout();
     }
 
     /// <summary>
@@ -195,38 +185,14 @@ public class NavigationControl : TemplatedControl
     }
 
     /// <summary>
-    /// Updates the layout of the navigation control based on the current <see cref="Position"/>.
-    /// Sets pseudo-classes, DockPanel.Dock on template parts, and ItemsPanel orientation.
+    /// Updates the pseudo-classes of the navigation control based on the current <see cref="Orientation"/>.
     /// </summary>
-    private void ApplyPositionLayout()
+    private void ApplyOrientationLayout()
     {
-        bool horizontal = Position == NavigationPosition.Horizontal;
+        bool horizontal = Orientation == NavigationOrientation.Horizontal;
 
         PseudoClasses.Set(":vertical", !horizontal);
         PseudoClasses.Set(":horizontal", horizontal);
-
-        if (_logoPresenter != null)
-            DockPanel.SetDock(_logoPresenter, horizontal ? Dock.Left : Dock.Top);
-
-        if (_footerListBox != null)
-            DockPanel.SetDock(_footerListBox, horizontal ? Dock.Right : Dock.Bottom);
-
-        var panel = CreateItemsPanel(horizontal);
-        if (_itemsListBox != null)
-            _itemsListBox.ItemsPanel = panel;
-        if (_footerListBox != null)
-            _footerListBox.ItemsPanel = panel;
-    }
-
-    /// <summary>
-    /// Creates an <see cref="ItemsPanelTemplate"/> with a <see cref="StackPanel"/> of the specified orientation.
-    /// </summary>
-    private static FuncTemplate<Panel?> CreateItemsPanel(bool horizontal)
-    {
-        return new FuncTemplate<Panel?>(() => new StackPanel
-        {
-            Orientation = horizontal ? Orientation.Horizontal : Orientation.Vertical
-        });
     }
 
     /// <summary>

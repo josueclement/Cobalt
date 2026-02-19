@@ -24,6 +24,7 @@
                     <TextBlock Text="{TemplateBinding Header}"
                               FontSize="11"
                               TextAlignment="Center"
+                              TextWrapping="Wrap"
                               Foreground="{DynamicResource CobaltForegroundBrush}" />
                 </StackPanel>
             </ControlTemplate>

@@ -73,17 +73,32 @@
             </ControlTemplate>
         </Setter>
 
-        <!-- Horizontal position: border on bottom, horizontal layout -->
+        <!-- Horizontal orientation: border on bottom, horizontal layout -->
         <Style Selector="^:horizontal /template/ Border#PART_Border">
             <Setter Property="BorderThickness" Value="0,1,0,0" />
             <Setter Property="Width" Value="NaN" />
             <Setter Property="Height" Value="70" />
         </Style>
 
-        <!-- Horizontal position: scroll horizontally instead of vertically -->
+        <!-- Horizontal orientation: logo docks left -->
+        <Style Selector="^:horizontal /template/ ContentPresenter#PART_Logo">
+            <Setter Property="DockPanel.Dock" Value="Left" />
+        </Style>
+
+        <!-- Horizontal orientation: footer docks right -->
+        <Style Selector="^:horizontal /template/ ListBox#PART_FooterListBox">
+            <Setter Property="DockPanel.Dock" Value="Right" />
+        </Style>
+
+        <!-- Horizontal orientation: scroll horizontally instead of vertically -->
         <Style Selector="^:horizontal /template/ ListBox">
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="ItemsPanel">
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter>
         </Style>
     </ControlTheme>
 
