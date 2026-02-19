@@ -17,7 +17,8 @@ sealed class Program
         // thread pool. Swallow it so the process exits cleanly.
         AppDomain.CurrentDomain.UnhandledException += (_, e) =>
         {
-            if (e.ExceptionObject is TaskCanceledException)
+            if (e.ExceptionObject is TaskCanceledException ex
+                && ex.StackTrace?.Contains("Tmds.DBus") == true)
                 Environment.Exit(0);
         };
 
