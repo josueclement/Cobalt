@@ -10,7 +10,8 @@
       "WebFetch(domain:livecharts.dev)",
       "Bash(grep:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(dotnet list:*)"
     ]
   }
 }

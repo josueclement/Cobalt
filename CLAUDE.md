@@ -43,8 +43,21 @@ No test projects exist yet.
 
 Colors are defined in `Cobalt.Avalonia.Desktop/Themes/Colors.axaml` using `ResourceDictionary.ThemeDictionaries` with `x:Key="Dark"` and `x:Key="Light"` variants. Brushes in `Brushes.axaml` reference colors via `{DynamicResource}` for runtime theme switching. Use `{DynamicResource CobaltForegroundSecondaryBrush}` (not `StaticResource`) for theme-reactive styling. Key prefixes: `CobaltBackground`, `CobaltSurface`, `CobaltBorder`, `CobaltForeground`, `CobaltAccent`, `CobaltSuccess`, `CobaltWarning`, `CobaltError`.
 
+### Property & Command conventions
+
+- **Observable properties**: Use C# 13 semi-auto properties with `SetProperty`. Never use `[ObservableProperty]`. Classes must NOT be `partial`.
+  ```csharp
+  public string Text { get; set => SetProperty(ref field, value); } = "default";
+  ```
+- **Commands**: Declare as `IRelayCommand` / `IAsyncRelayCommand` properties, initialize in the constructor with `new RelayCommand(Method)` / `new AsyncRelayCommand(AsyncMethod)`. Never use `[RelayCommand]`.
+  ```csharp
+  public IRelayCommand SaveCommand { get; }
+  // in constructor:
+  SaveCommand = new RelayCommand(Save);
+  ```
+
 ### Gotchas
 
-- **Namespace collision**: The `Cobalt.Avalonia.Desktop` namespace causes `Avalonia.Media` (and similar) to resolve incorrectly as `Cobalt.Avalonia.Media`. Use `global::Avalonia.Media` or `using global::Avalonia.Media;` in C# files that need Avalonia sub-namespaces.
+- **Namespace collision**: The `Cobalt.Avalonia.Desktop` namespace causes `Avalonia.Media` (and similar) to resolve incorrectly as `Cobalt.Avalonia.Media`. Use `global::Avalonia.Media` or `using global::Avalonia.Media;` in C# files that need Avalonia sub-namespaces, BUT ONLY WHEN ABSOLUTELY NECESSARY.
 - **Compiled bindings require `x:DataType`**: Every UserControl/DataTemplate using `{Binding}` needs an explicit `x:DataType` or the build fails with AVLN2100.
 - **Hit testing requires a Background**: A `Border` or `Panel` with no `Background` (null) is invisible to pointer events. Set `Background="Transparent"` on elements that need to receive clicks/hover across their full area.

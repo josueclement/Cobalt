@@ -1,8 +1,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
-using global::Avalonia.Controls;
-using global::Avalonia.Media;
-using CommunityToolkit.Mvvm.ComponentModel;
+using Avalonia.Controls;
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.Input;
 using Cobalt.Avalonia.Desktop.Services;
 using Cobalt.Avalonia.Desktop.Controls;

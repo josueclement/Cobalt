@@ -2,7 +2,7 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
-using global::Avalonia.Media;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Ribbon;
 

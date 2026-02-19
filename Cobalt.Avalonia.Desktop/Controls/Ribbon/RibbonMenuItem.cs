@@ -1,6 +1,6 @@
 using System.Windows.Input;
 using Avalonia;
-using global::Avalonia.Media;
+using Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Ribbon;
 
