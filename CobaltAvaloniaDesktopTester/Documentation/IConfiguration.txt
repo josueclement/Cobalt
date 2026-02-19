@@ -1,0 +1,62 @@
+❯ How can the IConfiguration be injected without even having to call something like ConfigureAppConfiguration with the CreateDefaultBuilder? Is it something magic with the standard name appsettings.json ? How could I add        
+  another json configuration file (how to configure it, how to inject its IConfiguration, and so on ) ?                                                                                                                             
+                                                                                                                                                                                                                                    
+● Great questions. Here's how it works:                                                                                                                                                                                             
+                                                                                                                                                                                                                                    
+  Why IConfiguration "just works"                                                                                                                                                                                                   
+   
+  Host.CreateDefaultBuilder() (or Host.CreateApplicationBuilder()) automatically calls ConfigureAppConfiguration under the hood with these sources, in order:                                                                       
+                  
+  1. appsettings.json (optional, reloadOnChange: true)
+  2. appsettings.{Environment}.json (optional, reloadOnChange: true)
+  3. Environment variables
+  4. Command-line args
+  5. User secrets (in Development environment only)
+
+  So yes, appsettings.json is "magic" — but only because CreateDefaultBuilder registers it for you. If you used new HostBuilder() directly, you'd get nothing automatically.
+
+  How to add another JSON config file
+
+  In the host builder setup, chain ConfigureAppConfiguration:
+
+  var builder = Host.CreateDefaultBuilder(args)
+      .ConfigureAppConfiguration((context, config) =>
+      {
+          // The defaults (appsettings.json, env vars, etc.) are already registered.
+          // Just add your extra file:
+          config.AddJsonFile("mysettings.json", optional: true, reloadOnChange: true);
+      });
+
+  Later sources override earlier ones for the same keys, so your custom file will win over appsettings.json for any duplicate keys.
+
+  How to inject / consume it
+
+  IConfiguration — You don't need to register it; the host does that. Just request it via constructor injection:
+
+  public class MyService(IConfiguration configuration)
+  {
+      var value = configuration["MySection:MyKey"];
+  }
+
+  Strongly-typed options (preferred) — Bind a section to a POCO class:
+
+  // In your service registration:
+  services.Configure<MyOptions>(configuration.GetSection("MySection"));
+
+  // POCO:
+  public class MyOptions
+  {
+      public string MyKey { get; set; }
+  }
+
+  // Then inject:
+  public class MyService(IOptions<MyOptions> options)
+  {
+      var value = options.Value.MyKey;
+  }
+
+  Key points
+
+  - There's one IConfiguration instance — it's a merged view of all sources. There's no separate IConfiguration per file.
+  - Source order matters: last writer wins for duplicate keys.
+  - IOptionsSnapshot<T> gives you reloaded values per-request (in scoped scenarios); IOptionsMonitor<T> gives you a change callback.
