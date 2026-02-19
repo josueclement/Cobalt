@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
+using System;
 using System.Linq;
 using Avalonia.Markup.Xaml;
 using Cobalt.Avalonia.Desktop.Services;
@@ -27,10 +28,9 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var collection = new ServiceCollection();
-        collection.AddCobaltServices();
-        collection.AddPagesAndViewModels();
-        var services = collection.BuildServiceProvider();
+        // When launched by the Avalonia Designer, Program.Main() is bypassed
+        // so AppHost is null. Build a standalone provider as fallback.
+        var services = Program.AppHost?.Services ?? BuildDesignerServices();
         
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -65,5 +65,13 @@ public partial class App : Application
         {
             BindingPlugins.DataValidators.Remove(plugin);
         }
+    }
+
+    private static IServiceProvider BuildDesignerServices()
+    {
+        var collection = new ServiceCollection();
+        collection.AddCobaltServices();
+        collection.AddPagesAndViewModels();
+        return collection.BuildServiceProvider();
     }
 }

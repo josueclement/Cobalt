@@ -1,4 +1,5 @@
-﻿using Avalonia;
+using Avalonia;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
 
@@ -6,9 +7,8 @@ namespace CobaltAvaloniaDesktopTester;
 
 sealed class Program
 {
-    // Initialization code. Don't use any Avalonia, third-party APIs or any
-    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-    // yet and stuff might break.
+    internal static IHost? AppHost { get; private set; }
+
     [STAThread]
     public static void Main(string[] args)
     {
@@ -22,7 +22,20 @@ sealed class Program
                 Environment.Exit(0);
         };
 
+        AppHost = Host.CreateDefaultBuilder(args)
+            .ConfigureServices((_, services) =>
+            {
+                services.AddCobaltServices();
+                services.AddPagesAndViewModels();
+            })
+            .Build();
+
+        AppHost.Start();
+
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+
+        AppHost.StopAsync().GetAwaiter().GetResult();
+        AppHost.Dispose();
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
