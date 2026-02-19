@@ -1,4 +1,5 @@
 using Avalonia;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
@@ -23,8 +24,9 @@ sealed class Program
         };
 
         AppHost = Host.CreateDefaultBuilder(args)
-            .ConfigureServices((_, services) =>
+            .ConfigureServices((context, services) =>
             {
+                services.Configure<ApiOptions>(context.Configuration.GetSection("Api"));
                 services.AddHostedServices();
                 services.AddCobaltServices();
                 services.AddPagesAndViewModels();
