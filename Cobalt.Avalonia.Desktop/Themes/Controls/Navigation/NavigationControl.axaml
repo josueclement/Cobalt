@@ -77,7 +77,7 @@
         <Style Selector="^:horizontal /template/ Border#PART_Border">
             <Setter Property="BorderThickness" Value="0,1,0,0" />
             <Setter Property="Width" Value="NaN" />
-            <Setter Property="Height" Value="70" />
+            <Setter Property="MaxHeight" Value="90" />
         </Style>
 
         <!-- Horizontal orientation: logo docks left -->
