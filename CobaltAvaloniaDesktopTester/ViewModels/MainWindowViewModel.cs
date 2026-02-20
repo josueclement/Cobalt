@@ -97,6 +97,13 @@ public class MainWindowViewModel : ViewModelBase
             PageType = typeof(Displayer2DPageView),
             PageViewModelType = typeof(Displayer2DPageViewModel)
         });
+        Navigation.Items.Add(new NavigationItemControl
+        {
+            Header = "Displayer2D Image",
+            IconData = IconService.CreateGeometry(Icon.image, IconType.regular),
+            PageType = typeof(Displayer2DImagePageView),
+            PageViewModelType = typeof(Displayer2DImagePageViewModel)
+        });
 
         Navigation.FooterItems.Add(new NavigationItemControl
         {

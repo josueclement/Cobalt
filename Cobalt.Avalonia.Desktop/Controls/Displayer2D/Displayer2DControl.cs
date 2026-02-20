@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
+using global::Avalonia.Media;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
 
@@ -28,6 +29,14 @@ public class Displayer2DControl : TemplatedControl
     public static readonly StyledProperty<double> PanYProperty =
         AvaloniaProperty.Register<Displayer2DControl, double>(nameof(PanY), defaultValue: 0.0);
 
+    public static readonly StyledProperty<IImage?> BackgroundImageProperty =
+        AvaloniaProperty.Register<Displayer2DControl, IImage?>(nameof(BackgroundImage));
+
+    public static readonly DirectProperty<Displayer2DControl, Point?> WorldMousePositionProperty =
+        AvaloniaProperty.RegisterDirect<Displayer2DControl, Point?>(
+            nameof(WorldMousePosition),
+            o => o.WorldMousePosition);
+
     public ObservableCollection<DrawingObject>? DrawingObjects
     {
         get => GetValue(DrawingObjectsProperty);
@@ -50,6 +59,19 @@ public class Displayer2DControl : TemplatedControl
     public double PanX { get => GetValue(PanXProperty); set => SetValue(PanXProperty, value); }
     public double PanY { get => GetValue(PanYProperty); set => SetValue(PanYProperty, value); }
 
+    public IImage? BackgroundImage
+    {
+        get => GetValue(BackgroundImageProperty);
+        set => SetValue(BackgroundImageProperty, value);
+    }
+
+    private Point? _worldMousePosition;
+    public Point? WorldMousePosition
+    {
+        get => _worldMousePosition;
+        internal set => SetAndRaise(WorldMousePositionProperty, ref _worldMousePosition, value);
+    }
+
     public Point WorldToCanvas(Point worldPoint)
     {
         var zoom = ZoomFactor;
@@ -61,6 +83,29 @@ public class Displayer2DControl : TemplatedControl
         var zoom = ZoomFactor;
         if (zoom == 0.0) return canvasPoint;
         return new Point((canvasPoint.X - PanX) / zoom, (canvasPoint.Y - PanY) / zoom);
+    }
+
+    public void ZoomToFit(Rect worldBounds, double padding = 20)
+    {
+        var viewWidth = Bounds.Width - padding * 2;
+        var viewHeight = Bounds.Height - padding * 2;
+        if (viewWidth <= 0 || viewHeight <= 0 || worldBounds.Width <= 0 || worldBounds.Height <= 0)
+            return;
+
+        var zoom = Math.Min(viewWidth / worldBounds.Width, viewHeight / worldBounds.Height);
+        var worldCenterX = worldBounds.X + worldBounds.Width / 2;
+        var worldCenterY = worldBounds.Y + worldBounds.Height / 2;
+
+        ZoomFactor = zoom;
+        PanX = Bounds.Width / 2 - worldCenterX * zoom;
+        PanY = Bounds.Height / 2 - worldCenterY * zoom;
+    }
+
+    public void ZoomToFit(double padding = 20)
+    {
+        var bgImage = BackgroundImage;
+        if (bgImage is null) return;
+        ZoomToFit(new Rect(0, 0, bgImage.Size.Width, bgImage.Size.Height), padding);
     }
 
     private Displayer2DCanvas? _canvas;
@@ -130,7 +175,8 @@ public class Displayer2DControl : TemplatedControl
             if (change.NewValue is UserInteraction newInteraction)
                 newInteraction.Owner = this;
         }
-        else if (change.Property == ZoomFactorProperty
+        else if (change.Property == BackgroundImageProperty
+              || change.Property == ZoomFactorProperty
               || change.Property == PanXProperty
               || change.Property == PanYProperty)
         {

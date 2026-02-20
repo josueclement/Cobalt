@@ -1,6 +1,7 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using Avalonia.Media;
+using global::Avalonia.Media;
 using Cobalt.Avalonia.Desktop.Controls.Displayer2D.Shapes;
 
 namespace Cobalt.Avalonia.Desktop.Controls.Displayer2D;
@@ -27,6 +28,15 @@ internal sealed class Displayer2DCanvas : Control
         var zoom = Owner.ZoomFactor;
         var panX = Owner.PanX;
         var panY = Owner.PanY;
+
+        // Render background image at world origin, behind all drawing objects
+        var bgImage = Owner.BackgroundImage;
+        if (bgImage is not null)
+        {
+            using var transform = context.PushTransform(
+                Matrix.CreateScale(zoom, zoom) * Matrix.CreateTranslation(panX, panY));
+            context.DrawImage(bgImage, new global::Avalonia.Rect(bgImage.Size));
+        }
 
         var objects = Enumerable.Empty<DrawingObject>();
 
@@ -61,6 +71,8 @@ internal sealed class Displayer2DCanvas : Control
     private void UpdateHoverState(global::Avalonia.Point? pos)
     {
         if (Owner is null) return;
+
+        Owner.WorldMousePosition = pos.HasValue ? Owner.CanvasToWorld(pos.Value) : null;
 
         bool changed = false;
 

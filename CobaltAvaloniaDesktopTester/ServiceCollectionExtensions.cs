@@ -39,6 +39,7 @@ public static class ServiceCollectionExtensions
             _ = services.AddTransient<SchedulePageView>();
             _ = services.AddTransient<ServicesTestingPageView>();
             _ = services.AddTransient<Displayer2DPageView>();
+            _ = services.AddTransient<Displayer2DImagePageView>();
             _ = services.AddTransient<SettingsPageView>();
 
             _ = services.AddSingleton<MainWindowViewModel>();
@@ -52,6 +53,7 @@ public static class ServiceCollectionExtensions
             _ = services.AddSingleton<SchedulePageViewModel>();
             _ = services.AddSingleton<ServicesTestingPageViewModel>();
             _ = services.AddSingleton<Displayer2DPageViewModel>();
+            _ = services.AddSingleton<Displayer2DImagePageViewModel>();
             _ = services.AddSingleton<SettingsPageViewModel>();
         }
     }
