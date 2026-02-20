@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cobalt.Localization", "Coba
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cobalt.Localization.Avalonia", "Cobalt.Localization.Avalonia\Cobalt.Localization.Avalonia.csproj", "{5F32B4E4-A567-494E-A1D2-AD13DAC08116}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cobalt.Iam", "Cobalt.Iam\Cobalt.Iam.csproj", "{4C3D3C63-EE22-43F9-8DF1-3548AC154654}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{5F32B4E4-A567-494E-A1D2-AD13DAC08116}.Release|x64.Build.0 = Release|Any CPU
 		{5F32B4E4-A567-494E-A1D2-AD13DAC08116}.Release|x86.ActiveCfg = Release|Any CPU
 		{5F32B4E4-A567-494E-A1D2-AD13DAC08116}.Release|x86.Build.0 = Release|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Debug|x64.Build.0 = Debug|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Release|x64.ActiveCfg = Release|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Release|x64.Build.0 = Release|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C3D3C63-EE22-43F9-8DF1-3548AC154654}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
