@@ -2,6 +2,7 @@ using Avalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CobaltAvaloniaDesktopTester;
@@ -37,6 +38,10 @@ sealed class Program
 
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
 
+        // Clear the Avalonia SynchronizationContext so that StopAsync
+        // continuations don't deadlock trying to post back to the
+        // now-shutdown dispatcher (observed on Windows).
+        SynchronizationContext.SetSynchronizationContext(null);
         AppHost.StopAsync().GetAwaiter().GetResult();
         AppHost.Dispose();
     }
