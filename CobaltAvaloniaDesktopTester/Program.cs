@@ -4,6 +4,8 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace CobaltAvaloniaDesktopTester;
 
@@ -27,6 +29,11 @@ sealed class Program
         AppHost = Host.CreateDefaultBuilder(args)
             .ConfigureServices((context, services) =>
             {
+                services.AddLogging(builder =>
+                {
+                    builder.ClearProviders();
+                    builder.AddNLog();
+                });
                 services.Configure<ApiOptions>(context.Configuration.GetSection("Api"));
                 services.AddHostedServices();
                 services.AddCobaltServices();

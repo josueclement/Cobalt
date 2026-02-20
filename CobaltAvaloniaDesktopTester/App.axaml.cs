@@ -10,6 +10,8 @@ using CobaltAvaloniaDesktopTester.Views;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace CobaltAvaloniaDesktopTester;
 
@@ -68,10 +70,15 @@ public partial class App : Application
 
     private static IServiceProvider BuildDesignerServices()
     {
-        var collection = new ServiceCollection();
-        collection.AddHostedServices();
-        collection.AddCobaltServices();
-        collection.AddPagesAndViewModels();
-        return collection.BuildServiceProvider();
+        var services = new ServiceCollection();
+        services.AddLogging(builder =>
+        {
+            builder.ClearProviders();
+            builder.AddNLog();
+        });
+        services.AddHostedServices();
+        services.AddCobaltServices();
+        services.AddPagesAndViewModels();
+        return services.BuildServiceProvider();
     }
 }
