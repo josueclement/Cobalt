@@ -12,7 +12,8 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(git mv:*)",
       "Bash(dotnet list:*)",
-      "Bash(dotnet csharp:*)"
+      "Bash(dotnet csharp:*)",
+      "Bash(dotnet sln:*)"
     ]
   }
 }
