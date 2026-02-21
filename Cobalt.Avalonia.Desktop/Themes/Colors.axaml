@@ -16,6 +16,7 @@
             <Color x:Key="CobaltAccentColor">#3574F0</Color>
             <Color x:Key="CobaltAccentHoverColor">#4A88F7</Color>
             <Color x:Key="CobaltSelectionColor">#214283</Color>
+            <Color x:Key="CobaltSurfaceLowColor">#252628</Color>
             <Color x:Key="CobaltHoverColor">#2E3035</Color>
             <Color x:Key="CobaltPressedColor">#3C3E42</Color>
             <Color x:Key="CobaltOverlayColor">#80000000</Color>
@@ -51,6 +52,7 @@
             <Color x:Key="CobaltAccentColor">#3574F0</Color>
             <Color x:Key="CobaltAccentHoverColor">#2D64D4</Color>
             <Color x:Key="CobaltSelectionColor">#C4D8F8</Color>
+            <Color x:Key="CobaltSurfaceLowColor">#F2F3F5</Color>
             <Color x:Key="CobaltHoverColor">#E8EAED</Color>
             <Color x:Key="CobaltPressedColor">#D2D4D8</Color>
             <Color x:Key="CobaltOverlayColor">#40000000</Color>

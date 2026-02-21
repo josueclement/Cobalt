@@ -36,6 +36,13 @@ public class MainWindowViewModel : ViewModelBase
         };
         Navigation.Items.Add(new NavigationItemControl
         {
+            Header = "Base Controls",
+            IconData = IconService.CreateGeometry(Icon.squares_four, IconType.regular),
+            PageType = typeof(BaseControlsPageView),
+            PageViewModelType = typeof(BaseControlsPageViewModel)
+        });
+        Navigation.Items.Add(new NavigationItemControl
+        {
             Header = "Services with a very long header",
             IconData = IconService.CreateGeometry(Icon.chat_circle_text, IconType.regular),
             PageType = typeof(ServicesTestingPageView),

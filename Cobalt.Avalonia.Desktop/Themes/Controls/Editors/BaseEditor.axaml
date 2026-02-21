@@ -92,14 +92,17 @@
 
         <!-- Pointer over -->
         <Style Selector="^:pointerover /template/ Border#PART_Border">
+            <Setter Property="Background" Value="{DynamicResource CobaltSurfaceHighBrush}" />
             <Setter Property="BorderBrush" Value="{DynamicResource CobaltBorderBrush}" />
         </Style>
 
         <!-- Focus state (after pointerover so it wins) -->
         <Style Selector="^:focus /template/ Border#PART_Border">
+            <Setter Property="Background" Value="{DynamicResource CobaltSurfaceLowBrush}" />
             <Setter Property="BorderBrush" Value="{DynamicResource CobaltAccentBrush}" />
         </Style>
         <Style Selector="^:focus-within /template/ Border#PART_Border">
+            <Setter Property="Background" Value="{DynamicResource CobaltSurfaceLowBrush}" />
             <Setter Property="BorderBrush" Value="{DynamicResource CobaltAccentBrush}" />
         </Style>
 

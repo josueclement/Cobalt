@@ -3,6 +3,7 @@
 
     <SolidColorBrush x:Key="CobaltBackgroundBrush" Color="{DynamicResource CobaltBackgroundColor}" />
     <SolidColorBrush x:Key="CobaltSurfaceBrush" Color="{DynamicResource CobaltSurfaceColor}" />
+    <SolidColorBrush x:Key="CobaltSurfaceLowBrush" Color="{DynamicResource CobaltSurfaceLowColor}" />
     <SolidColorBrush x:Key="CobaltSurfaceHighBrush" Color="{DynamicResource CobaltSurfaceHighColor}" />
     <SolidColorBrush x:Key="CobaltBorderBrush" Color="{DynamicResource CobaltBorderColor}" />
     <SolidColorBrush x:Key="CobaltBorderSubtleBrush" Color="{DynamicResource CobaltBorderSubtleColor}" />
@@ -32,5 +33,20 @@
     <SolidColorBrush x:Key="CobaltCalendarAppointmentBrush" Color="{DynamicResource CobaltCalendarAppointmentColor}" />
     <SolidColorBrush x:Key="CobaltCalendarGridLineBrush" Color="{DynamicResource CobaltCalendarGridLineColor}" />
     <SolidColorBrush x:Key="CobaltCalendarCurrentTimeBrush" Color="{DynamicResource CobaltCalendarCurrentTimeColor}" />
+
+    <!-- TextBox overrides (FluentTheme resource keys) -->
+    <SolidColorBrush x:Key="TextControlBackground" Color="{DynamicResource CobaltSurfaceColor}" />
+    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{DynamicResource CobaltSurfaceHighColor}" />
+    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{DynamicResource CobaltSurfaceLowColor}" />
+    <SolidColorBrush x:Key="TextControlBorderBrush" Color="{DynamicResource CobaltBorderSubtleColor}" />
+    <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="{DynamicResource CobaltBorderColor}" />
+    <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="{DynamicResource CobaltAccentColor}" />
+    <SolidColorBrush x:Key="TextControlForeground" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+    <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="{DynamicResource CobaltSelectionColor}" />
 
 </ResourceDictionary>
