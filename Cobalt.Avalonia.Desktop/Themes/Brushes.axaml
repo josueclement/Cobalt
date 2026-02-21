@@ -39,7 +39,7 @@
     <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{DynamicResource CobaltSurfaceHighColor}" />
     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{DynamicResource CobaltSurfaceLowColor}" />
     <SolidColorBrush x:Key="TextControlBorderBrush" Color="{DynamicResource CobaltBorderSubtleColor}" />
-    <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="{DynamicResource CobaltBorderColor}" />
+    <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="{DynamicResource CobaltBorderSubtleColor}" />
     <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="{DynamicResource CobaltAccentColor}" />
     <SolidColorBrush x:Key="TextControlForeground" Color="{DynamicResource CobaltForegroundColor}" />
     <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="{DynamicResource CobaltForegroundColor}" />
