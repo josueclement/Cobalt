@@ -1,0 +1,86 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+
+        <!-- Dark theme (JetBrains Darcula-inspired) -->
+        <ResourceDictionary x:Key="Dark">
+            <Color x:Key="CobaltBackgroundColor">#1E1F22</Color>
+            <Color x:Key="CobaltSurfaceColor">#2B2D30</Color>
+            <Color x:Key="CobaltSurfaceHighColor">#313335</Color>
+            <Color x:Key="CobaltBorderColor">#393B40</Color>
+            <Color x:Key="CobaltBorderSubtleColor">#43454A</Color>
+            <Color x:Key="CobaltForegroundColor">#BCBEC4</Color>
+            <Color x:Key="CobaltForegroundSecondaryColor">#6F737A</Color>
+            <Color x:Key="CobaltForegroundTertiaryColor">#4E5157</Color>
+            <Color x:Key="CobaltAccentColor">#3574F0</Color>
+            <Color x:Key="CobaltAccentHoverColor">#4A88F7</Color>
+            <Color x:Key="CobaltSelectionColor">#214283</Color>
+            <Color x:Key="CobaltSurfaceLowColor">#252628</Color>
+            <Color x:Key="CobaltInputBackgroundColor">#1F2123</Color>
+            <Color x:Key="CobaltInputBackgroundFocusedColor">#222325</Color>
+            <Color x:Key="CobaltInputBackgroundHoverColor">#242628</Color>
+            <Color x:Key="CobaltHoverColor">#2E3035</Color>
+            <Color x:Key="CobaltPressedColor">#3C3E42</Color>
+            <Color x:Key="CobaltOverlayColor">#80000000</Color>
+            <Color x:Key="CobaltSuccessColor">#59A869</Color>
+            <Color x:Key="CobaltWarningColor">#E8A33D</Color>
+            <Color x:Key="CobaltErrorColor">#F75464</Color>
+            <Color x:Key="CobaltInfoBackgroundColor">#1C2940</Color>
+            <Color x:Key="CobaltInfoBorderColor">#28406A</Color>
+            <Color x:Key="CobaltSuccessBackgroundColor">#1C3028</Color>
+            <Color x:Key="CobaltSuccessBorderColor">#28503A</Color>
+            <Color x:Key="CobaltWarningBackgroundColor">#302718</Color>
+            <Color x:Key="CobaltWarningBorderColor">#504020</Color>
+            <Color x:Key="CobaltErrorBackgroundColor">#301C20</Color>
+            <Color x:Key="CobaltErrorBorderColor">#502830</Color>
+            <Color x:Key="CobaltCalendarTodayColor">#2A3574F0</Color>
+            <Color x:Key="CobaltCalendarSelectedColor">#214283</Color>
+            <Color x:Key="CobaltCalendarOutOfMonthColor">#4E5157</Color>
+            <Color x:Key="CobaltCalendarAppointmentColor">#3574F0</Color>
+            <Color x:Key="CobaltCalendarGridLineColor">#393B40</Color>
+            <Color x:Key="CobaltCalendarCurrentTimeColor">#F75464</Color>
+        </ResourceDictionary>
+
+        <!-- Light theme (JetBrains IntelliJ-inspired) -->
+        <ResourceDictionary x:Key="Light">
+            <Color x:Key="CobaltBackgroundColor">#F7F8FA</Color>
+            <Color x:Key="CobaltSurfaceColor">#EBEDF0</Color>
+            <Color x:Key="CobaltSurfaceHighColor">#DFE1E5</Color>
+            <Color x:Key="CobaltBorderColor">#D1D3D8</Color>
+            <Color x:Key="CobaltBorderSubtleColor">#E0E2E6</Color>
+            <Color x:Key="CobaltForegroundColor">#1E1F22</Color>
+            <Color x:Key="CobaltForegroundSecondaryColor">#6F737A</Color>
+            <Color x:Key="CobaltForegroundTertiaryColor">#A0A3AA</Color>
+            <Color x:Key="CobaltAccentColor">#3574F0</Color>
+            <Color x:Key="CobaltAccentHoverColor">#2D64D4</Color>
+            <Color x:Key="CobaltSelectionColor">#C4D8F8</Color>
+            <Color x:Key="CobaltSurfaceLowColor">#F2F3F5</Color>
+            <Color x:Key="CobaltInputBackgroundColor">#E8EAED</Color>
+            <Color x:Key="CobaltInputBackgroundFocusedColor">#ECEEF1</Color>
+            <Color x:Key="CobaltInputBackgroundHoverColor">#E4E6EA</Color>
+            <Color x:Key="CobaltHoverColor">#E8EAED</Color>
+            <Color x:Key="CobaltPressedColor">#D2D4D8</Color>
+            <Color x:Key="CobaltOverlayColor">#40000000</Color>
+            <Color x:Key="CobaltSuccessColor">#3B8C4B</Color>
+            <Color x:Key="CobaltWarningColor">#C48832</Color>
+            <Color x:Key="CobaltErrorColor">#DB3B3B</Color>
+            <Color x:Key="CobaltInfoBackgroundColor">#DAE6FA</Color>
+            <Color x:Key="CobaltInfoBorderColor">#A0BEF0</Color>
+            <Color x:Key="CobaltSuccessBackgroundColor">#DAEEDA</Color>
+            <Color x:Key="CobaltSuccessBorderColor">#A0D4A0</Color>
+            <Color x:Key="CobaltWarningBackgroundColor">#F4E6D0</Color>
+            <Color x:Key="CobaltWarningBorderColor">#DCC098</Color>
+            <Color x:Key="CobaltErrorBackgroundColor">#F4DADA</Color>
+            <Color x:Key="CobaltErrorBorderColor">#DCA0A0</Color>
+            <Color x:Key="CobaltCalendarTodayColor">#2A3574F0</Color>
+            <Color x:Key="CobaltCalendarSelectedColor">#C4D8F8</Color>
+            <Color x:Key="CobaltCalendarOutOfMonthColor">#A0A3AA</Color>
+            <Color x:Key="CobaltCalendarAppointmentColor">#3574F0</Color>
+            <Color x:Key="CobaltCalendarGridLineColor">#D1D3D8</Color>
+            <Color x:Key="CobaltCalendarCurrentTimeColor">#DB3B3B</Color>
+        </ResourceDictionary>
+
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

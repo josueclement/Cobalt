@@ -1,0 +1,64 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="CobaltBackgroundBrush" Color="{DynamicResource CobaltBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltSurfaceBrush" Color="{DynamicResource CobaltSurfaceColor}" />
+    <SolidColorBrush x:Key="CobaltSurfaceLowBrush" Color="{DynamicResource CobaltSurfaceLowColor}" />
+    <SolidColorBrush x:Key="CobaltSurfaceHighBrush" Color="{DynamicResource CobaltSurfaceHighColor}" />
+    <SolidColorBrush x:Key="CobaltBorderBrush" Color="{DynamicResource CobaltBorderColor}" />
+    <SolidColorBrush x:Key="CobaltBorderSubtleBrush" Color="{DynamicResource CobaltBorderSubtleColor}" />
+    <SolidColorBrush x:Key="CobaltForegroundBrush" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="CobaltForegroundSecondaryBrush" Color="{DynamicResource CobaltForegroundSecondaryColor}" />
+    <SolidColorBrush x:Key="CobaltForegroundTertiaryBrush" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+    <SolidColorBrush x:Key="CobaltAccentBrush" Color="{DynamicResource CobaltAccentColor}" />
+    <SolidColorBrush x:Key="CobaltAccentHoverBrush" Color="{DynamicResource CobaltAccentHoverColor}" />
+    <SolidColorBrush x:Key="CobaltSelectionBrush" Color="{DynamicResource CobaltSelectionColor}" />
+    <SolidColorBrush x:Key="CobaltHoverBrush" Color="{DynamicResource CobaltHoverColor}" />
+    <SolidColorBrush x:Key="CobaltPressedBrush" Color="{DynamicResource CobaltPressedColor}" />
+    <SolidColorBrush x:Key="CobaltOverlayBrush" Color="{DynamicResource CobaltOverlayColor}" />
+    <SolidColorBrush x:Key="CobaltSuccessBrush" Color="{DynamicResource CobaltSuccessColor}" />
+    <SolidColorBrush x:Key="CobaltWarningBrush" Color="{DynamicResource CobaltWarningColor}" />
+    <SolidColorBrush x:Key="CobaltErrorBrush" Color="{DynamicResource CobaltErrorColor}" />
+    <SolidColorBrush x:Key="CobaltInfoBackgroundBrush" Color="{DynamicResource CobaltInfoBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltInfoBorderBrush" Color="{DynamicResource CobaltInfoBorderColor}" />
+    <SolidColorBrush x:Key="CobaltSuccessBackgroundBrush" Color="{DynamicResource CobaltSuccessBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltSuccessBorderBrush" Color="{DynamicResource CobaltSuccessBorderColor}" />
+    <SolidColorBrush x:Key="CobaltWarningBackgroundBrush" Color="{DynamicResource CobaltWarningBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltWarningBorderBrush" Color="{DynamicResource CobaltWarningBorderColor}" />
+    <SolidColorBrush x:Key="CobaltErrorBackgroundBrush" Color="{DynamicResource CobaltErrorBackgroundColor}" />
+    <SolidColorBrush x:Key="CobaltErrorBorderBrush" Color="{DynamicResource CobaltErrorBorderColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarTodayBrush" Color="{DynamicResource CobaltCalendarTodayColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarSelectedBrush" Color="{DynamicResource CobaltCalendarSelectedColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarOutOfMonthBrush" Color="{DynamicResource CobaltCalendarOutOfMonthColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarAppointmentBrush" Color="{DynamicResource CobaltCalendarAppointmentColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarGridLineBrush" Color="{DynamicResource CobaltCalendarGridLineColor}" />
+    <SolidColorBrush x:Key="CobaltCalendarCurrentTimeBrush" Color="{DynamicResource CobaltCalendarCurrentTimeColor}" />
+
+    <!-- TextBox overrides (FluentTheme resource keys) -->
+    <SolidColorBrush x:Key="TextControlBackground" Color="{DynamicResource CobaltInputBackgroundColor}" />
+    <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{DynamicResource CobaltInputBackgroundHoverColor}" />
+    <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="{DynamicResource CobaltInputBackgroundFocusedColor}" />
+    <SolidColorBrush x:Key="TextControlBorderBrush" Color="{DynamicResource CobaltBorderSubtleColor}" />
+    <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="{DynamicResource CobaltBorderSubtleColor}" />
+    <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="{DynamicResource CobaltAccentColor}" />
+    <SolidColorBrush x:Key="TextControlForeground" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="TextControlForegroundFocused" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+    <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+    <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="{DynamicResource CobaltSelectionColor}" />
+
+    <!-- ComboBox overrides (FluentTheme resource keys) -->
+    <SolidColorBrush x:Key="ComboBoxBackground" Color="{DynamicResource CobaltInputBackgroundColor}" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="{DynamicResource CobaltSurfaceHighColor}" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="{DynamicResource CobaltSurfaceLowColor}" />
+    <SolidColorBrush x:Key="ComboBoxBackgroundDisabled" Color="{DynamicResource CobaltSurfaceLowColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="{DynamicResource CobaltBorderSubtleColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="{DynamicResource CobaltBorderSubtleColor}" />
+    <SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="{DynamicResource CobaltAccentColor}" />
+    <SolidColorBrush x:Key="ComboBoxForeground" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="{DynamicResource CobaltForegroundColor}" />
+    <SolidColorBrush x:Key="ComboBoxPlaceholderTextForeground" Color="{DynamicResource CobaltForegroundTertiaryColor}" />
+
+</ResourceDictionary>

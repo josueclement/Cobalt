@@ -1,0 +1,97 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:CobaltAvaloniaDesktopTester.ViewModels"
+             xmlns:cobalt="using:Cobalt.Avalonia.Desktop.Data"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="800"
+             x:Class="CobaltAvaloniaDesktopTester.Views.CollectionViewPageView"
+             x:DataType="vm:CollectionViewPageViewModel">
+
+    <UserControl.Resources>
+        <cobalt:CollectionViewSource x:Key="SortedPeople" Source="{Binding People}">
+            <cobalt:CollectionViewSource.SortDescriptions>
+                <cobalt:SortDescription PropertyName="LastName" Direction="Ascending" />
+            </cobalt:CollectionViewSource.SortDescriptions>
+        </cobalt:CollectionViewSource>
+
+        <cobalt:CollectionViewSource x:Key="GroupedPeople" Source="{Binding People}">
+            <cobalt:CollectionViewSource.SortDescriptions>
+                <cobalt:SortDescription PropertyName="LastName" Direction="Ascending" />
+            </cobalt:CollectionViewSource.SortDescriptions>
+            <cobalt:CollectionViewSource.GroupDescriptions>
+                <cobalt:PropertyGroupDescription PropertyName="Department" />
+            </cobalt:CollectionViewSource.GroupDescriptions>
+        </cobalt:CollectionViewSource>
+    </UserControl.Resources>
+
+    <ScrollViewer>
+        <StackPanel Margin="24" Spacing="16">
+            <TextBlock Text="CollectionViewSource"
+                       FontSize="24"
+                       FontWeight="SemiBold" />
+            <TextBlock Text="Demonstrates sorting, filtering, and grouping over an ObservableCollection."
+                       Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+
+            <!-- Filter -->
+            <TextBox x:Name="FilterTextBox"
+                     Watermark="Filter by name..."
+                     Text="{Binding FilterText}" />
+
+            <!-- Actions -->
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button Content="Add Person" Command="{Binding AddPersonCommand}" />
+                <Button Content="Remove Last" Command="{Binding RemoveLastCommand}" />
+            </StackPanel>
+
+            <!-- Sorted list -->
+            <TextBlock Text="Sorted by LastName (Ascending)"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       Margin="0,8,0,0" />
+            <ListBox ItemsSource="{Binding View, Source={StaticResource SortedPeople}}"
+                     MaxHeight="250">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PersonItem">
+                        <TextBlock>
+                            <Run Text="{Binding LastName}" FontWeight="SemiBold" />
+                            <Run Text=", " />
+                            <Run Text="{Binding FirstName}" />
+                            <Run Text=" — " />
+                            <Run Text="{Binding Department}" Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- Grouped list -->
+            <TextBlock Text="Grouped by Department, Sorted by LastName"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       Margin="0,8,0,0" />
+            <ItemsControl ItemsSource="{Binding View.Groups, Source={StaticResource GroupedPeople}}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="cobalt:CollectionViewGroup">
+                        <StackPanel Margin="0,0,0,12">
+                            <TextBlock FontSize="14" FontWeight="SemiBold" Margin="0,0,0,4">
+                                <Run Text="{Binding Key}" />
+                                <Run Text=" (" /><Run Text="{Binding ItemCount}" /><Run Text=")" />
+                            </TextBlock>
+                            <ItemsControl ItemsSource="{Binding Items}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:PersonItem">
+                                        <TextBlock Margin="16,2,0,2">
+                                            <Run Text="{Binding LastName}" FontWeight="SemiBold" />
+                                            <Run Text=", " />
+                                            <Run Text="{Binding FirstName}" />
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

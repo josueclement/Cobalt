@@ -1,0 +1,120 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:CobaltAvaloniaDesktopTester.ViewModels"
+             xmlns:cobalt="using:Cobalt.Avalonia.Desktop.Controls.Ribbon"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pia="using:PhosphorIconsAvalonia.Markup"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="CobaltAvaloniaDesktopTester.Views.RibbonTestingPageView"
+             x:DataType="vm:RibbonTestingPageViewModel">
+
+    <DockPanel>
+        <cobalt:Ribbon DockPanel.Dock="Top"
+                              SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}">
+            <!-- Home Tab -->
+            <cobalt:RibbonTab Header="Home">
+                <cobalt:RibbonGroup Header="File">
+                    <cobalt:RibbonButton Header="New"
+                                         IconData="{pia:IconGeometry Icon=file_text}"
+                                         Command="{Binding NewCommand}" />
+                    <cobalt:RibbonButton Header="Open"
+                                         IconData="{pia:IconGeometry Icon=folder_open}"
+                                         Command="{Binding OpenCommand}" />
+                    <cobalt:RibbonButton Header="Save"
+                                         IconData="{pia:IconGeometry Icon=floppy_disk}"
+                                         Command="{Binding SaveCommand}" />
+                </cobalt:RibbonGroup>
+
+                <cobalt:RibbonGroup Header="Clipboard">
+                    <cobalt:RibbonButton Header="Cut"
+                                         IconData="{pia:IconGeometry Icon=scissors}"
+                                         Command="{Binding CutCommand}" />
+                    <cobalt:RibbonButton Header="Copy"
+                                         IconData="{pia:IconGeometry Icon=copy}"
+                                         Command="{Binding CopyCommand}" />
+                    <cobalt:RibbonDropDownButton Header="Paste"
+                                                  IconData="{pia:IconGeometry Icon=clipboard}">
+                        <cobalt:RibbonMenuItem Header="Paste"
+                                               Command="{Binding PasteCommand}" />
+                        <cobalt:RibbonMenuItem Header="Paste Special"
+                                               Command="{Binding PasteCommand}" />
+                    </cobalt:RibbonDropDownButton>
+                </cobalt:RibbonGroup>
+
+                <cobalt:RibbonGroup Header="Edit">
+                    <cobalt:RibbonButton Header="Undo"
+                                         IconData="{pia:IconGeometry Icon=arrow_arc_left}"
+                                         Command="{Binding UndoCommand}" />
+                    <cobalt:RibbonButton Header="Redo"
+                                         IconData="{pia:IconGeometry Icon=arrow_arc_right}"
+                                         Command="{Binding RedoCommand}" />
+                </cobalt:RibbonGroup>
+
+                <cobalt:RibbonGroup Header="Format">
+                    <cobalt:RibbonToggleButton Header="Bold"
+                                                IconData="{pia:IconGeometry Icon=text_b}"
+                                                IsChecked="{Binding IsBoldActive}"
+                                                Command="{Binding ToggleBoldCommand}" />
+                    <cobalt:RibbonToggleButton Header="Italic"
+                                                IconData="{pia:IconGeometry Icon=text_italic}"
+                                                IsChecked="{Binding IsItalicActive}"
+                                                Command="{Binding ToggleItalicCommand}" />
+                </cobalt:RibbonGroup>
+            </cobalt:RibbonTab>
+
+            <!-- Insert Tab -->
+            <cobalt:RibbonTab Header="Insert">
+                <cobalt:RibbonGroup Header="Elements">
+                    <cobalt:RibbonButton Header="Image"
+                                         IconData="{pia:IconGeometry Icon=image}"
+                                         Command="{Binding InsertImageCommand}" />
+                    <cobalt:RibbonButton Header="Table"
+                                         IconData="{pia:IconGeometry Icon=grid_nine}"
+                                         Command="{Binding InsertTableCommand}" />
+                    <cobalt:RibbonButton Header="Link"
+                                         IconData="{pia:IconGeometry Icon=link}"
+                                         Command="{Binding InsertLinkCommand}" />
+                </cobalt:RibbonGroup>
+            </cobalt:RibbonTab>
+
+            <!-- Export Tab -->
+            <cobalt:RibbonTab Header="Export">
+                <cobalt:RibbonGroup Header="Export">
+                    <cobalt:RibbonDropDownButton Header="Export As"
+                                                  IconData="{pia:IconGeometry Icon=download}">
+                        <cobalt:RibbonMenuItem Header="Export as PDF"
+                                               Command="{Binding ExportPdfCommand}" />
+                        <cobalt:RibbonMenuItem Header="Export as CSV"
+                                               Command="{Binding ExportCsvCommand}" />
+                        <cobalt:RibbonMenuItem Header="Export as JSON"
+                                               Command="{Binding ExportJsonCommand}" />
+                    </cobalt:RibbonDropDownButton>
+                </cobalt:RibbonGroup>
+            </cobalt:RibbonTab>
+        </cobalt:Ribbon>
+
+        <!-- Status area -->
+        <Border Margin="24" Padding="16"
+                Background="{DynamicResource CobaltSurfaceBrush}"
+                CornerRadius="8"
+                VerticalAlignment="Top">
+            <StackPanel Spacing="8">
+                <TextBlock Text="Ribbon Control Testing"
+                           FontSize="20" FontWeight="SemiBold" />
+                <TextBlock Text="{Binding StatusText, StringFormat='Last action: {0}'}"
+                           Foreground="{DynamicResource CobaltForegroundSecondaryBrush}" />
+                <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,8,0,0">
+                    <TextBlock Foreground="{DynamicResource CobaltForegroundSecondaryBrush}">
+                        <Run Text="Bold:" />
+                        <Run Text="{Binding IsBoldActive}" />
+                    </TextBlock>
+                    <TextBlock Foreground="{DynamicResource CobaltForegroundSecondaryBrush}">
+                        <Run Text="Italic:" />
+                        <Run Text="{Binding IsItalicActive}" />
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </DockPanel>
+</UserControl>
